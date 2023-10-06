@@ -20,7 +20,7 @@ function ProjectListItem({ project, odd }: ProjectListItemProps) {
           <Image
             src={project.wideScreenView.asset.url}
             alt={`Cover image from ${project.name}`}
-            layout="fill"
+            fill
             objectFit="cover"
             priority={false}
           />
