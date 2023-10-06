@@ -18,18 +18,18 @@ const projectOrder: { [key: string]: number } = {
   "Shift's Closet": 4,
 };
 
-interface ProjectsQueryResult {
-  allProjects: Project[];
-}
-
 interface AboutQueryResult {
   allAbout: About[];
 }
 
+interface ProjectsQueryResult {
+  allProjects: Project[];
+}
+
 export default function Home() {
+  const { data: aboutData } = useSuspenseQuery<AboutQueryResult>(aboutQuery);
   const { data: projectData } =
     useSuspenseQuery<ProjectsQueryResult>(projectsQuery);
-  const { data: aboutData } = useSuspenseQuery<AboutQueryResult>(aboutQuery);
 
   const projects = projectData.allProjects;
 
