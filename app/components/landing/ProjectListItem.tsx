@@ -22,6 +22,7 @@ function ProjectListItem({ project, odd }: ProjectListItemProps) {
             alt={`Cover image from ${project.name}`}
             layout="fill"
             objectFit="cover"
+            priority={false}
           />
         </div>
       </div>
