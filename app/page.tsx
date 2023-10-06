@@ -3,10 +3,11 @@
 import Image from "next/image";
 import { PortableText } from "@portabletext/react";
 
-import { useQuery } from "@apollo/client";
+import { useSuspenseQuery } from "@apollo/client";
 
 import ProjectListItem from "./components/landing/ProjectListItem";
 import { aboutQuery, projectsQuery } from "@/graphql/queries";
+import { About } from "@/types/About";
 import { Project } from "@/types/Project";
 import { FaLinkedin, FaGithub, FaEnvelope } from "react-icons/fa";
 
@@ -17,21 +18,18 @@ const projectOrder: { [key: string]: number } = {
   "Shift's Closet": 4,
 };
 
-export default function Home() {
-  const {
-    data: projectData,
-    loading: projectDataLoading,
-    error: projectDataError,
-  } = useQuery(projectsQuery);
-  const {
-    data: aboutData,
-    loading: aboutDataLoading,
-    error: aboutDataError,
-  } = useQuery(aboutQuery);
+interface ProjectsQueryResult {
+  allProjects: Project[];
+}
 
-  if (projectDataLoading || aboutDataLoading) return <p>Loading...</p>;
-  if (projectDataError || aboutDataError)
-    return <p>Error: {projectDataError?.message || aboutDataError?.message}</p>;
+interface AboutQueryResult {
+  allAbout: About[];
+}
+
+export default function Home() {
+  const { data: projectData } =
+    useSuspenseQuery<ProjectsQueryResult>(projectsQuery);
+  const { data: aboutData } = useSuspenseQuery<AboutQueryResult>(aboutQuery);
 
   const projects = projectData.allProjects;
 
