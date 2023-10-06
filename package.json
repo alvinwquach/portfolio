@@ -9,12 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@apollo/client": "^3.8.0-rc.2",
+    "@apollo/experimental-nextjs-app-support": "^0.4.3",
+    "@portabletext/react": "^3.0.9",
     "@sanity/image-url": "^1.0.2",
     "@sanity/vision": "^3.17.0",
+    "graphql": "^16.8.1",
     "next": "13.5.4",
     "next-sanity": "^5.5.5",
     "react": "^18",
     "react-dom": "^18",
+    "react-icons": "^4.11.0",
     "sanity": "^3.17.0",
     "styled-components": "5.2"
   },
