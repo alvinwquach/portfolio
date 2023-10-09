@@ -19,10 +19,15 @@ function ProjectListItem({ project, odd }: ProjectListItemProps) {
         <div className="relative aspect-[16/9]">
           <Image
             src={project.wideScreenView.asset.url}
-            alt={`Cover image from ${project.name}`}
+            alt={`Cover image for ${project.name}`}
             fill
-            objectFit="cover"
-            priority={false}
+            sizes="(min-width: 808px) 50vw, 100vw"
+            blurDataURL={project.wideScreenView.asset.url}
+            placeholder="blur"
+            priority
+            style={{
+              objectFit: "cover",
+            }}
           />
         </div>
       </div>
