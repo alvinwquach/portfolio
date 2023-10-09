@@ -14,10 +14,10 @@ function TextBox({ project }: TextBoxProps) {
           {project.name}
         </div>
         <div className="font-serif text-gray-500">
-          <div className="text-xl">
+          <div className="text-xl leading-8">
             <PortableText value={project.descriptionRaw} />
           </div>
-          <div className="mt-4 flex flex-wrap gap-x-2 gap-y-2">
+          <div className="mt-4 flex flex-wrap gap-x-4 gap-y-4">
             {project.tags?.map((tag, key) => (
               <div
                 key={key}
