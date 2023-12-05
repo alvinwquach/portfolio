@@ -11,8 +11,8 @@ interface ProjectListItemProps {
 function ProjectListItem({ project, odd }: ProjectListItemProps) {
   return (
     <div
-      className={`flex flex-col gap-x-5 p-2 transition xl:flex-row ${
-        odd && "border-b border-t xl:flex-row-reverse"
+      className={`flex flex-col gap-x-5 p-2 transition xl:flex-row border ${
+        odd && "border-b border-t xl:flex-row-reverse "
       }`}
     >
       <div className="w-full xl:w-9/12">

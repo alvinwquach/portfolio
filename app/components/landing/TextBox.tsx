@@ -27,7 +27,7 @@ function TextBox({ project }: TextBoxProps) {
               </div>
             ))}
           </div>
-          <div className="mt-4 space-x-4">
+          <div className="space-x-4  mt-2 flex md:flex-row">
             {project.url && (
               <a
                 href={project.url}
@@ -36,7 +36,7 @@ function TextBox({ project }: TextBoxProps) {
                 aria-label={`Open link to ${project.name} website`}
                 className="inline-block px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition duration-300"
               >
-                Visit Website
+                Website
               </a>
             )}
             {project.repository && (
@@ -47,7 +47,7 @@ function TextBox({ project }: TextBoxProps) {
                 aria-label={`Open link to ${project.name} Github repository`}
                 className="inline-block px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition duration-300"
               >
-                GitHub Repository
+                Repository
               </a>
             )}
           </div>
