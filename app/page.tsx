@@ -7,7 +7,7 @@ import { aboutQuery, projectsQuery } from "@/graphql/queries";
 import { About } from "@/types/About";
 import { Project } from "@/types/Project";
 import { PortableText } from "@portabletext/react";
-import { FaLinkedin, FaGithub, FaEnvelope } from "react-icons/fa";
+import { FaLinkedin, FaGithub, FaEnvelope, FaDownload } from "react-icons/fa";
 
 const projectOrder: { [key: string]: number } = {
   "Bring The Shreds": 1,
@@ -80,6 +80,15 @@ export default function Home() {
               <FaEnvelope size={30} className="mx-2 hover:scale-110" />
             </a>
           )}
+          <a
+            href="/resume/alvin-quach-resume-fullstack.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Download Alvin Quach's Resume"
+            download
+          >
+            <FaDownload size={30} className="mx-2 hover:scale-110" />
+          </a>
         </div>
         <div className="text-lg mb-5">
           <PortableText value={about.storyRaw} />
