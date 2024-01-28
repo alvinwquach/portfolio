@@ -3,11 +3,6 @@ import { gql } from "@apollo/client";
 export const aboutQuery = gql`
   query allAbouts {
     allAbout {
-      image {
-        asset {
-          url
-        }
-      }
       storyRaw
       linkedin
       github

@@ -1,13 +1,13 @@
 "use client";
 
 import { useSuspenseQuery } from "@apollo/client";
-import Image from "next/image";
 import ProjectListItem from "./components/landing/ProjectListItem";
 import { aboutQuery, projectsQuery } from "@/graphql/queries";
 import { About } from "@/types/About";
 import { Project } from "@/types/Project";
 import { PortableText } from "@portabletext/react";
 import { FaLinkedin, FaGithub, FaEnvelope, FaDownload } from "react-icons/fa";
+import Typewriter from "typewriter-effect";
 
 const projectOrder: { [key: string]: number } = {
   "Bring The Shreds": 1,
@@ -40,59 +40,93 @@ export default function Home() {
 
   return (
     <main>
-      <section className=" mx-auto max-w-[100rem] text-white py-16 text-center  mt-20 flex-grow px-4 md:px-16 lg:px-32">
-        <Image
-          src={about.image.asset.url}
-          alt="Image of Alvin"
-          width={200}
-          height={200}
-          className="rounded-full mx-auto my-4 border border-white p-2"
-        />
+      <section className=" max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-20 sm:py-24 lg:py-24">
+        <h1 className="text-5xl font-bold tracking-tight text-slate-200 sm:text-5xl">
+          <p>Alvin Quach</p>
+        </h1>
 
-        <div className="mx-auto flex items-center justify-center mb-5">
-          {about.linkedin && (
-            <a
-              href={about.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Open link to Alvin Quach's LinkedIn"
-            >
-              <FaLinkedin size={30} className="mx-2 hover:scale-110" />
-            </a>
-          )}
-          {about.github && (
-            <a
-              href={about.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Open link to Alvin Quach's Github"
-            >
-              <FaGithub size={30} className="mx-2 hover:scale-110" />
-            </a>
-          )}
-          {about.email && (
-            <a
-              href={`mailto:${about.email}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Email Alvin Quach"
-            >
-              <FaEnvelope size={30} className="mx-2 hover:scale-110" />
-            </a>
-          )}
-          <a
-            href="/resume/alvin-quach-resume-fullstack.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Download Alvin Quach's Resume"
-            download
-          >
-            <FaDownload size={30} className="mx-2 hover:scale-110" />
-          </a>
+        <div className="mt-3 text-3xl font-medium tracking-tight text-slate-200 sm:text-2xl">
+          <Typewriter
+            onInit={(typewriter) => {
+              typewriter
+                .pauseFor(1000)
+                .typeString("Full Stack Developer")
+                .start();
+            }}
+            options={{
+              autoStart: true,
+              loop: false,
+              // delay: 75,
+            }}
+          />
         </div>
-        <div className="text-lg mb-5">
+        <div className="text-left text-xl my-5">
           <PortableText value={about.storyRaw} />
         </div>
+        <ul
+          className="flex items-center space-x-4 mb-8"
+          aria-label="Social media"
+        >
+          <li className="text-xs shrink-0">
+            {about.github && (
+              <a
+                href={about.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub (opens in a new tab)"
+                title="GitHub"
+                className="flex items-center space-x-1 hover:text-slate-200 hover:scale-110"
+              >
+                <span className="sr-only">GitHub</span>
+                <FaGithub className="block h-6 w-6" />
+              </a>
+            )}
+          </li>
+          <li className="text-xs shrink-0">
+            {about.linkedin && (
+              <a
+                href={about.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn (opens in a new tab)"
+                title="LinkedIn"
+                className="flex items-center space-x-1 hover:text-slate-200 hover:scale-110"
+              >
+                <span className="sr-only">LinkedIn</span>
+                <FaLinkedin className="block h-6 w-6" />
+              </a>
+            )}
+          </li>
+          <li className="text-xs shrink-0">
+            {about.email && (
+              <a
+                href={`mailto:${about.email}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Email (opens in a new tab)"
+                title="Email"
+                className="flex items-center space-x-1 hover:text-slate-200 hover:scale-110"
+              >
+                <span className="sr-only">Email</span>
+                <FaEnvelope className="block h-6 w-6" />
+              </a>
+            )}
+          </li>
+          <li className="text-xs shrink-0">
+            <a
+              href="/resume/alvin-quach-resume-fullstack.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Resume (Opens in a new tab)"
+              title="Download Resume"
+              download
+              className="flex items-center space-x-1 hover:text-slate-200 hover:scale-110"
+            >
+              <span className="sr-only">Download Resume</span>
+              <FaDownload className="block h-6 w-6" />
+            </a>
+          </li>
+        </ul>
         {sortedProjects.map((project: Project, key: number) => (
           <ProjectListItem project={project} odd={key % 2} key={project.name} />
         ))}
