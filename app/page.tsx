@@ -1,7 +1,7 @@
 "use client";
 
 import { useSuspenseQuery } from "@apollo/client";
-import ProjectListItem from "./components/landing/ProjectListItem";
+import Projects from "./components/landing/Projects";
 import { aboutQuery, projectsQuery } from "@/graphql/queries";
 import { About } from "@/types/About";
 import { Project } from "@/types/Project";
@@ -128,7 +128,7 @@ export default function Home() {
           </li>
         </ul>
         {sortedProjects.map((project: Project, key: number) => (
-          <ProjectListItem project={project} odd={key % 2} key={project.name} />
+          <Projects project={project} odd={key % 2} key={project.name} />
         ))}
       </section>
     </main>
