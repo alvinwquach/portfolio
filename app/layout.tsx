@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className="bg-gray-800 text-gray-300 leading-relaxed antialiased selection:bg-indigo-500 selection:text-indigo-100">
         <ApolloWrapper>{children}</ApolloWrapper>
       </body>
     </html>

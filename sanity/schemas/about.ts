@@ -4,16 +4,6 @@ export default {
   title: "About",
   fields: [
     {
-      name: "image",
-      title: "Image",
-      type: "image",
-      description: "Please upload an image of yourself.",
-      options: {
-        hotspot: true,
-      },
-      validation: (Rule: any) => Rule.required(),
-    },
-    {
       name: "story",
       title: "Story",
       type: "array",
