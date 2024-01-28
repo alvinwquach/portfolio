@@ -56,7 +56,7 @@ export default function Home() {
             options={{
               autoStart: true,
               loop: false,
-              // delay: 75,
+              delay: 75,
             }}
           />
         </div>
