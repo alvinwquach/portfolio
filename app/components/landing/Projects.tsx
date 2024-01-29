@@ -13,7 +13,7 @@ interface ProjectsProps {
 function Projects({ project, odd }: ProjectsProps) {
   return (
     <div
-      className={`bg-white dark:bg-gray-900 flex flex-col gap-x-5 p-2 transition xl:flex-row   ${
+      className={`bg-white dark:bg-gray-900 flex flex-col transition xl:flex-row   ${
         odd && "xl:flex-row-reverse "
       }`}
     >
