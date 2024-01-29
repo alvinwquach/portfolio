@@ -41,10 +41,12 @@ export default function Home() {
   return (
     <main>
       <section className=" max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-20 sm:py-24 lg:py-24">
-        <h1 className="text-5xl font-bold tracking-tight  sm:text-5xl">
-          <p>Alvin Quach</p>
+        <h1 className="text-5xl font-bold text-center">
+          Hey, I'm Alvin {""}
+          <span role="img" aria-label="Waving hand emoji">
+            👋
+          </span>
         </h1>
-
         <div className="mt-3 text-3xl font-medium tracking-tight sm:text-2xl">
           <Typewriter
             onInit={(typewriter) => {
