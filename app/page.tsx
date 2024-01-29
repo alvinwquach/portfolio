@@ -64,7 +64,7 @@ export default function Home() {
           <PortableText value={about.storyRaw} />
         </div>
         <ul
-          className="flex items-center space-x-4 mb-8"
+          className="flex justify-center space-x-4 mb-8"
           aria-label="Social media"
         >
           <li className="text-xs shrink-0">
@@ -75,7 +75,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 aria-label="GitHub (opens in a new tab)"
                 title="GitHub"
-                className="flex items-center space-x-1 hover:text-slate-200 hover:scale-110"
+                className="hover:scale-110 bg-blue-100 text-blue-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-md dark:bg-gray-700 dark:text-blue-400 mb-2"
               >
                 <span className="sr-only">GitHub</span>
                 <FaGithub className="block h-6 w-6" />
@@ -90,7 +90,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 aria-label="LinkedIn (opens in a new tab)"
                 title="LinkedIn"
-                className="flex items-center space-x-1 hover:text-slate-200 hover:scale-110"
+                className="hover:scale-110 bg-blue-100 text-blue-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-md dark:bg-gray-700 dark:text-blue-400 mb-2"
               >
                 <span className="sr-only">LinkedIn</span>
                 <FaLinkedin className="block h-6 w-6" />
@@ -105,7 +105,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 aria-label="Email (opens in a new tab)"
                 title="Email"
-                className="flex items-center space-x-1 hover:text-slate-200 hover:scale-110"
+                className="hover:scale-110 bg-blue-100 text-blue-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-md dark:bg-gray-700 dark:text-blue-400 mb-2"
               >
                 <span className="sr-only">Email</span>
                 <FaEnvelope className="block h-6 w-6" />
@@ -120,7 +120,7 @@ export default function Home() {
               aria-label="Resume (Opens in a new tab)"
               title="Download Resume"
               download
-              className="flex items-center space-x-1 hover:text-slate-200 hover:scale-110"
+              className="hover:scale-110 bg-blue-100 text-blue-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-md dark:bg-gray-700 dark:text-blue-400 mb-2"
             >
               <span className="sr-only">Download Resume</span>
               <FaDownload className="block h-6 w-6" />
