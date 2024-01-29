@@ -8,6 +8,7 @@ import { Project } from "@/types/Project";
 import { PortableText } from "@portabletext/react";
 import { FaLinkedin, FaGithub, FaEnvelope, FaDownload } from "react-icons/fa";
 import Typewriter from "typewriter-effect";
+import BackToTopButton from "./components/ui/BackToTopButton";
 
 const projectOrder: { [key: string]: number } = {
   "Bring The Shreds": 1,
@@ -131,6 +132,7 @@ export default function Home() {
           <Projects project={project} odd={key % 2} key={project.name} />
         ))}
       </section>
+      <BackToTopButton />
     </main>
   );
 }
