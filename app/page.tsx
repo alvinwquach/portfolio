@@ -44,7 +44,7 @@ export default function Home() {
         <h1 className="text-5xl font-bold text-center">
           Hey, I'm Alvin {""}
           <span role="img" aria-label="Waving hand emoji">
-            👋
+            &nbsp;👋&nbsp;
           </span>
         </h1>
         <div className="mt-3 text-3xl font-medium tracking-tight sm:text-2xl">
