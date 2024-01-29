@@ -43,7 +43,7 @@ export default function Home() {
     <main>
       <section className=" max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-20 sm:py-24 lg:py-24">
         <h1 className="text-5xl font-bold tracking-tight  sm:text-5xl">
-          <p>Alvin Quach</p>
+          Alvin Quach
         </h1>
 
         <div className="mt-3 text-3xl font-medium tracking-tight sm:text-2xl">

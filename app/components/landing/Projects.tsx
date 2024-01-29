@@ -46,14 +46,14 @@ function Projects({ project, odd }: ProjectsProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Open link to ${project.name} website`}
-                className="inline-flex items-center text-blue-600 hover:underline"
+                className="inline-flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline"
               >
                 {project.url}
                 <FiExternalLink className="w-3 h-3 ms-2.5" />
               </a>
             )}
 
-            <div className="flex flex-wrap gap-4 mt-2">
+            <div className="flex flex-wrap gap-x-2 mt-2">
               {project.tags?.map((tag, key) => (
                 <div
                   key={key}
@@ -63,16 +63,16 @@ function Projects({ project, odd }: ProjectsProps) {
                 </div>
               ))}
             </div>
-            <p className="text-lg font-normal text-gray-500 dark:text-gray-400 mb-4">
+            <div className="text-lg font-normal text-gray-500 dark:text-gray-400 mb-4">
               <PortableText value={project.descriptionRaw} />
-            </p>
+            </div>
             {project.repository && (
               <a
                 href={project.repository}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Open link to ${project.name} Github repository`}
-                className="text-blue-600 dark:text-blue-500 hover:underline font-medium text-lg inline-flex items-center"
+                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
               >
                 View repository
                 <FaArrowRight className="inline-block ml-2" />
