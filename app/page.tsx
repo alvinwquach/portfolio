@@ -84,7 +84,7 @@ export default function Home() {
           <h1 className="text-3xl">alvinquach</h1>
         </div>
         <div className="flex justify-betweem mx-0 mb-2 w-full flex-row items-center md:flex">
-          <div className="blog-social-media-section flex flex-row flex-wrap gap-y-2 justify-center gap-x-1.5 text-slate-800">
+          <div className="flex flex-row flex-wrap gap-y-2 justify-center gap-x-1.5 text-slate-800">
             {about?.github && (
               <a
                 href={about.github}
