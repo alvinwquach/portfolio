@@ -1,6 +1,6 @@
 "use client";
 
-import { useSuspenseQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import Projects from "./components/landing/Projects";
 import { aboutQuery, projectsQuery } from "@/graphql/queries";
 import { About } from "@/types/About";
@@ -26,27 +26,26 @@ interface ProjectsQueryResult {
 }
 
 export default function Home() {
-  const { data: aboutData } = useSuspenseQuery<AboutQueryResult>(aboutQuery);
-  const { data: projectData } =
-    useSuspenseQuery<ProjectsQueryResult>(projectsQuery);
+  const { data: aboutData } = useQuery<AboutQueryResult>(aboutQuery);
+  const { data: projectData } = useQuery<ProjectsQueryResult>(projectsQuery);
 
-  const projects = projectData.allProjects;
+  const projects = projectData?.allProjects;
 
-  const sortedProjects = projects.slice().sort((a: Project, b: Project) => {
+  const sortedProjects = projects?.slice().sort((a: Project, b: Project) => {
     const orderA = projectOrder[a.name] || Infinity;
     const orderB = projectOrder[b.name] || Infinity;
     return orderA - orderB;
   });
-  const about = aboutData.allAbout[0];
+  const about = aboutData?.allAbout[0];
 
   return (
     <main>
-      <section className=" max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-20 sm:py-24 lg:py-24">
+      <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-20 sm:py-24 lg:py-24">
         <h1 className="text-5xl font-bold tracking-tight  sm:text-5xl">
           Alvin Quach
         </h1>
 
-        <div className="mt-3 text-3xl font-medium tracking-tight sm:text-2xl">
+        <div className="mt-3 text-2xl font-medium tracking-tight sm:text-2xl">
           <Typewriter
             onInit={(typewriter) => {
               typewriter
@@ -62,14 +61,14 @@ export default function Home() {
           />
         </div>
         <div className="text-left text-xl my-5">
-          <PortableText value={about.storyRaw} />
+          <PortableText value={about?.storyRaw || []} />
         </div>
         <ul
           className="flex justify-center space-x-4 mb-8"
           aria-label="Social media"
         >
           <li className="text-xs shrink-0">
-            {about.github && (
+            {about?.github && (
               <a
                 href={about.github}
                 target="_blank"
@@ -84,7 +83,7 @@ export default function Home() {
             )}
           </li>
           <li className="text-xs shrink-0">
-            {about.linkedin && (
+            {about?.linkedin && (
               <a
                 href={about.linkedin}
                 target="_blank"
@@ -99,7 +98,7 @@ export default function Home() {
             )}
           </li>
           <li className="text-xs shrink-0">
-            {about.email && (
+            {about?.email && (
               <a
                 href={`mailto:${about.email}`}
                 target="_blank"
@@ -128,11 +127,14 @@ export default function Home() {
             </a>
           </li>
         </ul>
-        {sortedProjects.map((project: Project, key: number) => (
+        <h2 className="text-left text-3xl font-bold uppercase tracking-wider ">
+          Portfolio
+        </h2>
+        {sortedProjects?.map((project: Project, key: number) => (
           <Projects project={project} odd={key % 2} key={project.name} />
         ))}
+        <BackToTopButton />
       </section>
-      <BackToTopButton />
     </main>
   );
 }
