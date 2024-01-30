@@ -1,11 +1,12 @@
 "use client";
 
 import { useQuery } from "@apollo/client";
+import { useTrail, animated } from "@react-spring/web";
+import { useState, useEffect } from "react";
 import { About } from "@/types/About";
 import { Project } from "@/types/Project";
 import { aboutQuery, projectsQuery } from "@/graphql/queries";
 import { PortableText } from "@portabletext/react";
-import Typewriter from "typewriter-effect";
 import {
   FaLinkedin,
   FaGithub,
@@ -36,25 +37,54 @@ export default function Home() {
 
   const projects = projectData?.allProjects;
 
+  const ShiftsCloset = () => {
+    const text = "Shift's Closet";
+    const config = { mass: 5, tension: 2000, friction: 200 };
+    const trail = useTrail(text.length, {
+      config,
+      opacity: 1,
+      x: 0,
+      from: { opacity: 0, x: 50 },
+      delay: 1000,
+    });
+
+    return (
+      <h1 className="text-7xl font-bold text-center">
+        {trail.map(({ x, opacity }, index) => (
+          <animated.span
+            key={index}
+            style={{
+              opacity,
+              transform: x.to((x) => `translate3d(${x}px,0,0)`),
+              color: x.to([0, 100], ["black", "#60a5fa"]),
+            }}
+          >
+            {text[index]}
+          </animated.span>
+        ))}
+      </h1>
+    );
+  };
+
   const sortedProjects = projects?.slice().sort((a: Project, b: Project) => {
     const orderA = projectOrder[a.name] || Infinity;
     const orderB = projectOrder[b.name] || Infinity;
     return orderA - orderB;
   });
   const about = aboutData?.allAbout[0];
+  const trail = useTrail(1, {
+    opacity: 1,
+    from: { opacity: 0 },
+  });
 
   return (
     <main>
       <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-20 sm:py-24 lg:py-24">
-        <h1 className="text-4xl font-bold tracking-tight text-center sm:text-5xl">
-          Alvin Quach
-        </h1>
-
-        <ul
-          className="flex justify-center space-x-1 mt-5"
-          aria-label="Social media"
-        >
-          <li>
+        <div className="flex justify-between mt-5">
+          <h1 className="text-3xl">alvinquach</h1>
+        </div>
+        <div className="flex justify-betweem mx-0 mb-2 w-full flex-row items-center md:flex">
+          <div className="blog-social-media-section flex flex-row flex-wrap gap-y-2 justify-center gap-x-1.5 text-slate-800">
             {about?.github && (
               <a
                 href={about.github}
@@ -62,107 +92,72 @@ export default function Home() {
                 rel="noopener noreferrer"
                 aria-label="GitHub (opens in a new tab)"
                 title="GitHub"
-                className="hover:scale-110 text-blue-600 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-md"
+                className="focus-ring-base flex flex-row items-center justify-center rounded-full p-2 transition-colors duration-150 focus-ring-colors-light-header hover:bg-black/10"
               >
                 <span className="sr-only">GitHub</span>
                 <FaGithub className="block h-6 w-6" />
               </a>
             )}
-          </li>
-          <li>
-            {about?.linkedin && (
+            {about?.github && (
               <a
-                href={about.linkedin}
+                href={about.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="LinkedIn (opens in a new tab)"
-                title="LinkedIn"
-                className="hover:scale-110 text-blue-600 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-md"
+                aria-label="GitHub (opens in a new tab)"
+                title="GitHub"
+                className="focus-ring-base flex flex-row items-center justify-center rounded-full p-2 transition-colors duration-150 focus-ring-colors-light-header hover:bg-black/10"
               >
-                <span className="sr-only">LinkedIn</span>
+                <span className="sr-only">GitHub</span>
                 <FaLinkedin className="block h-6 w-6" />
               </a>
             )}
-          </li>
-          <li>
             {about?.email && (
               <a
-                href={`mailto:${about.email}`}
+                href={about.email}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Email (opens in a new tab)"
-                title="Email"
-                className="hover:scale-110 text-blue-600 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-md"
+                aria-label="GitHub (opens in a new tab)"
+                title="GitHub"
+                className="focus-ring-base flex flex-row items-center justify-center rounded-full p-2 transition-colors duration-150 focus-ring-colors-light-header hover:bg-black/10"
               >
                 <span className="sr-only">Email</span>
                 <FaEnvelope className="block h-6 w-6" />
               </a>
             )}
-          </li>
-        </ul>
-        <div className="flex flex-col lg:flex-row">
-          <div className="lg:w-1/2 my-3 text-2xl text-center font-medium tracking-tight sm:text-2xl">
-            <Typewriter
-              onInit={(typewriter) => {
-                typewriter
-                  .pauseFor(1000)
-                  .typeString("Full Stack Engineer")
-                  .start();
-              }}
-              options={{
-                autoStart: true,
-                loop: false,
-                delay: 75,
-              }}
-            />
-            <Typewriter
-              onInit={(typewriter) => {
-                typewriter
-                  .pauseFor(1000)
-                  .typeString("Sneaker Connoisseur")
-                  .start();
-              }}
-              options={{
-                autoStart: true,
-                loop: false,
-                delay: 75,
-              }}
-            />
-            <Typewriter
-              onInit={(typewriter) => {
-                typewriter.pauseFor(1000).typeString("Foodie").start();
-              }}
-              options={{
-                autoStart: true,
-                loop: false,
-                delay: 75,
-              }}
-            />
           </div>
+          <div className="mb-0 ml-auto flex flex-row items-center justify-center gap-x-3">
+            <a
+              href="/resume/alvin-quach-resume-fullstack.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Resume (Opens in a new tab)"
+              title="Download Resume"
+              download
+              className="flex items-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+            >
+              Resume <FaFileDownload className="ml-2" />
+            </a>
+          </div>
+        </div>
+
+        {trail.map((props, index) => (
+          <animated.p key={index} style={props} className="text-2xl">
+            I create experiences for the web.
+          </animated.p>
+        ))}
+        <div className="flex flex-col lg:flex-row">
           <div className="lg:w-1/2 text-left text-xl my-5">
             <PortableText value={about?.storyRaw || []} />
           </div>
         </div>
-        <div className="flex justify-between">
-          <h2 className="text-left text-3xl font-bold uppercase tracking-wider ">
-            Portfolio
-          </h2>
-          <a
-            href="/resume/alvin-quach-resume-fullstack.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Resume (Opens in a new tab)"
-            title="Download Resume"
-            download
-            className="flex items-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-          >
-            Resume <FaFileDownload className="ml-2" />
-          </a>
-        </div>
+        <h2 className="text-3xl font-bold text-center">
+          Some Things I've Created
+        </h2>
 
         {sortedProjects?.map((project: Project, key: number) => (
           <Projects project={project} odd={key % 2} key={project.name} />
         ))}
+
         <BackToTopButton />
       </section>
     </main>
