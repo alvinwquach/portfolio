@@ -37,7 +37,7 @@ function Projects({ project, odd }: ProjectsProps) {
       <div className="flex xl:w-7/12 flex-col ">
         <div className="relative mt-2 flex w-full flex-col justify-between p-3 xl:mt-0 flex-grow">
           <div className="font-serif">
-            <h3 className="text-gray-900 dark:text-white text-2xl font-extrabold mb-2">
+            <h3 className="text-gray-900  text-2xl font-extrabold mb-2">
               {project.name}
             </h3>
             {project.url && (
@@ -54,10 +54,10 @@ function Projects({ project, odd }: ProjectsProps) {
             )}
 
             <div className="flex flex-wrap gap-x-2 mt-2">
-              {project.tags?.map((tag, key) => (
+              {project.tags?.map((tag, index) => (
                 <div
-                  key={key}
-                  className="bg-blue-100 text-blue-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-md dark:bg-gray-700 dark:text-blue-400 mb-2"
+                  key={index}
+                  className="bg-blue-100 text-blue-800 text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded-md mb-2"
                 >
                   {tag}
                 </div>

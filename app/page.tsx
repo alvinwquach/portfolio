@@ -62,7 +62,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 aria-label="GitHub (opens in a new tab)"
                 title="GitHub"
-                className="hover:scale-110  text-blue-600 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-md dark:bg-gray-700 dark:text-blue-500 mb-2"
+                className="hover:scale-110 text-blue-600 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-md"
               >
                 <span className="sr-only">GitHub</span>
                 <FaGithub className="block h-6 w-6" />
@@ -77,7 +77,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 aria-label="LinkedIn (opens in a new tab)"
                 title="LinkedIn"
-                className="hover:scale-110  text-blue-600 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-md dark:bg-gray-700 dark:text-blue-500 mb-2"
+                className="hover:scale-110 text-blue-600 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-md"
               >
                 <span className="sr-only">LinkedIn</span>
                 <FaLinkedin className="block h-6 w-6" />
@@ -92,7 +92,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 aria-label="Email (opens in a new tab)"
                 title="Email"
-                className="hover:scale-110  text-blue-600 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-md dark:bg-gray-700 dark:text-blue-500 mb-2"
+                className="hover:scale-110 text-blue-600 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-md"
               >
                 <span className="sr-only">Email</span>
                 <FaEnvelope className="block h-6 w-6" />
