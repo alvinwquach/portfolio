@@ -37,35 +37,6 @@ export default function Home() {
 
   const projects = projectData?.allProjects;
 
-  const ShiftsCloset = () => {
-    const text = "Shift's Closet";
-    const config = { mass: 5, tension: 2000, friction: 200 };
-    const trail = useTrail(text.length, {
-      config,
-      opacity: 1,
-      x: 0,
-      from: { opacity: 0, x: 50 },
-      delay: 1000,
-    });
-
-    return (
-      <h1 className="text-7xl font-bold text-center">
-        {trail.map(({ x, opacity }, index) => (
-          <animated.span
-            key={index}
-            style={{
-              opacity,
-              transform: x.to((x) => `translate3d(${x}px,0,0)`),
-              color: x.to([0, 100], ["black", "#60a5fa"]),
-            }}
-          >
-            {text[index]}
-          </animated.span>
-        ))}
-      </h1>
-    );
-  };
-
   const sortedProjects = projects?.slice().sort((a: Project, b: Project) => {
     const orderA = projectOrder[a.name] || Infinity;
     const orderB = projectOrder[b.name] || Infinity;
