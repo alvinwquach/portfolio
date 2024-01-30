@@ -3,7 +3,7 @@ import Image from "next/image";
 import { PortableText } from "@portabletext/react";
 import { Project } from "@/types/Project";
 import { FiExternalLink } from "react-icons/fi";
-import { FaArrowRight, FaChevronCircleRight } from "react-icons/fa";
+import { FaArrowRight } from "react-icons/fa";
 
 interface ProjectsProps {
   project: Project;
