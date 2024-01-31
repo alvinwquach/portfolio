@@ -3,7 +3,6 @@
 import { useQuery } from "@apollo/client";
 import { Project } from "@/types/Project";
 import { projectsQuery } from "@/graphql/queries";
-import { PortableText } from "@portabletext/react";
 import {
   FaLinkedin,
   FaGithub,
@@ -12,7 +11,7 @@ import {
 } from "react-icons/fa";
 import Projects from "./components/landing/Projects";
 import BackToTopButton from "./components/ui/BackToTopButton";
-import Link from "next/link";
+import { rubik_bubbles, vampiro_one } from "../fonts";
 
 const projectOrder: { [key: string]: number } = {
   "Bring The Shreds": 1,
@@ -41,8 +40,10 @@ export default function Home() {
       <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-20 sm:py-24 lg:py-24">
         <div className="container mx-auto px-2 md:px-4 2xl:px-10">
           <div className="text-center sm:text-left">
-            <h1 className="text-5xl font-bold tracking-tight">
-              <a href="/">alvinquach.me</a>
+            <h1
+              className={`${rubik_bubbles.className} text-5xl text-white font-bold tracking-tight`}
+            >
+              <a href="/">alvin quach</a>
             </h1>
           </div>
           <div className="flex justify-center sm:justify-between mx-0 mb-2 w-full flex-row items-center md:flex">
@@ -58,7 +59,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                     aria-label="GitHub (opens in a new tab)"
                     title="GitHub"
-                    className="focus-ring-base flex flex-row items-center justify-center rounded-full p-2 transition-colors duration-150 focus-ring-colors-light-header hover:bg-black/10"
+                    className="text-white focus-ring-base flex flex-row items-center justify-center rounded-full p-2 transition-colors duration-150 focus-ring-colors-light-header hover:bg-black/10"
                   >
                     <span className="sr-only">GitHub</span>
                     <FaGithub className="block h-6 w-6" />
@@ -71,7 +72,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                     aria-label="LinkedIn (opens in a new tab)"
                     title="LinkedIn"
-                    className="focus-ring-base flex flex-row items-center justify-center rounded-full p-2 transition-colors duration-150 focus-ring-colors-light-header hover:bg-black/10"
+                    className="text-white focus-ring-base flex flex-row items-center justify-center rounded-full p-2 transition-colors duration-150 focus-ring-colors-light-header hover:bg-black/10"
                   >
                     <span className="sr-only">LinkedIn</span>
                     <FaLinkedin className="block h-6 w-6" />
@@ -84,7 +85,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                     aria-label="Email (opens in a new tab)"
                     title="Email"
-                    className="focus-ring-base flex flex-row items-center justify-center rounded-full p-2 transition-colors duration-150 focus-ring-colors-light-header hover:bg-black/10"
+                    className="text-white focus-ring-base flex flex-row items-center justify-center rounded-full p-2 transition-colors duration-150 focus-ring-colors-light-header hover:bg-black/10"
                   >
                     <span className="sr-only">Email</span>
                     <FaEnvelope className="block h-6 w-6" />
@@ -98,7 +99,7 @@ export default function Home() {
                     aria-label="Resume (Opens in a new tab)"
                     title="Download Resume"
                     download
-                    className="focus-ring-base flex flex-row items-center justify-center rounded-full p-2 transition-colors duration-150 focus-ring-colors-light-header hover:bg-black/10"
+                    className="text-white focus-ring-base flex flex-row items-center justify-center rounded-full p-2 transition-colors duration-150 focus-ring-colors-light-header hover:bg-black/10"
                   >
                     <FaFileDownload className="block h-6 w-6" />
                   </a>
@@ -107,13 +108,15 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <p className="text-xl my-5">
+        <p className="text-xl my-5 text-white">
           I'm currently an engineer at Bring The Shreds. When I'm not coding,
           you can catch me trying out new restaurants or watching the Golden
           State Warriors. Go Dubs!
         </p>
-        <h2 className="text-3xl font-bold text-center">
-          Some Things I've Created
+        <h2
+          className={`${vampiro_one.className} text-white animate-neon text-5xl font-bold text-center mb-0 mt-0 leading-1`}
+        >
+          PROJECTS
         </h2>
 
         {sortedProjects?.map((project: Project, key: number) => (
