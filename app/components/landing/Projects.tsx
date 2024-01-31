@@ -34,7 +34,7 @@ function Projects({ project, odd }: ProjectsProps) {
           />
         </div>
       </div>
-      <div className="flex xl:w-7/12 flex-col ">
+      <div className="flex flex-col xl:w-7/12">
         <div className="relative mt-2 flex w-full flex-col justify-between p-3 xl:mt-0 flex-grow">
           <div className="font-serif">
             <h3 className="  text-2xl mb-2  text-slate-50 font-semibold">
@@ -53,7 +53,10 @@ function Projects({ project, odd }: ProjectsProps) {
               </a>
             )}
 
-            <div className="flex flex-wrap gap-x-2 mt-2">
+            <div className="text-lg font-normal text-gray-400 mb-2">
+              <PortableText value={project.descriptionRaw} />
+            </div>
+            <div className="flex flex-wrap gap-x-2 mb-2">
               {project.tags?.map((tag, index) => (
                 <div
                   key={index}
@@ -63,16 +66,13 @@ function Projects({ project, odd }: ProjectsProps) {
                 </div>
               ))}
             </div>
-            <div className="text-lg font-normal text-gray-400 mb-4">
-              <PortableText value={project.descriptionRaw} />
-            </div>
             {project.repository && (
               <a
                 href={project.repository}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Open link to ${project.name} Github repository`}
-                className="text-white bg-zinc-600 hover:bg-zinc-700 focus:ring-4 focus:ring-zinc-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2  focus:outline-none dark:focus:ring-blue-800"
+                className="mt-2 text-white bg-zinc-600 hover:bg-zinc-700 focus:ring-4 focus:ring-zinc-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2  focus:outline-none dark:focus:ring-blue-800"
               >
                 View repository
                 <FaArrowRight className="inline-block ml-2" />

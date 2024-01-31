@@ -55,38 +55,42 @@ export default function Home() {
 
   return (
     <main>
-      <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-20 sm:py-24 lg:py-24">
-        <div className="container mx-auto px-2 md:px-4 2xl:px-10">
-          <div className="text-center sm:text-left">
-            <h1
-              className={`${rubik_bubbles.className} text-5xl text-white font-bold tracking-tight`}
-            >
-              <a href="/">alvin quach</a>
-            </h1>
-            <animated.h2
-              style={fadeIn}
-              className={` ${rubik_glitch.className} mt-5 text-5xl text-white font-bold tracking-tight`}
-            >
-              {trail.map(({ x, opacity }, index) => (
-                <animated.span
-                  key={index}
-                  style={{
-                    opacity,
-                    transform: x.to((x) => `translate3d(${x}px,0,0)`),
-                  }}
-                >
-                  {text[index]}
-                </animated.span>
-              ))}
-            </animated.h2>
-          </div>
-          <div className="flex justify-center sm:justify-between mx-0 mb-2 w-full flex-row items-center md:flex">
-            <div className="flex flex-row flex-wrap gap-y-2 justify-center gap-x-1.5 text-slate-800 sm:flex sm:justify-center">
+      <section className="mx-auto min-h-screen max-w-screen-xl px-6 py-12 md:px-12 md:py-20 lg:px-24 lg:py-0 ">
+        <div className="lg:flex lg:justify-between lg:gap-4">
+          <header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:py-24">
+            <div>
+              <h1
+                className={`${rubik_bubbles.className} text-4xl font-bold tracking-tight text-slate-200 sm:text-5xl"`}
+              >
+                <a href="/">Alvin Quach</a>
+              </h1>
+              <animated.h2
+                style={fadeIn}
+                className={` ${rubik_glitch.className} mt-5 text-2xl text-white font-bold tracking-tight`}
+              >
+                {trail.map(({ x, opacity }, index) => (
+                  <animated.span
+                    key={index}
+                    style={{
+                      opacity,
+                      transform: x.to((x) => `translate3d(${x}px,0,0)`),
+                    }}
+                  >
+                    {text[index]}
+                  </animated.span>
+                ))}
+              </animated.h2>
+
+              <p className="mt-4 max-w-xs leading-normal text-white">
+                I&apos;m currently an engineer at Bring The Shreds. When
+                I&apos;m not coding, you can catch me trying out new restaurants
+                or watching the Golden State Warriors. Go Dubs!
+              </p>
               <ul
-                className="flex justify-center space-x-1 mt-5"
+                className="flex items-center ml-1 mt-8 lg:mt-96"
                 aria-label="Social media"
               >
-                <li>
+                <li className="mr-5 text-xs shrink-0">
                   <a
                     href="https://github.com/alvinwquach"
                     target="_blank"
@@ -99,7 +103,7 @@ export default function Home() {
                     <FaGithub className="block h-6 w-6" />
                   </a>
                 </li>
-                <li>
+                <li className="mr-5 text-xs shrink-0">
                   <a
                     href="https://www.linkedin.com/in/a-quach/"
                     target="_blank"
@@ -112,7 +116,7 @@ export default function Home() {
                     <FaLinkedin className="block h-6 w-6" />
                   </a>
                 </li>
-                <li>
+                <li className="mr-5 text-xs shrink-0">
                   <a
                     href="mailto: alvinwquach@gmail.com"
                     target="_blank"
@@ -125,7 +129,7 @@ export default function Home() {
                     <FaEnvelope className="block h-6 w-6" />
                   </a>
                 </li>
-                <li>
+                <li className="mr-5 text-xs shrink-0">
                   <a
                     href="/resume/alvin-quach-resume-fullstack.pdf"
                     target="_blank"
@@ -140,23 +144,25 @@ export default function Home() {
                 </li>
               </ul>
             </div>
-          </div>
+          </header>
+          <BackToTopButton />
+          <section
+            id="projects"
+            className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
+            aria-label="Selected projects"
+          >
+            <div>
+              <h3
+                className={`${vampiro_one.className} mt-12 text-white animate-neon text-5xl font-bold text-center  leading-1`}
+              >
+                PROJECTS
+              </h3>
+              {sortedProjects?.map((project: Project, key: number) => (
+                <Projects project={project} odd={key % 2} key={project.name} />
+              ))}
+            </div>
+          </section>
         </div>
-        <p className="text-xl my-5 text-white">
-          I&apos;m currently an engineer at Bring The Shreds. When I&apos;m not
-          coding, you can catch me trying out new restaurants or watching the
-          Golden State Warriors. Go Dubs!
-        </p>
-        <h3
-          className={`${vampiro_one.className} text-white animate-neon text-5xl font-bold text-center mb-0 mt-0 leading-1`}
-        >
-          PROJECTS
-        </h3>
-
-        {sortedProjects?.map((project: Project, key: number) => (
-          <Projects project={project} odd={key % 2} key={project.name} />
-        ))}
-        <BackToTopButton />
       </section>
     </main>
   );
