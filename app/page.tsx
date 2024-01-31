@@ -11,7 +11,8 @@ import {
 } from "react-icons/fa";
 import Projects from "./components/landing/Projects";
 import BackToTopButton from "./components/ui/BackToTopButton";
-import { rubik_bubbles, vampiro_one } from "../fonts";
+import { rubik_bubbles, rubik_80s_fade, vampiro_one } from "../fonts";
+import { animated, useTrail, useSpring } from "@react-spring/web";
 
 const projectOrder: { [key: string]: number } = {
   "Bring The Shreds": 1,
@@ -35,6 +36,23 @@ export default function Home() {
     return orderA - orderB;
   });
 
+  const fadeIn = useSpring({
+    opacity: 1,
+    from: { opacity: 0 },
+    config: { mass: 5, tension: 2000, friction: 200 },
+    delay: 1000,
+  });
+
+  const text = "Full Stack Engineer";
+  const config = { mass: 5, tension: 2000, friction: 200 };
+  const trail = useTrail(text.length, {
+    config,
+    opacity: 1,
+    x: 0,
+    from: { opacity: 0, x: 20 },
+    delay: 1000,
+  });
+
   return (
     <main>
       <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-20 sm:py-24 lg:py-24">
@@ -45,6 +63,22 @@ export default function Home() {
             >
               <a href="/">alvin quach</a>
             </h1>
+            <animated.h2
+              style={fadeIn}
+              className={` ${rubik_80s_fade.className} mt-5 text-5xl text-white font-bold tracking-tight`}
+            >
+              {trail.map(({ x, opacity }, index) => (
+                <animated.span
+                  key={index}
+                  style={{
+                    opacity,
+                    transform: x.to((x) => `translate3d(${x}px,0,0)`),
+                  }}
+                >
+                  {text[index]}
+                </animated.span>
+              ))}
+            </animated.h2>
           </div>
           <div className="flex justify-center sm:justify-between mx-0 mb-2 w-full flex-row items-center md:flex">
             <div className="flex flex-row flex-wrap gap-y-2 justify-center gap-x-1.5 text-slate-800 sm:flex sm:justify-center">
@@ -59,7 +93,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                     aria-label="GitHub (opens in a new tab)"
                     title="GitHub"
-                    className="text-white focus-ring-base flex flex-row items-center justify-center rounded-full p-2 transition-colors duration-150 focus-ring-colors-light-header hover:bg-black/10"
+                    className="text-white focus-ring-base flex flex-row items-center justify-center rounded-full p-2 transition-colors duration-150 focus-ring-colors-light-header hover:bg-black/10 hover:text-black"
                   >
                     <span className="sr-only">GitHub</span>
                     <FaGithub className="block h-6 w-6" />
@@ -72,7 +106,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                     aria-label="LinkedIn (opens in a new tab)"
                     title="LinkedIn"
-                    className="text-white focus-ring-base flex flex-row items-center justify-center rounded-full p-2 transition-colors duration-150 focus-ring-colors-light-header hover:bg-black/10"
+                    className="text-white focus-ring-base flex flex-row items-center justify-center rounded-full p-2 transition-colors duration-150 focus-ring-colors-light-header hover:bg-black/10 hover:text-black"
                   >
                     <span className="sr-only">LinkedIn</span>
                     <FaLinkedin className="block h-6 w-6" />
@@ -85,7 +119,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                     aria-label="Email (opens in a new tab)"
                     title="Email"
-                    className="text-white focus-ring-base flex flex-row items-center justify-center rounded-full p-2 transition-colors duration-150 focus-ring-colors-light-header hover:bg-black/10"
+                    className="text-white focus-ring-base flex flex-row items-center justify-center rounded-full p-2 transition-colors duration-150 focus-ring-colors-light-header hover:bg-black/10 hover:text-black"
                   >
                     <span className="sr-only">Email</span>
                     <FaEnvelope className="block h-6 w-6" />
@@ -99,7 +133,7 @@ export default function Home() {
                     aria-label="Resume (Opens in a new tab)"
                     title="Download Resume"
                     download
-                    className="text-white focus-ring-base flex flex-row items-center justify-center rounded-full p-2 transition-colors duration-150 focus-ring-colors-light-header hover:bg-black/10"
+                    className="text-white focus-ring-base flex flex-row items-center justify-center rounded-full p-2 transition-colors duration-150 focus-ring-colors-light-header hover:bg-black/10 hover:text-black"
                   >
                     <FaFileDownload className="block h-6 w-6" />
                   </a>
@@ -113,11 +147,11 @@ export default function Home() {
           coding, you can catch me trying out new restaurants or watching the
           Golden State Warriors. Go Dubs!
         </p>
-        <h2
+        <h3
           className={`${vampiro_one.className} text-white animate-neon text-5xl font-bold text-center mb-0 mt-0 leading-1`}
         >
           PROJECTS
-        </h2>
+        </h3>
 
         {sortedProjects?.map((project: Project, key: number) => (
           <Projects project={project} odd={key % 2} key={project.name} />
