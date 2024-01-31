@@ -87,7 +87,7 @@ export default function Home() {
                 or watching the Golden State Warriors. Go Dubs!
               </p>
               <ul
-                className="flex items-center ml-1 mt-8 lg:mt-96"
+                className="flex items-center ml-1 mt-8 lg:mt-72"
                 aria-label="Social media"
               >
                 <li className="mr-5 text-xs shrink-0">
