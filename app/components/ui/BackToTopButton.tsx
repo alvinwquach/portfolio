@@ -32,7 +32,7 @@ function BackToTopButton() {
     <button
       onClick={handleClick}
       className={cn(
-        "fixed right-8 bg-blue-600 text-white py-3 px-3 rounded-md z-10 hover:scale-110 transition-transform duration-150 ease-in-out",
+        "fixed right-8 bg-zinc-600 text-white py-3 px-3 rounded-md z-10 hover:scale-110 transition-transform duration-150 ease-in-out",
         showButton ? "bottom-8" : "-bottom-16"
       )}
     >

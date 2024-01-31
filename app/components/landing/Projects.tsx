@@ -13,7 +13,7 @@ interface ProjectsProps {
 function Projects({ project, odd }: ProjectsProps) {
   return (
     <div
-      className={`mt-5 p-6 bg-white border border-gray-200 rounded-lg shadow flex flex-col transition xl:flex-row   ${
+      className={`mt-5 p-6 bg-zinc-900 border border-gray-200 rounded-lg shadow flex flex-col transition xl:flex-row   ${
         odd && "xl:flex-row-reverse "
       }`}
     >
@@ -37,7 +37,7 @@ function Projects({ project, odd }: ProjectsProps) {
       <div className="flex xl:w-7/12 flex-col ">
         <div className="relative mt-2 flex w-full flex-col justify-between p-3 xl:mt-0 flex-grow">
           <div className="font-serif">
-            <h3 className="text-gray-900  text-2xl font-extrabold mb-2">
+            <h3 className="  text-2xl mb-2  text-slate-50 font-semibold">
               {project.name}
             </h3>
             {project.url && (
@@ -63,7 +63,7 @@ function Projects({ project, odd }: ProjectsProps) {
                 </div>
               ))}
             </div>
-            <div className="text-lg font-normal text-gray-500 dark:text-gray-400 mb-4">
+            <div className="text-lg font-normal text-gray-400 mb-4">
               <PortableText value={project.descriptionRaw} />
             </div>
             {project.repository && (
@@ -72,7 +72,7 @@ function Projects({ project, odd }: ProjectsProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Open link to ${project.name} Github repository`}
-                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                className="text-white bg-zinc-600 hover:bg-zinc-700 focus:ring-4 focus:ring-zinc-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2  focus:outline-none dark:focus:ring-blue-800"
               >
                 View repository
                 <FaArrowRight className="inline-block ml-2" />
