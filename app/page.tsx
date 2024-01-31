@@ -42,7 +42,7 @@ export default function Home() {
         <div className="container mx-auto px-2 md:px-4 2xl:px-10">
           <div className="text-center sm:text-left">
             <h1 className="text-5xl font-bold tracking-tight">
-              <Link href="/">alvinquach.me</Link>
+              <a href="/">alvinquach.me</a>
             </h1>
           </div>
           <div className="flex justify-center sm:justify-between mx-0 mb-2 w-full flex-row items-center md:flex">
