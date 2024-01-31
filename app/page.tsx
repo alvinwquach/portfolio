@@ -109,9 +109,9 @@ export default function Home() {
           </div>
         </div>
         <p className="text-xl my-5 text-white">
-          I'm currently an engineer at Bring The Shreds. When I'm not coding,
-          you can catch me trying out new restaurants or watching the Golden
-          State Warriors. Go Dubs!
+          I&apos;m currently an engineer at Bring The Shreds. When I&apos;m not
+          coding, you can catch me trying out new restaurants or watching the
+          Golden State Warriors. Go Dubs!
         </p>
         <h2
           className={`${vampiro_one.className} text-white animate-neon text-5xl font-bold text-center mb-0 mt-0 leading-1`}
