@@ -2,6 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ApolloWrapper } from "./components/ApolloWrapper";
+import Footer from "./components/common/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,6 +21,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="bg-gradient-linear leading-relaxed antialiased selection:bg-indigo-500 selection:text-indigo-100">
         <ApolloWrapper>{children}</ApolloWrapper>
+        <Footer />
       </body>
     </html>
   );
