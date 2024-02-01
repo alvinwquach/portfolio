@@ -41,6 +41,8 @@ export default function Home() {
     return orderA - orderB;
   });
 
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+
   const fadeIn = useSpring({
     opacity: 1,
     from: { opacity: 0 },
@@ -74,7 +76,9 @@ export default function Home() {
               </h1>
               <animated.h2
                 style={fadeIn}
-                className={` ${bungee_outline.className} animate-neon mt-5 text-2xl text-white font-bold tracking-tight`}
+                className={` ${
+                  isMobile ? bungee_outline.className : bungee_spice.className
+                } animate-neon mt-5 text-2xl text-white font-bold tracking-tight`}
               >
                 {trail.map(({ x, opacity }, index) => (
                   <animated.span
@@ -171,7 +175,7 @@ export default function Home() {
           >
             <div>
               <h3
-                className={`${bungee_spice.className} mt-12 text-white animate-neon text-5xl font-bold text-center  leading-1`}
+                className={`${bungee_outline.className} mt-12 text-white animate-neon text-5xl font-bold text-center  leading-1`}
               >
                 PROJECTS
               </h3>
