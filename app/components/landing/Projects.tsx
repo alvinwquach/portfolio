@@ -1,9 +1,10 @@
 import Image from "next/image";
 import { PortableText } from "@portabletext/react";
+import { FaExternalLinkAlt } from "react-icons/fa";
 import { FiExternalLink } from "react-icons/fi";
-import { FaArrowRight } from "react-icons/fa";
+
 import { Project } from "@/types/Project";
-import { montserrat, press_start_2p } from "../../../utils/fonts";
+import { montserrat } from "../../../utils/fonts";
 
 interface ProjectCardProps {
   project: Project;
@@ -41,7 +42,7 @@ function ProjectCard({ project }: ProjectCardProps) {
                   className="inline-flex items-center font-medium text-lg text-teal-300 underline hover:no-underline"
                 >
                   {project.url}
-                  <FiExternalLink className="w-3 h-3 ms-2.5" />
+                  <FaExternalLinkAlt className="w-3 h-3 ms-2.5" />
                 </a>
               )}
 
@@ -67,10 +68,10 @@ function ProjectCard({ project }: ProjectCardProps) {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`Open link to ${project.name} Github repository`}
-                    className="inline-flex mr-1.5 mt-2 items-center rounded-lg bg-yellow-400/10 px-3 py-1 text-base font-medium leading-5 text-yellow-300  hover:bg-yellow-500/20"
+                    className="inline-flex mr-1.5 mt-2 items-center rounded-lg bg-sky-400/10 px-3 py-1 text-base font-medium leading-5 text-sky-300  hover:bg-sky-500/20"
                   >
                     View repository
-                    <FaArrowRight className="block ml-2" />
+                    <FiExternalLink className="block ml-2" />
                   </a>
                 </div>
               )}

@@ -1,13 +1,15 @@
 "use client";
 
 import { useQuery } from "@apollo/client";
+import { useState } from "react";
 import { animated, useTrail, useSpring } from "@react-spring/web";
 import {
-  FaLinkedin,
-  FaGithub,
-  FaEnvelope,
-  FaFileDownload,
-} from "react-icons/fa";
+  RxDownload,
+  RxEnvelopeClosed,
+  RxEnvelopeOpen,
+  RxGithubLogo,
+  RxLinkedinLogo,
+} from "react-icons/rx";
 import { Project } from "@/types/Project";
 import { GET_PROJECTS } from "@/graphql/queries";
 import {
@@ -31,6 +33,14 @@ interface ProjectsQueryResult {
 }
 
 export default function Home() {
+  const [isEnvelopeIconClosed, setIsEnvelopeIconClosed] = useState(false);
+
+  const handleMouseToggle = () => {
+    setIsEnvelopeIconClosed((prev) => !prev);
+  };
+
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+
   const { data: projectData } = useQuery<ProjectsQueryResult>(GET_PROJECTS);
 
   const projects = projectData?.allProjects;
@@ -40,8 +50,6 @@ export default function Home() {
     const orderB = projectOrder[b.name] || Infinity;
     return orderA - orderB;
   });
-
-  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
   const fadeIn = useSpring({
     opacity: 1,
@@ -59,7 +67,6 @@ export default function Home() {
     from: { opacity: 0, x: 20 },
     delay: 500,
   });
-
   return (
     <main>
       <section className="mx-auto min-h-screen max-w-screen-xl px-6 py-12 md:px-12 md:py-20 lg:px-24 lg:py-0 ">
@@ -122,7 +129,7 @@ export default function Home() {
                     className="text-white focus-ring-base flex flex-row items-center justify-center rounded-full p-2 transition-colors duration-150  hover:bg-slate-800/50"
                   >
                     <span className="sr-only">GitHub</span>
-                    <FaGithub className="block h-6 w-6" />
+                    <RxGithubLogo className="block h-6 w-6" />
                   </a>
                 </li>
                 <li className="mr-5 text-xs shrink-0">
@@ -135,7 +142,7 @@ export default function Home() {
                     className="text-white focus-ring-base flex flex-row items-center justify-center rounded-full p-2 transition-colors duration-150  hover:bg-slate-800/50"
                   >
                     <span className="sr-only">LinkedIn</span>
-                    <FaLinkedin className="block h-6 w-6" />
+                    <RxLinkedinLogo className="block h-6 w-6" />
                   </a>
                 </li>
                 <li className="mr-5 text-xs shrink-0">
@@ -145,10 +152,16 @@ export default function Home() {
                     rel="noopener noreferrer"
                     aria-label="Email (opens in a new tab)"
                     title="Email"
-                    className="text-white focus-ring-base flex flex-row items-center justify-center rounded-full p-2 transition-colors duration-150  hover:bg-slate-800/50"
+                    className="text-white focus-ring-base flex flex-row items-center justify-center rounded-full p-2 transition-colors duration-150 hover:bg-slate-800/50"
+                    onMouseEnter={handleMouseToggle}
+                    onMouseLeave={handleMouseToggle}
                   >
                     <span className="sr-only">Email</span>
-                    <FaEnvelope className="block h-6 w-6" />
+                    {isEnvelopeIconClosed ? (
+                      <RxEnvelopeOpen className="block h-6 w-6" />
+                    ) : (
+                      <RxEnvelopeClosed className="block h-6 w-6" />
+                    )}
                   </a>
                 </li>
                 <li className="mr-5 text-xs shrink-0">
@@ -161,7 +174,7 @@ export default function Home() {
                     download
                     className="text-white focus-ring-base flex flex-row items-center justify-center rounded-full p-2 transition-colors duration-150  hover:bg-slate-800/50"
                   >
-                    <FaFileDownload className="block h-6 w-6" />
+                    <RxDownload className="block h-6 w-6" />
                   </a>
                 </li>
               </ul>
