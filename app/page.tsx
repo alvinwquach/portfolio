@@ -119,7 +119,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                     aria-label="GitHub (opens in a new tab)"
                     title="GitHub"
-                    className="text-white focus-ring-base flex flex-row items-center justify-center rounded-full p-2 transition-colors duration-150 focus-ring-colors-light-header hover:bg-black/10"
+                    className="text-white focus-ring-base flex flex-row items-center justify-center rounded-full p-2 transition-colors duration-150  hover:bg-slate-800/50"
                   >
                     <span className="sr-only">GitHub</span>
                     <FaGithub className="block h-6 w-6" />
@@ -132,7 +132,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                     aria-label="LinkedIn (opens in a new tab)"
                     title="LinkedIn"
-                    className="text-white focus-ring-base flex flex-row items-center justify-center rounded-full p-2 transition-colors duration-150 focus-ring-colors-light-header hover:bg-black/10"
+                    className="text-white focus-ring-base flex flex-row items-center justify-center rounded-full p-2 transition-colors duration-150  hover:bg-slate-800/50"
                   >
                     <span className="sr-only">LinkedIn</span>
                     <FaLinkedin className="block h-6 w-6" />
@@ -145,7 +145,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                     aria-label="Email (opens in a new tab)"
                     title="Email"
-                    className="text-white focus-ring-base flex flex-row items-center justify-center rounded-full p-2 transition-colors duration-150 focus-ring-colors-light-header hover:bg-black/10"
+                    className="text-white focus-ring-base flex flex-row items-center justify-center rounded-full p-2 transition-colors duration-150  hover:bg-slate-800/50"
                   >
                     <span className="sr-only">Email</span>
                     <FaEnvelope className="block h-6 w-6" />
@@ -159,7 +159,7 @@ export default function Home() {
                     aria-label="Resume (Opens in a new tab)"
                     title="Download Resume"
                     download
-                    className="text-white focus-ring-base flex flex-row items-center justify-center rounded-full p-2 transition-colors duration-150 focus-ring-colors-light-header hover:bg-black/10"
+                    className="text-white focus-ring-base flex flex-row items-center justify-center rounded-full p-2 transition-colors duration-150  hover:bg-slate-800/50"
                   >
                     <FaFileDownload className="block h-6 w-6" />
                   </a>
@@ -175,7 +175,7 @@ export default function Home() {
           >
             <div>
               <h3
-                className={`${bungee_outline.className} mt-12 text-white animate-neon text-5xl font-bold text-center  leading-1`}
+                className={`${bungee_outline.className} mt-12 text-white animate-neon text-5xl font-bold text-center leading-1`}
               >
                 PROJECTS
               </h3>
