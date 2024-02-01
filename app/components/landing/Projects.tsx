@@ -28,7 +28,7 @@ function ProjectCard({ project }: ProjectCardProps) {
 
             <div className="sm:col-span-8 mt-4 sm:mt-0">
               <h3
-                className={`${press_start_2p.className} text-3xl font-bold tracking-tight text-slate-200 sm:text-4xl"`}
+                className={`${montserrat.className} text-3xl font-bold tracking-tight text-slate-200 sm:text-4xl"`}
               >
                 {project.name}
               </h3>

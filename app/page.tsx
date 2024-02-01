@@ -10,7 +10,12 @@ import {
 } from "react-icons/fa";
 import { Project } from "@/types/Project";
 import { GET_PROJECTS } from "@/graphql/queries";
-import { bungee_outline, bungee_spice, montserrat } from "../utils/fonts";
+import {
+  bungee_outline,
+  bungee_spice,
+  montserrat,
+  press_start_2p,
+} from "../utils/fonts";
 import Projects from "./components/landing/Projects";
 import BackToTopButton from "./components/ui/BackToTopButton";
 
@@ -63,7 +68,7 @@ export default function Home() {
                 Hi, my name is
               </p>
               <h1
-                className={`${bungee_outline.className} text-4xl font-bold tracking-tight text-slate-200 sm:text-5xl"`}
+                className={`${press_start_2p.className} text-4xl font-bold tracking-tight text-slate-200 sm:text-5xl"`}
               >
                 <a href="/">Alvin.</a>
               </h1>
