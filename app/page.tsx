@@ -96,15 +96,13 @@ export default function Home() {
                 team, I design interfaces, optimize performance, and ensure
                 accessibility. At Bring The Shreds, we&apos;re committed to
                 delivering an engaging platform that makes a difference in
-                users' lives.
+                users&rsquo; lives.
               </p>
               <p
                 className={`${montserrat.className} mt-4 max-w-xs leading-normal text-white `}
               >
-                When I&apos;m not coding, you'll often find me exploring new
-                eateries or watching the Golden State Warriors. Go Dubs! Feel
-                free to send me an e-mail if you want to chat about engineering
-                related or if you want to exchange food recommendations!
+                When I&apos;m not coding, you&apos;ll often find me exploring
+                new eateries or watching the Golden State Warriors. Go Dubs!
               </p>
               <ul
                 className="flex items-center ml-1 mt-8"
