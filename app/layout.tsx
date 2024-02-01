@@ -21,7 +21,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="bg-gradient-linear leading-relaxed antialiased selection:bg-indigo-500 selection:text-indigo-100">
         <ApolloWrapper>
-          <Suspense>{children}</Suspense>
+          <Suspense fallback={<p>Loading projects...</p>}>{children}</Suspense>
         </ApolloWrapper>
       </body>
     </html>
