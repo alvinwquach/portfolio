@@ -1,8 +1,9 @@
 "use client";
+export const dynamic = "force-dynamic";
 
-import { useQuery } from "@apollo/client";
+import { useSuspenseQuery } from "@apollo/client";
 import { Project } from "@/types/Project";
-import { projectsQuery } from "@/graphql/queries";
+import { GET_PROJECTS } from "@/graphql/queries";
 import {
   FaLinkedin,
   FaGithub,
@@ -25,8 +26,9 @@ interface ProjectsQueryResult {
   allProjects: Project[];
 }
 
-export default function Home() {
-  const { data: projectData } = useQuery<ProjectsQueryResult>(projectsQuery);
+export default async function Home() {
+  const { data: projectData } =
+    useSuspenseQuery<ProjectsQueryResult>(GET_PROJECTS);
 
   const projects = projectData?.allProjects;
 
@@ -87,7 +89,7 @@ export default function Home() {
                 or watching the Golden State Warriors. Go Dubs!
               </p>
               <ul
-                className="flex items-center ml-1 mt-8 lg:mt-72"
+                className="flex items-center ml-1 mt-8"
                 aria-label="Social media"
               >
                 <li className="mr-5 text-xs shrink-0">
