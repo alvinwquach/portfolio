@@ -10,7 +10,7 @@ import {
 } from "react-icons/fa";
 import { Project } from "@/types/Project";
 import { GET_PROJECTS } from "@/graphql/queries";
-import { rubik_bubbles, vampiro_one } from "../utils/fonts";
+import { bungee_outline, bungee_spice, montserrat } from "../utils/fonts";
 import Projects from "./components/landing/Projects";
 import BackToTopButton from "./components/ui/BackToTopButton";
 
@@ -40,17 +40,17 @@ export default function Home() {
     opacity: 1,
     from: { opacity: 0 },
     config: { mass: 5, tension: 2000, friction: 200 },
-    delay: 1000,
+    delay: 500,
   });
 
-  const text = "Full Stack Engineer";
+  const text = "Software Engineer";
   const config = { mass: 5, tension: 2000, friction: 200 };
   const trail = useTrail(text.length, {
     config,
     opacity: 1,
     x: 0,
     from: { opacity: 0, x: 20 },
-    delay: 1000,
+    delay: 500,
   });
 
   return (
@@ -59,14 +59,17 @@ export default function Home() {
         <div className="lg:flex lg:justify-between lg:gap-4">
           <header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:py-24">
             <div>
+              <p className={`${montserrat.className} text-slate-200 text-2xl`}>
+                Hi, my name is
+              </p>
               <h1
-                className={`${rubik_bubbles.className} text-4xl font-bold tracking-tight text-slate-200 sm:text-5xl"`}
+                className={`${bungee_outline.className} text-4xl font-bold tracking-tight text-slate-200 sm:text-5xl"`}
               >
-                <a href="/">Alvin Quach</a>
+                <a href="/">Alvin.</a>
               </h1>
               <animated.h2
                 style={fadeIn}
-                className={` ${rubik_bubbles.className} mt-5 text-2xl text-white font-bold tracking-tight`}
+                className={` ${bungee_outline.className} animate-neon mt-5 text-2xl text-white font-bold tracking-tight`}
               >
                 {trail.map(({ x, opacity }, index) => (
                   <animated.span
@@ -80,8 +83,9 @@ export default function Home() {
                   </animated.span>
                 ))}
               </animated.h2>
-
-              <p className="mt-4 max-w-xs leading-normal text-white">
+              <p
+                className={`${montserrat.className} mt-4 max-w-xs leading-normal text-white `}
+              >
                 I&apos;m currently an engineer at Bring The Shreds. When
                 I&apos;m not coding, you can catch me trying out new restaurants
                 or watching the Golden State Warriors. Go Dubs!
@@ -153,7 +157,7 @@ export default function Home() {
           >
             <div>
               <h3
-                className={`${vampiro_one.className} mt-12 text-white animate-neon text-5xl font-bold text-center  leading-1`}
+                className={`${bungee_spice.className} mt-12 text-white animate-neon text-5xl font-bold text-center  leading-1`}
               >
                 PROJECTS
               </h3>

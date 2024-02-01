@@ -3,7 +3,7 @@ import { PortableText } from "@portabletext/react";
 import { FiExternalLink } from "react-icons/fi";
 import { FaArrowRight } from "react-icons/fa";
 import { Project } from "@/types/Project";
-import { rubik_bubbles } from "../../../utils/fonts";
+import { montserrat, press_start_2p } from "../../../utils/fonts";
 
 interface ProjectCardProps {
   project: Project;
@@ -28,7 +28,7 @@ function ProjectCard({ project }: ProjectCardProps) {
 
             <div className="sm:col-span-8 mt-4 sm:mt-0">
               <h3
-                className={`${rubik_bubbles.className} text-3xl font-bold tracking-tight text-slate-200 sm:text-4xl"`}
+                className={`${press_start_2p.className} text-3xl font-bold tracking-tight text-slate-200 sm:text-4xl"`}
               >
                 {project.name}
               </h3>
@@ -38,21 +38,23 @@ function ProjectCard({ project }: ProjectCardProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`Open link to ${project.name} website`}
-                  className="inline-flex items-center font-medium text-lg text-teal-300 hover:text-teal-400 hover:under"
+                  className="inline-flex items-center font-medium text-lg text-teal-300 underline hover:no-underline"
                 >
                   {project.url}
                   <FiExternalLink className="w-3 h-3 ms-2.5" />
                 </a>
               )}
 
-              <p className="mt-2 text-base leading-normal">
+              <p
+                className={`${montserrat.className} mt-2 text-base leading-normal`}
+              >
                 <PortableText value={project.descriptionRaw} />
               </p>
               <ul className="mt-2 flex flex-wrap">
                 {project.tags?.map((tag, index) => (
                   <li
                     key={index}
-                    className="mr-1.5 mt-2 flex items-center bg-teal-400/10 px-2.5 py-0.5 text-sm font-medium leading-5 text-teal-300"
+                    className={`${montserrat.className} mr-1.5 mt-2 flex items-center bg-teal-400/10 px-2.5 py-0.5 text-sm font-medium leading-5 text-teal-300`}
                   >
                     {tag}
                   </li>

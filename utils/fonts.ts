@@ -1,13 +1,32 @@
-import { Rubik_Bubbles, Vampiro_One } from "next/font/google";
+import {
+  Bungee_Shade,
+  Bungee_Spice,
+  Montserrat,
+  Press_Start_2P,
+} from "next/font/google";
 
-export const rubik_bubbles = Rubik_Bubbles({
+export const bungee_outline = Bungee_Shade({
   weight: ["400"],
   style: ["normal"],
   subsets: ["latin"],
   display: "swap",
 });
 
-export const vampiro_one = Vampiro_One({
+export const bungee_spice = Bungee_Spice({
+  weight: ["400"],
+  style: ["normal"],
+  subsets: ["latin"],
+  display: "swap",
+});
+
+export const montserrat = Montserrat({
+  weight: ["400"],
+  style: ["normal"],
+  subsets: ["latin"],
+  display: "swap",
+});
+
+export const press_start_2p = Press_Start_2P({
   weight: ["400"],
   style: ["normal"],
   subsets: ["latin"],
