@@ -1,18 +1,18 @@
 "use client";
 
 import { useQuery } from "@apollo/client";
-import { Project } from "@/types/Project";
-import { GET_PROJECTS } from "@/graphql/queries";
+import { animated, useTrail, useSpring } from "@react-spring/web";
 import {
   FaLinkedin,
   FaGithub,
   FaEnvelope,
   FaFileDownload,
 } from "react-icons/fa";
+import { Project } from "@/types/Project";
+import { GET_PROJECTS } from "@/graphql/queries";
+import { rubik_bubbles, vampiro_one } from "../utils/fonts";
 import Projects from "./components/landing/Projects";
 import BackToTopButton from "./components/ui/BackToTopButton";
-import { rubik_bubbles, rubik_glitch, vampiro_one } from "../fonts";
-import { animated, useTrail, useSpring } from "@react-spring/web";
 
 const projectOrder: { [key: string]: number } = {
   "Bring The Shreds": 1,
@@ -66,7 +66,7 @@ export default function Home() {
               </h1>
               <animated.h2
                 style={fadeIn}
-                className={` ${rubik_glitch.className} mt-5 text-2xl text-white font-bold tracking-tight`}
+                className={` ${rubik_bubbles.className} mt-5 text-2xl text-white font-bold tracking-tight`}
               >
                 {trail.map(({ x, opacity }, index) => (
                   <animated.span
@@ -157,9 +157,11 @@ export default function Home() {
               >
                 PROJECTS
               </h3>
-              {sortedProjects?.map((project: Project, key: number) => (
-                <Projects project={project} odd={key % 2} key={project.name} />
-              ))}
+              <div>
+                {sortedProjects?.map((project: Project) => (
+                  <Projects key={project.name} project={project} />
+                ))}
+              </div>
             </div>
           </section>
         </div>
