@@ -25,7 +25,7 @@ interface ProjectsQueryResult {
   allProjects: Project[];
 }
 
-export default async function Home() {
+export default function Home() {
   const { data: projectData } = useQuery<ProjectsQueryResult>(GET_PROJECTS);
 
   const projects = projectData?.allProjects;

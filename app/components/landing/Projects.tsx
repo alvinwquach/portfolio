@@ -13,12 +13,12 @@ interface ProjectsProps {
 function Projects({ project, odd }: ProjectsProps) {
   return (
     <div
-      className={`mt-5 p-6 bg-zinc-900 border border-gray-200 rounded-lg shadow flex flex-col transition xl:flex-row   ${
-        odd && "xl:flex-row-reverse "
+      className={`hover:bg-zinc-800 bg-black rounded-md border border-zinc-700 shadow-sm shadow-zinc-800 p-4 flex flex-col transition xl:flex-row ${
+        odd && "xl:flex-row-reverse"
       }`}
     >
-      <div className="w-full xl:w-5/12 ">
-        <div className="relative aspect-[16/9]">
+      <div className="w-full xl:w-5/12">
+        <div className="relative h-40">
           <Image
             src={project.wideScreenView.asset.url}
             alt={`Cover image for ${project.name}`}
@@ -34,51 +34,49 @@ function Projects({ project, odd }: ProjectsProps) {
           />
         </div>
       </div>
-      <div className="flex flex-col xl:w-7/12">
-        <div className="relative mt-2 flex w-full flex-col justify-between p-3 xl:mt-0 flex-grow">
-          <div className="font-serif">
-            <h3 className="  text-2xl mb-2  text-slate-50 font-semibold">
-              {project.name}
-            </h3>
-            {project.url && (
-              <a
-                href={project.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`Open link to ${project.name} website`}
-                className="inline-flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline"
-              >
-                {project.url}
-                <FiExternalLink className="w-3 h-3 ms-2.5" />
-              </a>
-            )}
+      <div className="flex flex-col xl:w-7/12 py-4 px-4">
+        <div className="">
+          <h3 className="text-2xl mb-2 text-slate-50 font-semibold">
+            {project.name}
+          </h3>
+          {project.url && (
+            <a
+              href={project.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Open link to ${project.name} website`}
+              className="inline-flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline"
+            >
+              {project.url}
+              <FiExternalLink className="w-3 h-3 ms-2.5" />
+            </a>
+          )}
 
-            <div className="text-lg font-normal text-gray-400 mb-2">
-              <PortableText value={project.descriptionRaw} />
-            </div>
-            <div className="flex flex-wrap gap-x-2 mb-2">
-              {project.tags?.map((tag, index) => (
-                <div
-                  key={index}
-                  className="bg-blue-100 text-blue-800 text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded-md mb-2"
-                >
-                  {tag}
-                </div>
-              ))}
-            </div>
-            {project.repository && (
-              <a
-                href={project.repository}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`Open link to ${project.name} Github repository`}
-                className="mt-2 text-white bg-zinc-600 hover:bg-zinc-700 focus:ring-4 focus:ring-zinc-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2  focus:outline-none dark:focus:ring-blue-800"
-              >
-                View repository
-                <FaArrowRight className="inline-block ml-2" />
-              </a>
-            )}
+          <div className="text-lg text-gray-400 mb-2">
+            <PortableText value={project.descriptionRaw} />
           </div>
+          <div className="flex flex-wrap gap-x-2 mb-2">
+            {project.tags?.map((tag, index) => (
+              <div
+                key={index}
+                className="bg-blue-100 text-blue-800 text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded-md mb-2"
+              >
+                {tag}
+              </div>
+            ))}
+          </div>
+          {project.repository && (
+            <a
+              href={project.repository}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Open link to ${project.name} Github repository`}
+              className="mt-2 text-white bg-zinc-600 hover:bg-zinc-700 focus:ring-4 focus:ring-zinc-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none dark:focus:ring-blue-800"
+            >
+              View repository
+              <FaArrowRight className="inline-block ml-2" />
+            </a>
+          )}
         </div>
       </div>
     </div>
