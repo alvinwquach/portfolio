@@ -2,7 +2,6 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ApolloWrapper } from "./components/ApolloWrapper";
-import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,9 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-gradient-linear leading-relaxed antialiased selection:bg-indigo-500 selection:text-indigo-100">
-        <ApolloWrapper>
-          <Suspense fallback={<p>Loading projects...</p>}>{children}</Suspense>
-        </ApolloWrapper>
+        <ApolloWrapper>{children}</ApolloWrapper>
       </body>
     </html>
   );

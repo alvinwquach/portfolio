@@ -1,7 +1,6 @@
 "use client";
-export const dynamic = "force-dynamic";
 
-import { useSuspenseQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { Project } from "@/types/Project";
 import { GET_PROJECTS } from "@/graphql/queries";
 import {
@@ -27,8 +26,7 @@ interface ProjectsQueryResult {
 }
 
 export default async function Home() {
-  const { data: projectData } =
-    useSuspenseQuery<ProjectsQueryResult>(GET_PROJECTS);
+  const { data: projectData } = useQuery<ProjectsQueryResult>(GET_PROJECTS);
 
   const projects = projectData?.allProjects;
 
