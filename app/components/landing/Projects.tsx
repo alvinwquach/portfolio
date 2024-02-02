@@ -4,7 +4,7 @@ import { FaExternalLinkAlt } from "react-icons/fa";
 import { FiExternalLink } from "react-icons/fi";
 
 import { Project } from "@/types/Project";
-import { montserrat } from "../../../utils/fonts";
+import { bungee_outline, bungee_spice, montserrat } from "../../../utils/fonts";
 
 interface ProjectCardProps {
   project: Project;
@@ -29,7 +29,7 @@ function ProjectCard({ project }: ProjectCardProps) {
 
             <div className="sm:col-span-8 mt-4 sm:mt-0">
               <h3
-                className={`${montserrat.className} text-3xl font-bold tracking-tight text-slate-200 sm:text-4xl"`}
+                className={`${bungee_spice.className} text-3xl font-bold tracking-tight text-slate-200 sm:text-4xl"`}
               >
                 {project.name}
               </h3>
