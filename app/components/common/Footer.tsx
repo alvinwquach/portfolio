@@ -8,11 +8,11 @@ function Footer() {
       <p className="text-lg">
         Design inspired by{" "}
         <a
-          href="https://newretrowave.com/"
+          href="https://www.youtube.com/@NewRetroWave"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-block text-orange-300 hover:text-orange-400 underline hover:no-underline"
-          aria-label="Visit New Retro Wave website (opens in a new tab)"
+          aria-label="Visit New Retro Wave's Youtube Channel (opens in a new tab)"
         >
           New Retro Wave
         </a>
