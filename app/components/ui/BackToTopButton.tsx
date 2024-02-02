@@ -32,8 +32,8 @@ function BackToTopButton() {
     <button
       onClick={handleClick}
       className={cn(
-        "fixed right-8 bg-zinc-600 text-white py-3 px-3 rounded-md z-10 hover:scale-110 transition-transform duration-150 ease-in-out",
-        showButton ? "bottom-8" : "-bottom-16"
+        "fixed right-8 bg-teal-600 text-white py-3 px-3 rounded-md z-10 hover:scale-110 transition-transform duration-150 ease-in-out",
+        showButton ? "bottom-24" : "-bottom-28"
       )}
     >
       <HiChevronDoubleUp className="w-4 h-4" />
