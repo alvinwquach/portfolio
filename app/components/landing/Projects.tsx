@@ -12,7 +12,7 @@ interface ProjectCardProps {
 
 function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <div className="mt-5 p-6 bg-slate-800/50 hover:bg-slate-800/90">
+    <div className="mt-5 p-6 bg-slate-800/50 hover:bg-slate-800/90 rounded-lg">
       <ul>
         <li className="mb-12 text-white">
           <div className="relative grid gap-4 pb-1 sm:grid-cols-8 sm:gap-8 md:gap-4">
