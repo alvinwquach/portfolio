@@ -22,8 +22,9 @@ import Projects from "./components/landing/Projects";
 import BackToTopButton from "./components/ui/BackToTopButton";
 
 const projectOrder: { [key: string]: number } = {
-  "Bring The Shreds": 1,
-  "Hands on Physiotherapy and Rehab Centre": 2,
+  "Hone Your Craft": 1,
+  "Bring The Shreds": 2,
+  "Hands on Physiotherapy and Rehab Centre": 3,
 };
 
 interface ProjectsQueryResult {

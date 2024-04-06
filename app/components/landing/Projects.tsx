@@ -17,14 +17,14 @@ function ProjectCard({ project }: ProjectCardProps) {
         <li className="mb-12 text-white">
           <div className="relative grid gap-4 pb-1 sm:grid-cols-8 sm:gap-8 md:gap-4">
             <div className="sm:col-span-8">
-              <Image
+              {/* <Image
                 src={project.wideScreenView?.asset?.url}
                 alt={`Desktop image for ${project.name}`}
                 loading="lazy"
                 width={200}
                 height={48}
                 className="w-full rounded sm:translate-y-1"
-              />
+              /> */}
             </div>
 
             <div className="sm:col-span-8 mt-4 sm:mt-0">
