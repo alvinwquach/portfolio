@@ -165,7 +165,7 @@ export default function Home() {
                 </li>
                 <li className="mr-5 text-xs shrink-0">
                   <a
-                    href="/resume/alvin-quach-resume-fullstack.pdf"
+                    href="/resume/alvin-quach-resume.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Resume (Opens in a new tab)"
