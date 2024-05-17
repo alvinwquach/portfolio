@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@apollo/client";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { animated, useTrail, useSpring } from "@react-spring/web";
 import {
   RxDownload,
@@ -30,6 +30,48 @@ const projectOrder: { [key: string]: number } = {
 interface ProjectsQueryResult {
   allProjects: Project[];
 }
+
+const DownloadButton = () => {
+  const linkRef = useRef<HTMLAnchorElement>(null);
+
+  const handleDownload = async () => {
+    try {
+      // Fetch the file from the server
+      const response = await fetch("/api/download");
+      // Convert the fetched data into a Blob object
+      const blob = await response.blob();
+      // Create a URL representing the Blob object
+      const url = window.URL.createObjectURL(blob);
+      // Get the reference to the anchor element
+      const link = linkRef.current;
+
+      if (!link) {
+        return;
+      }
+      // Set the href attribute of the anchor element to the Blob URL
+      link.href = url;
+      // Specify the filename for the downloaded file
+      link.download = "alvin-quach-resume.pdf";
+      // Programmatically click the anchor element to start the download
+      link.click();
+      // Revoke the Blob URL to free up memory
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Failed to download file:", error);
+    }
+  };
+
+  return (
+    <>
+      <button
+        onClick={handleDownload}
+        className="text-white focus-ring-base flex flex-row items-center justify-center rounded-full p-2 transition-colors duration-150 hover:bg-slate-800/50"
+      >
+        <RxDownload size={24} />
+      </button>
+    </>
+  );
+};
 
 export default function Home() {
   const [isEnvelopeIconClosed, setIsEnvelopeIconClosed] = useState(false);
@@ -104,9 +146,7 @@ export default function Home() {
                 I&apos;m currently an engineer at Bring The Shreds. My focus is
                 on crafting a seamless user experience. Collaborating with our
                 team, I design interfaces, optimize performance, and ensure
-                accessibility. At Bring The Shreds, we&apos;re committed to
-                delivering an engaging platform that makes a difference in
-                users&rsquo; lives.
+                accessibility.
               </p>
               <p
                 className={`${montserrat.className} mt-4 max-w-xs leading-normal text-white `}
@@ -164,17 +204,7 @@ export default function Home() {
                   </a>
                 </li>
                 <li className="mr-5 text-xs shrink-0">
-                  <a
-                    href="/resume/alvin-quach-resume.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Resume (Opens in a new tab)"
-                    title="Download Resume"
-                    download
-                    className="text-white focus-ring-base flex flex-row items-center justify-center rounded-full p-2 transition-colors duration-150  hover:bg-slate-800/50"
-                  >
-                    <RxDownload className="block h-6 w-6" />
-                  </a>
+                  <DownloadButton />
                 </li>
               </ul>
             </div>
