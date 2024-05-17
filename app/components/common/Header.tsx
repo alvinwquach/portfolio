@@ -6,19 +6,12 @@ import {
   montserrat,
   press_start_2p,
 } from "../../../utils/fonts";
-import SocialMediaLinks from "./SocialMediaLinks";
 
 interface HeaderProps {
-  isEnvelopeIconClosed: boolean;
-  handleMouseToggle: () => void;
   isMobile: boolean;
 }
 
-function Header({
-  isEnvelopeIconClosed,
-  handleMouseToggle,
-  isMobile,
-}: HeaderProps) {
+function Header({ isMobile }: HeaderProps) {
   const fadeIn = useSpring({
     opacity: 1,
     from: { opacity: 0 },
@@ -80,10 +73,6 @@ function Header({
           When I&apos;m not coding, you&apos;ll often find me exploring new
           eateries or watching the Golden State Warriors. Go Dubs!
         </p>
-        <SocialMediaLinks
-          handleMouseToggle={handleMouseToggle}
-          isEnvelopeIconClosed={isEnvelopeIconClosed}
-        />
       </div>
     </header>
   );
