@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
       rules: {},
     },
   },
+  webpack: (config) => {
+    return config;
+  },
 };
 
 export default nextConfig;
