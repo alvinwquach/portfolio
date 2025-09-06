@@ -7,9 +7,7 @@ const nextConfig: NextConfig = {
       rules: {},
     },
   },
-  webpack: (config) => {
-    return config;
-  },
+  transpilePackages: ["@sanity/client", "@sanity/visual-editing"],
 };
 
 export default nextConfig;
