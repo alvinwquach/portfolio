@@ -57,5 +57,12 @@ export const blogType = defineType({
       type: "datetime",
       description: "Set the publish date and time for scheduling or sorting.",
     }),
+    defineField({
+      name: "featured",
+      title: "Featured",
+      type: "boolean",
+      description: "Mark as featured blog to display prominently.",
+      initialValue: false,
+    }),
   ],
 });
