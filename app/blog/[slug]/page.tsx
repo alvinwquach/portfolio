@@ -69,9 +69,12 @@ export async function generateStaticParams() {
       query: GET_BLOGS,
     });
 
-    return result?.data?.allBlog.map((blog) => ({
-      slug: blog.slug.current,
-    }));
+    // Ensure we return an array even if result.data.allBlog is undefined
+    return (
+      result?.data?.allBlog?.map((blog) => ({
+        slug: blog.slug.current,
+      })) || []
+    );
   } catch (error) {
     console.error("Error fetching slugs for generateStaticParams:", error);
     return [];
