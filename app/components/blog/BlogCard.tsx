@@ -1,3 +1,4 @@
+import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Blog } from "../../types/types";
@@ -10,9 +11,8 @@ interface BlogCardProps {
 
 export default function BlogCard({ blog, isFeatured = false }: BlogCardProps) {
   return (
-    <Link
-      href={`/blogs/${blog._id}`}
-      className="relative block p-6 bg-slate-800 rounded-lg hover:bg-slate-700 transition-colors overflow-hidden"
+    <div
+      className="relative block p-6 bg-slate-800 rounded-lg transition-colors overflow-hidden"
       style={{ minHeight: "320px" }}
     >
       {isFeatured && (
@@ -56,6 +56,12 @@ export default function BlogCard({ blog, isFeatured = false }: BlogCardProps) {
           ))}
         </div>
       )}
-    </Link>
+      <Link
+        href={`/blog/${blog.slug.current}`}
+        className="mt-4 inline-flex items-center font-semibold text-green-400 hover:underline"
+      >
+        Read More <ArrowRight className="ml-2 w-5 h-5" />
+      </Link>
+    </div>
   );
 }
