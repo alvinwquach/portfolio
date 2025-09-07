@@ -15,8 +15,14 @@ export interface Blog {
 export interface Project {
   _id: string;
   title: string;
-  slug: { current: string };
-  mainImage?: { asset: { url: string } };
+  slug: {
+    current: string;
+  };
+  mainImage?: {
+    asset: {
+      url: string;
+    };
+  };
   description?: string;
   github?: string;
   live?: string;
