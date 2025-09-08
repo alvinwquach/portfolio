@@ -59,9 +59,9 @@ const portableTextComponents: PortableTextComponents = {
   },
 };
 
-// ✅ Static params for dynamic routing
 export async function generateStaticParams() {
   const client = getClient();
+
   try {
     const result = await client.query<{
       allBlog: { slug: { current: string } }[];
@@ -69,7 +69,6 @@ export async function generateStaticParams() {
       query: GET_BLOGS,
     });
 
-    // Ensure we return an array even if result.data.allBlog is undefined
     return (
       result?.data?.allBlog?.map((blog) => ({
         slug: blog.slug.current,
@@ -82,11 +81,10 @@ export async function generateStaticParams() {
 }
 
 export default async function BlogPage({ params }: BlogPageProps) {
-  const resolvedParams = await params;
-  const rawSlug = resolvedParams?.slug;
+  const { slug: rawSlug } = params;
 
   if (!rawSlug || typeof rawSlug !== "string") {
-    console.error("Invalid or missing slug in params:", resolvedParams);
+    console.error("Invalid or missing slug in params:", params);
     notFound();
   }
 
@@ -99,7 +97,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
       variables: { slug },
     });
 
-    const blog = result?.data?.allBlog[0];
+    const blog = result?.data?.allBlog?.[0];
 
     if (!blog) {
       console.error(`No blog found for slug: ${slug}`);
