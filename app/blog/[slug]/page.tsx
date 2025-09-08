@@ -8,7 +8,7 @@ import { notFound } from "next/navigation";
 import { ChevronLeft } from "lucide-react";
 
 interface BlogPageProps {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }
 
 // ✅ PortableText component styling
