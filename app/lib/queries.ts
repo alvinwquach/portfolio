@@ -1,92 +1,102 @@
-import { gql } from "@apollo/client";
-
-export const GET_BLOGS = gql`
-  query GetBlogs {
-    allBlog {
-      _id
-      title
-      slug {
-        current
+export const GET_BLOGS = `
+  *[_type == "blog"] {
+    _id,
+    title,
+    slug {
+      current
+    },
+    mainImage {
+      asset -> {
+        url
       }
-      mainImage {
-        asset {
-          url
-        }
-      }
-      excerpt
-      contentRaw
-      publishedAt
-      tags
-      featured
-    }
+    },
+    excerpt,
+    content,
+    publishedAt,
+    tags,
+    featured
   }
 `;
 
-export const GET_FEATURED_BLOG = gql`
-  query GetFeaturedBlog {
-    allBlog(
-      where: { featured: { eq: true } }
-      sort: [{ publishedAt: DESC }]
-      limit: 1
-    ) {
-      _id
-      title
-      slug {
-        current
+export const GET_FEATURED_BLOG = `
+  *[_type == "blog" && featured == true] | order(publishedAt desc) [0] {
+    _id,
+    title,
+    slug {
+      current
+    },
+    mainImage {
+      asset -> {
+        url
       }
-      mainImage {
-        asset {
-          url
-        }
-      }
-      excerpt
-      contentRaw
-      publishedAt
-      tags
-      featured
-    }
+    },
+    excerpt,
+    content,
+    publishedAt,
+    tags,
+    featured
   }
 `;
 
-export const GET_BLOG_BY_SLUG = gql`
-  query GetBlogBySlug($slug: String!) {
-    allBlog(where: { slug: { current: { eq: $slug } } }) {
-      _id
-      title
-      slug {
-        current
+export const GET_BLOG_BY_SLUG = (slug: string) => `
+  *[_type == "blog" && slug.current == "${slug}"][0] {
+    _id,
+    title,
+    slug {
+      current
+    },
+    mainImage {
+      asset -> {
+        url
       }
-      mainImage {
-        asset {
-          url
-        }
-      }
-      contentRaw
-      excerpt
-      publishedAt
-      tags
-      featured
-    }
+    },
+    content[],
+    excerpt,
+    publishedAt,
+    tags,
+    featured
   }
 `;
 
-export const GET_PROJECTS = gql`
-  query GetProjects {
-    allProject {
-      _id
-      title
-      slug {
-        current
+export const GET_PROJECTS = `
+  *[_type == "project"] {
+    _id,
+    title,
+    slug {
+      current
+    },
+    mainImage {
+      asset -> {
+        url
       }
-      mainImage {
-        asset {
+    },
+    description,
+    github,
+    live,
+    technologies
+  }
+`;
+
+export const GET_PROFILE = `
+  *[_type == "profile"][0] {
+    _id,
+    name,
+    email,
+    linkedin,
+    github,
+    bio[],
+    profileImage {
+      asset -> {
+        url
+      }
+    },
+    skills[] {
+      name,
+      image {
+        asset -> {
           url
         }
       }
-      description
-      github
-      live
-      technologies
     }
   }
 `;
