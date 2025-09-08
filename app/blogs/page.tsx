@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import Link from "next/link";
 import { fetchSanity } from "@/sanity/lib/fetchSanity";
 import { GET_BLOGS, GET_FEATURED_BLOG } from "@/app/lib/queries";
 import { Blog } from "@/app/types/types";
@@ -47,6 +46,8 @@ export default async function BlogsPage() {
     fetchSanity<Blog[]>(GET_BLOGS),
   ]);
 
+  const blogsArray = Array.isArray(blogs) ? blogs : [];
+
   return (
     <div className="bg-[#0f172a] min-h-screen text-slate-200 font-sans overflow-x-hidden">
       <main className="max-w-7xl mx-auto px-6 py-16 space-y-16">
@@ -58,7 +59,7 @@ export default async function BlogsPage() {
             <FeaturedBlogCard blog={featuredBlog} />
           </section>
         )}
-        <BlogList blogs={blogs} />
+        <BlogList blogs={blogsArray} />
       </main>
     </div>
   );
