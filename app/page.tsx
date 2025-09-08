@@ -20,7 +20,10 @@ export default async function Home() {
     fetchSanity<Profile | null>(GET_PROFILE),
   ]);
 
-  const filteredBlogs = blogs.filter((b) => b._id !== featuredBlog?._id);
+  const filteredBlogs = Array.isArray(blogs)
+    ? blogs.filter((b) => b._id !== featuredBlog?._id)
+    : [];
+
 
   const bio = profile?.bio
     ? Array.isArray(profile.bio)
