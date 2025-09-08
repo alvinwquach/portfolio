@@ -55,11 +55,11 @@ const portableTextComponents: PortableTextComponents = {
 };
 
 interface BlogPageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
-export default async function BlogPage(props: BlogPageProps) {
-  const { slug: rawSlug } = await props.params;
+export default async function BlogPage({ params }: BlogPageProps) {
+  const { slug: rawSlug } = await params;
   const slug = decodeURIComponent(rawSlug);
 
   const blog = await fetchSanity<Blog | null>(GET_BLOG_BY_SLUG(slug));
