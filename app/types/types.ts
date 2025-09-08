@@ -6,7 +6,7 @@ export interface Blog {
   slug: { current: string };
   mainImage?: { asset: { url: string } };
   excerpt?: string;
-  contentRaw: PortableTextBlock;
+  content: PortableTextBlock;
   publishedAt?: string;
   tags?: string[];
   featured: boolean;
@@ -27,4 +27,30 @@ export interface Project {
   github?: string;
   live?: string;
   technologies?: string[];
+}
+
+export interface Skill {
+  name: string;
+  featured: boolean;
+  image: {
+    asset: {
+      url: string;
+    };
+  };
+  skillUrl: string;
+}
+
+export interface Profile {
+  _id: string;
+  name: string;
+  email?: string;
+  linkedin?: string;
+  github?: string;
+  bio?: PortableTextBlock;
+  profileImage: {
+    asset: {
+      url: string;
+    };
+  };
+  skills?: Skill[];
 }
