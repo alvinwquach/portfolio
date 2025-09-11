@@ -11,13 +11,11 @@ import { getClient } from "@/app/lib/client";
 const portableTextComponents: PortableTextComponents = {
   block: {
     h3: ({ children }) => (
-      <h3 className="text-2xl font-bold text-green-400 mt-8 mb-4">
-        {children}
-      </h3>
+      <h3 className="text-2xl font-bold text-blue-400 mt-8 mb-4">{children}</h3>
     ),
     normal: ({ children }) => <p className="mb-4">{children}</p>,
     blockquote: ({ children }) => (
-      <blockquote className="border-l-4 border-green-400 pl-4 my-4 italic">
+      <blockquote className="border-l-4 border-blue-400 pl-4 my-4 italic">
         {children}
       </blockquote>
     ),
@@ -47,7 +45,7 @@ const portableTextComponents: PortableTextComponents = {
         href={value?.href}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-green-400 hover:underline"
+        className="text-blue-400 hover:underline"
       >
         {children}
       </a>
@@ -79,12 +77,12 @@ export default async function BlogPage({ params }: BlogPageProps) {
       <div className="container max-w-3xl mx-auto px-6 py-12">
         <Link
           href="/"
-          className="flex items-center gap-2 text-green-400 font-semibold hover:underline mb-4"
+          className="flex items-center gap-2 text-blue-400 font-semibold hover:underline mb-4"
         >
           <ChevronLeft className="w-5 h-5" />
           Home
         </Link>
-        <h1 className="text-4xl font-bold text-green-400 mb-6">{blog.title}</h1>
+        <h1 className="text-4xl font-bold text-blue-400 mb-6">{blog.title}</h1>
         {blog.mainImage?.asset?.url && (
           <div className="relative w-full h-[24rem] mb-8 rounded-lg overflow-hidden">
             <Image

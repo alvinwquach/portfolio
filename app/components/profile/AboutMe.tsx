@@ -10,13 +10,11 @@ import Image from "next/image";
 const portableTextComponents: PortableTextComponents = {
   block: {
     h3: ({ children }) => (
-      <h3 className="text-2xl font-bold text-green-400 mt-8 mb-4">
-        {children}
-      </h3>
+      <h3 className="text-2xl font-bold text-blue-400 mt-8 mb-4">{children}</h3>
     ),
     normal: ({ children }) => <p className="mb-4">{children}</p>,
     blockquote: ({ children }) => (
-      <blockquote className="border-l-4 border-green-400 pl-4 my-4 italic">
+      <blockquote className="border-l-4 border-blue-400 pl-4 my-4 italic">
         {children}
       </blockquote>
     ),
@@ -44,7 +42,7 @@ const portableTextComponents: PortableTextComponents = {
     link: ({ children, value }) => (
       <a
         href={value?.href}
-        className="text-green-400 hover:underline"
+        className="text-blue-400 hover:underline"
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -64,7 +62,7 @@ export default function AboutMe({ name, profileImageUrl, bio }: AboutMeProps) {
   return (
     <div className="max-w-7xl mx-auto px-6 py-16 flex flex-col items-center gap-12">
       <div className="flex flex-col md:flex-row items-center gap-12 w-full">
-        <div className="w-48 h-48 relative rounded-full overflow-hidden flex-shrink-0 shadow-lg ring-4 ring-green-400/50">
+        <div className="w-48 h-48 relative rounded-full overflow-hidden flex-shrink-0 shadow-lg ring-4 ring-blue-400/50">
           <Image
             src={profileImageUrl}
             alt={name}
@@ -73,7 +71,7 @@ export default function AboutMe({ name, profileImageUrl, bio }: AboutMeProps) {
           />
         </div>
         <div className="flex-1 text-center md:text-left">
-          <h2 className="text-4xl font-bold text-green-400 mb-4">{name}</h2>
+          <h2 className="text-4xl font-bold text-blue-400 mb-4">{name}</h2>
           <div className="text-slate-300 text-lg leading-relaxed">
             <PortableText value={bio} components={portableTextComponents} />
           </div>
