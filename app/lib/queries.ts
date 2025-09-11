@@ -10,6 +10,11 @@ export const GET_BLOGS = `
         url
       }
     },
+    video {
+      asset -> {
+        playbackId
+      }
+    },
     excerpt,
     content,
     publishedAt,
@@ -30,6 +35,11 @@ export const GET_FEATURED_BLOG = `
         url
       }
     },
+    video {
+      asset -> {
+        playbackId
+      }
+    },
     excerpt,
     content,
     publishedAt,
@@ -48,6 +58,11 @@ export const GET_BLOG_BY_SLUG = (slug: string) => `
     mainImage {
       asset -> {
         url
+      }
+    },
+    video {
+      asset -> {
+        playbackId
       }
     },
     content[],

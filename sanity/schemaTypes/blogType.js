@@ -32,6 +32,12 @@ export const blogType = defineType({
       options: { hotspot: true },
     }),
     defineField({
+      name: "video",
+      title: "Video",
+      type: "mux.video",
+      description: "Upload or link a Mux video for this blog post.",
+    }),
+    defineField({
       name: "excerpt",
       title: "Excerpt",
       type: "text",
