@@ -26,7 +26,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         />
       </div>
       <div className="flex-1 w-full md:w-1/2">
-        <h3 className="text-3xl font-bold text-green-400 mb-4">
+        <h3 className="text-3xl font-bold text-blue-400 mb-4">
           {project.title}
         </h3>
         {project.description && (
@@ -39,7 +39,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
             {project.technologies.map((tech, idx) => (
               <span
                 key={idx}
-                className="bg-green-700/90 text-white text-xs px-3 py-1 rounded-full tracking-wide"
+                className="bg-blue-700/90 text-white text-xs px-3 py-1 rounded-full tracking-wide"
               >
                 {tech}
               </span>
@@ -65,7 +65,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`Live site for ${project.title}`}
-              className="flex items-center gap-2 text-white bg-green-600 hover:bg-green-500 px-4 py-2 rounded transition"
+              className="flex items-center gap-2 text-white bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded transition"
             >
               <ExternalLink className="w-5 h-5" />
               <span>Live</span>

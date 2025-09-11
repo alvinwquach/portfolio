@@ -50,7 +50,7 @@ export default async function Home() {
           </Section>
         )}
         <Section id="projects" bg={Section.Colors.Dark} className="space-y-8">
-          <h2 className="text-4xl font-bold text-green-400 mb-10 text-center">
+          <h2 className="text-4xl font-bold text-blue-400 mb-10 text-center">
             Projects
           </h2>
           <div className="space-y-12">
@@ -60,7 +60,7 @@ export default async function Home() {
           </div>
         </Section>
         <Section id="blogs" bg={Section.Colors.Light} className="space-y-8">
-          <h2 className="text-4xl font-bold text-green-400 mb-10 text-center">
+          <h2 className="text-4xl font-bold text-blue-400 mb-10 text-center">
             Blogs
           </h2>
           {featuredBlog && <BlogCard blog={featuredBlog} isFeatured={true} />}

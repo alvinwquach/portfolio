@@ -18,7 +18,7 @@ export default function BlogCard({ blog, isFeatured = false }: BlogCardProps) {
       {isFeatured && (
         <div className="absolute top-0 left-0 w-full z-10">
           <Marquee
-            className="bg-green-500 text-white py-1 px-4 text-lg font-bold"
+            className="bg-blue-500 text-white py-1 px-4 text-lg font-bold"
             pauseOnHover={true}
             speed={50}
           >
@@ -40,16 +40,14 @@ export default function BlogCard({ blog, isFeatured = false }: BlogCardProps) {
           />
         </div>
       )}
-      <h3 className="text-xl font-semibold text-green-400 mb-2">
-        {blog.title}
-      </h3>
+      <h3 className="text-xl font-semibold text-blue-400 mb-2">{blog.title}</h3>
       <p className="text-slate-300 line-clamp-3">{blog.excerpt}</p>
       {blog.tags && blog.tags.length > 0 && (
         <div className="mt-4 flex flex-wrap gap-2">
           {blog.tags.map((tag) => (
             <span
               key={tag}
-              className="text-sm bg-slate-700 text-green-400 px-2 py-1 rounded"
+              className="text-sm bg-slate-700 text-blue-400 px-2 py-1 rounded"
             >
               {tag}
             </span>
@@ -58,7 +56,7 @@ export default function BlogCard({ blog, isFeatured = false }: BlogCardProps) {
       )}
       <Link
         href={`/blog/${blog.slug.current}`}
-        className="mt-4 inline-flex items-center font-semibold text-green-400 hover:underline"
+        className="mt-4 inline-flex items-center font-semibold text-blue-400 hover:underline"
       >
         Read More <ArrowRight className="ml-2 w-5 h-5" />
       </Link>

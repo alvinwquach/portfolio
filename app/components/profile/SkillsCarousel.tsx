@@ -47,7 +47,7 @@ export default function SkillsCarousel({ skills }: SkillsCarouselProps) {
   return (
     <div className="max-w-7xl mx-auto px-6 py-16 flex flex-col items-center gap-8">
       <h3
-        className={`${prata.className} text-3xl text-green-600 mb-2 text-center`}
+        className={`${prata.className} text-3xl text-blue-600 mb-2 text-center`}
       >
         My Skills
       </h3>
@@ -61,9 +61,9 @@ export default function SkillsCarousel({ skills }: SkillsCarouselProps) {
               key={skill.name}
               className="flex items-center p-2 transition-transform duration-300 hover:scale-105"
             >
-              <div className="flex items-center space-x-3 cursor-pointer p-2 rounded-full bg-white border border-green-600 shadow hover:shadow-lg transition-all duration-300">
+              <div className="flex items-center space-x-3 cursor-pointer p-2  transition-all duration-300">
                 {skill.image?.asset?.url ? (
-                  <div className="relative w-10 h-10 rounded-full overflow-hidden">
+                  <div className="relative w-10 h-10  overflow-hidden">
                     <Image
                       src={skill.image.asset.url}
                       alt={skill.name}
@@ -73,12 +73,12 @@ export default function SkillsCarousel({ skills }: SkillsCarouselProps) {
                   </div>
                 ) : (
                   <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">
-                    <span className="text-green-600 text-sm">
+                    <span className="text-blue-600 text-sm">
                       {skill.name[0]}
                     </span>
                   </div>
                 )}
-                <span className="text-sm font-medium text-green-600">
+                <span className="text-sm font-medium text-blue-600">
                   {skill.name}
                 </span>
               </div>

@@ -19,15 +19,15 @@ export default function BlogList({ blogs }: BlogListProps) {
 
   return (
     <section className="space-y-6">
-      <h2 className="text-4xl font-bold text-green-400 mb-6">All Blogs</h2>
+      <h2 className="text-4xl font-bold text-blue-400 mb-6">All Blogs</h2>
       {allTags.length > 0 && (
         <div className="flex flex-wrap gap-2 mb-6">
           <button
             onClick={() => setSelectedTag(null)}
             className={`px-4 py-2 rounded-full font-semibold text-sm transition-colors shadow-sm ${
               !selectedTag
-                ? "bg-green-500 text-white shadow-green-700/50"
-                : "bg-slate-700 text-green-300 hover:bg-slate-600"
+                ? "bg-blue-500 text-white shadow-blue-700/50"
+                : "bg-slate-700 text-blue-300 hover:bg-slate-600"
             }`}
           >
             All
@@ -38,8 +38,8 @@ export default function BlogList({ blogs }: BlogListProps) {
               onClick={() => setSelectedTag(tag)}
               className={`px-4 py-2 rounded-full font-semibold text-sm transition-colors shadow-sm ${
                 selectedTag === tag
-                  ? "bg-green-500 text-white shadow-green-700/50"
-                  : "bg-slate-700 text-green-300 hover:bg-slate-600"
+                  ? "bg-blue-500 text-white shadow-blue-700/50"
+                  : "bg-slate-700 text-blue-300 hover:bg-slate-600"
               }`}
             >
               {tag}
