@@ -10,32 +10,27 @@ import {
   GET_PROJECTS,
   GET_PROFILE,
 } from "./lib/queries";
-import { fetchSanity } from "@/sanity/lib/fetchSanity";
+import { getClient } from "./lib/client";
 
 export default async function Home() {
-  const [featuredBlog, blogs, projects, profile] = await Promise.all([
-    fetchSanity<Blog | null>(GET_FEATURED_BLOG),
-    fetchSanity<Blog[]>(GET_BLOGS),
-    fetchSanity<Project[]>(GET_PROJECTS),
-    fetchSanity<Profile | null>(GET_PROFILE),
-  ]);
+  const client = getClient();
 
-  const filteredBlogs = Array.isArray(blogs)
-    ? blogs.filter((b) => b._id !== featuredBlog?._id)
-    : [];
+  const [featuredResult, blogsResult, projectsResult, profileResult] =
+    await Promise.all([
+      client.query<{ allBlog: Blog[] }>({ query: GET_FEATURED_BLOG }),
+      client.query<{ allBlog: Blog[] }>({ query: GET_BLOGS }),
+      client.query<{ allProject: Project[] }>({ query: GET_PROJECTS }),
+      client.query<{ allProfile: Profile[] }>({ query: GET_PROFILE }),
+    ]);
 
+  const featuredBlog = featuredResult?.data?.allBlog?.[0] || null;
+  const blogs = blogsResult?.data?.allBlog || [];
+  const projects = projectsResult?.data?.allProject || [];
+  const profile = profileResult?.data?.allProfile?.[0] || null;
 
-  const bio = profile?.bio
-    ? Array.isArray(profile.bio)
-      ? profile.bio
-      : [
-          {
-            _type: "block",
-            style: "normal",
-            children: [{ _type: "span", text: profile.bio }],
-          },
-        ]
-    : [];
+  const filteredBlogs = blogs.filter((b) => b._id !== featuredBlog?._id);
+
+  const bio = profile?.bioRaw || [];
 
   return (
     <div className="bg-[#0f172a] min-h-screen text-slate-200 font-sans overflow-x-hidden">
