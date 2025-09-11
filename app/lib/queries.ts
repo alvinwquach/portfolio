@@ -1,115 +1,131 @@
-export const GET_BLOGS = `
-  *[_type == "blog"] {
-    _id,
-    title,
-    slug {
-      current
-    },
-    mainImage {
-      asset -> {
-        url
-      }
-    },
-    video {
-      asset -> {
-        playbackId
-      }
-    },
-    excerpt,
-    content,
-    publishedAt,
-    tags,
-    featured
-  }
-`;
+import { gql } from "@apollo/client";
 
-export const GET_FEATURED_BLOG = `
-  *[_type == "blog" && featured == true] | order(publishedAt desc) [0] {
-    _id,
-    title,
-    slug {
-      current
-    },
-    mainImage {
-      asset -> {
-        url
+export const GET_BLOGS = gql`
+  query GetBlogs {
+    allBlog {
+      _id
+      title
+      slug {
+        current
       }
-    },
-    video {
-      asset -> {
-        playbackId
-      }
-    },
-    excerpt,
-    content,
-    publishedAt,
-    tags,
-    featured
-  }
-`;
-
-export const GET_BLOG_BY_SLUG = (slug: string) => `
-  *[_type == "blog" && slug.current == "${slug}"][0] {
-    _id,
-    title,
-    slug {
-      current
-    },
-    mainImage {
-      asset -> {
-        url
-      }
-    },
-    video {
-      asset -> {
-        playbackId
-      }
-    },
-    content[],
-    excerpt,
-    publishedAt,
-    tags,
-    featured
-  }
-`;
-
-export const GET_PROJECTS = `
-  *[_type == "project"] {
-    _id,
-    title,
-    slug {
-      current
-    },
-    mainImage {
-      asset -> {
-        url
-      }
-    },
-    description,
-    github,
-    live,
-    technologies
-  }
-`;
-
-export const GET_PROFILE = `
-  *[_type == "profile"][0] {
-    _id,
-    name,
-    email,
-    linkedin,
-    github,
-    bio[],
-    profileImage {
-      asset -> {
-        url
-      }
-    },
-    skills[] {
-      name,
-      image {
-        asset -> {
+      mainImage {
+        asset {
           url
+        }
+      }
+      video {
+        asset {
+          playbackId
+        }
+      }
+      excerpt
+      contentRaw
+      publishedAt
+      tags
+      featured
+    }
+  }
+`;
+
+export const GET_FEATURED_BLOG = gql`
+  query GetFeaturedBlog {
+    allBlog(
+      where: { featured: { eq: true } }
+      sort: { publishedAt: DESC }
+      limit: 1
+    ) {
+      _id
+      title
+      slug {
+        current
+      }
+      mainImage {
+        asset {
+          url
+        }
+      }
+      video {
+        asset {
+          playbackId
+        }
+      }
+      excerpt
+      contentRaw
+      publishedAt
+      tags
+      featured
+    }
+  }
+`;
+
+export const GET_BLOG_BY_SLUG = gql`
+  query GetBlogBySlug($slug: String!) {
+    allBlog(where: { slug: { current: { eq: $slug } } }, limit: 1) {
+      _id
+      title
+      slug {
+        current
+      }
+      mainImage {
+        asset {
+          url
+        }
+      }
+      video {
+        asset {
+          playbackId
+        }
+      }
+      excerpt
+      contentRaw
+      publishedAt
+      tags
+      featured
+    }
+  }
+`;
+
+export const GET_PROJECTS = gql`
+  query GetProjects {
+    allProject {
+      _id
+      title
+      slug {
+        current
+      }
+      mainImage {
+        asset {
+          url
+        }
+      }
+      description
+      github
+      live
+      technologies
+    }
+  }
+`;
+
+export const GET_PROFILE = gql`
+  query GetProfile {
+    allProfile(limit: 1) {
+      _id
+      name
+      email
+      linkedin
+      github
+      bioRaw
+      profileImage {
+        asset {
+          url
+        }
+      }
+      skills {
+        name
+        image {
+          asset {
+            url
+          }
         }
       }
     }

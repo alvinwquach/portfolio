@@ -44,25 +44,7 @@ export const profileType = defineType({
       name: "skills",
       title: "Skills",
       type: "array",
-      of: [
-        {
-          type: "object",
-          fields: [
-            {
-              name: "name",
-              title: "Skill Name",
-              type: "string",
-              validation: (Rule) => Rule.required(),
-            },
-            {
-              name: "image",
-              title: "Skill Image/Icon",
-              type: "image",
-              options: { hotspot: true },
-            },
-          ],
-        },
-      ],
+      of: [{ type: "skill" }],
     }),
   ],
 });

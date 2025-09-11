@@ -3,10 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ChevronLeft } from "lucide-react";
-import { fetchSanity } from "@/sanity/lib/fetchSanity";
-import { GET_BLOG_BY_SLUG } from "@/app/lib/queries";
 import { Blog } from "@/app/types/types";
 import MuxVideoPlayer from "@/app/components/blog/MuxVideoPlayer";
+import { GET_BLOG_BY_SLUG } from "@/app/lib/queries";
+import { getClient } from "@/app/lib/client";
 
 const portableTextComponents: PortableTextComponents = {
   block: {
@@ -63,7 +63,14 @@ export default async function BlogPage({ params }: BlogPageProps) {
   const { slug: rawSlug } = await params;
   const slug = decodeURIComponent(rawSlug);
 
-  const blog = await fetchSanity<Blog | null>(GET_BLOG_BY_SLUG(slug));
+  const client = getClient();
+
+  const result = await client.query<{ allBlog: Blog[] }>({
+    query: GET_BLOG_BY_SLUG,
+    variables: { slug },
+  });
+
+  const blog = result?.data?.allBlog?.[0] || null;
 
   if (!blog) return notFound();
 
@@ -95,7 +102,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
         )}
         <div className="prose prose-invert prose-lg max-w-none">
           <PortableText
-            value={blog.content}
+            value={blog.contentRaw}
             components={portableTextComponents}
           />
         </div>

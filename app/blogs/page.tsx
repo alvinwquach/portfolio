@@ -1,9 +1,9 @@
 import { Metadata } from "next";
-import { fetchSanity } from "@/sanity/lib/fetchSanity";
 import { GET_BLOGS, GET_FEATURED_BLOG } from "@/app/lib/queries";
 import { Blog } from "@/app/types/types";
 import BlogList from "../components/blog/BlogList";
 import FeaturedBlogCard from "../components/blog/FeaturedBlogCard";
+import { getClient } from "../lib/client";
 
 export const metadata: Metadata = {
   title: "Blogs - Alvin Quach | Full Stack Engineer",
@@ -41,12 +41,15 @@ export const metadata: Metadata = {
 };
 
 export default async function BlogsPage() {
-  const [featuredBlog, blogs] = await Promise.all([
-    fetchSanity<Blog | null>(GET_FEATURED_BLOG),
-    fetchSanity<Blog[]>(GET_BLOGS),
+  const client = getClient();
+
+  const [featuredResult, blogsResult] = await Promise.all([
+    client.query<{ allBlog: Blog[] }>({ query: GET_FEATURED_BLOG }),
+    client.query<{ allBlog: Blog[] }>({ query: GET_BLOGS }),
   ]);
 
-  const blogsArray = Array.isArray(blogs) ? blogs : [];
+  const featuredBlog = featuredResult?.data?.allBlog?.[0] || null;
+  const blogsArray = blogsResult?.data?.allBlog || [];
 
   return (
     <div className="bg-[#0f172a] min-h-screen text-slate-200 font-sans overflow-x-hidden">

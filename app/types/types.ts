@@ -1,4 +1,4 @@
-import { PortableTextBlock } from "sanity";
+import { PortableTextBlock } from "@portabletext/types";
 
 export interface Blog {
   _id: string;
@@ -7,7 +7,7 @@ export interface Blog {
   mainImage?: { asset: { url: string } };
   video?: { asset: { playbackId: string } };
   excerpt?: string;
-  content: PortableTextBlock;
+  contentRaw: PortableTextBlock[];
   publishedAt?: string;
   tags?: string[];
   featured: boolean;
@@ -38,7 +38,7 @@ export interface Skill {
       url: string;
     };
   };
-  skillUrl: string;
+  skillUrl?: string;
 }
 
 export interface Profile {
@@ -47,7 +47,7 @@ export interface Profile {
   email?: string;
   linkedin?: string;
   github?: string;
-  bio?: PortableTextBlock;
+  bioRaw?: PortableTextBlock[];
   profileImage: {
     asset: {
       url: string;
