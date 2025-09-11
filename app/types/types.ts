@@ -5,6 +5,7 @@ export interface Blog {
   title: string;
   slug: { current: string };
   mainImage?: { asset: { url: string } };
+  video?: { asset: { playbackId: string } };
   excerpt?: string;
   content: PortableTextBlock;
   publishedAt?: string;

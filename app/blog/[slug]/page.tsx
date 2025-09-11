@@ -6,6 +6,7 @@ import { ChevronLeft } from "lucide-react";
 import { fetchSanity } from "@/sanity/lib/fetchSanity";
 import { GET_BLOG_BY_SLUG } from "@/app/lib/queries";
 import { Blog } from "@/app/types/types";
+import MuxVideoPlayer from "@/app/components/blog/MuxVideoPlayer";
 
 const portableTextComponents: PortableTextComponents = {
   block: {
@@ -88,6 +89,9 @@ export default async function BlogPage({ params }: BlogPageProps) {
               priority
             />
           </div>
+        )}
+        {blog.video?.asset?.playbackId && (
+          <MuxVideoPlayer playbackId={blog.video.asset.playbackId} />
         )}
         <div className="prose prose-invert prose-lg max-w-none">
           <PortableText
