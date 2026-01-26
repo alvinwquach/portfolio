@@ -85,6 +85,57 @@ export const project = {
       description: 'A short one-liner that summarizes the project (shown on cards/previews)',
     },
 
+    /**
+     * PROJECT TYPE
+     * - Distinguish between personal projects, freelance/client work, and open source
+     * - Helps filter and categorize on the frontend
+     */
+    {
+      name: 'projectType',
+      title: 'Project Type',
+      type: 'string',
+      description: 'What type of project is this?',
+      options: {
+        list: [
+          { title: 'Personal Project', value: 'personal' },
+          { title: 'Freelance / Client Work', value: 'freelance' },
+          { title: 'Open Source', value: 'opensource' },
+          { title: 'Work Project', value: 'work' },
+        ],
+      },
+      initialValue: 'personal',
+    },
+
+    /**
+     * CLIENT INFO (for freelance projects)
+     * - Name of the client/company
+     * - Only shown for freelance projects
+     */
+    {
+      name: 'clientName',
+      title: 'Client Name',
+      type: 'string',
+      description: 'Name of the client or company (for freelance projects)',
+      hidden: ({ parent }: { parent: { projectType?: string } }) => parent?.projectType !== 'freelance',
+    },
+
+    {
+      name: 'clientIndustry',
+      title: 'Client Industry',
+      type: 'string',
+      description: 'Industry or sector of the client (e.g., "Real Estate", "Healthcare", "E-commerce")',
+      hidden: ({ parent }: { parent: { projectType?: string } }) => parent?.projectType !== 'freelance',
+    },
+
+    {
+      name: 'clientTestimonial',
+      title: 'Client Testimonial',
+      type: 'text',
+      rows: 3,
+      description: 'A quote from the client about working with you',
+      hidden: ({ parent }: { parent: { projectType?: string } }) => parent?.projectType !== 'freelance',
+    },
+
     // ========================================
     // STAR FORMAT FIELDS
     // ========================================
@@ -229,6 +280,88 @@ export const project = {
     },
 
     /**
+     * INTERVIEW QUESTIONS (STAR FORMAT)
+     * - Each question answered using STAR method
+     * - Situation, Task, Action, Result for behavioral depth
+     * - Perfect for "Tell me about a time when..." questions
+     */
+    {
+      name: 'interviewQuestions',
+      title: 'Interview Questions (STAR Format)',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          name: 'starQuestion',
+          fields: [
+            {
+              name: 'question',
+              title: 'Interview Question',
+              type: 'string',
+              description: 'e.g., "What was the hardest technical challenge?" or "How did you handle a disagreement?"',
+              validation: (rule: any) => rule.required(),
+            },
+            {
+              name: 'category',
+              title: 'Category',
+              type: 'string',
+              options: {
+                list: [
+                  { title: 'Technical', value: 'technical' },
+                  { title: 'Behavioral', value: 'behavioral' },
+                  { title: 'System Design', value: 'system-design' },
+                  { title: 'Leadership', value: 'leadership' },
+                  { title: 'Problem Solving', value: 'problem-solving' },
+                ],
+              },
+            },
+            {
+              name: 'situation',
+              title: 'Situation',
+              type: 'text',
+              rows: 3,
+              description: 'Set the scene. What was the context? What were the constraints?',
+            },
+            {
+              name: 'task',
+              title: 'Task',
+              type: 'text',
+              rows: 2,
+              description: 'What was your specific responsibility or goal?',
+            },
+            {
+              name: 'actions',
+              title: 'Actions',
+              type: 'array',
+              of: [{ type: 'string' }],
+              description: 'What specific steps did YOU take? Use action verbs.',
+            },
+            {
+              name: 'result',
+              title: 'Result',
+              type: 'text',
+              rows: 2,
+              description: 'What was the outcome? Use metrics if possible.',
+            },
+            {
+              name: 'keyTakeaway',
+              title: 'Key Takeaway',
+              type: 'string',
+              description: 'One sentence summary of what you learned or demonstrated',
+            },
+          ],
+          preview: {
+            select: {
+              title: 'question',
+              subtitle: 'category',
+            },
+          },
+        },
+      ],
+      description: 'Interview questions about this project, each answered in STAR format',
+    },
+
+    /**
      * TECHNICAL DECISIONS
      * - "Why did you choose X over Y?"
      * - Prepare answers for common questions
@@ -236,7 +369,7 @@ export const project = {
      */
     {
       name: 'technicalDecisions',
-      title: 'Technical Decisions',
+      title: 'Technical Decisions (Quick Q&A)',
       type: 'array',
       of: [
         {
@@ -262,7 +395,7 @@ export const project = {
           },
         },
       ],
-      description: 'Why you chose specific technologies - be ready to defend these in interviews',
+      description: 'Quick technical Q&A - for simple "why did you choose X" questions',
     },
 
     /**
@@ -329,6 +462,157 @@ export const project = {
       type: 'array',
       of: [{ type: 'string' }],
       description: 'How would you improve or scale this project?',
+    },
+
+    // ========================================
+    // PROJECT ROADMAP (roadmap.sh style)
+    // ========================================
+
+    /**
+     * ROADMAP - Visual project planning
+     * - MVP and Stretch phases with milestones
+     * - Interactive roadmap.sh style visualization
+     * - Shows project scope and future potential
+     */
+    {
+      name: 'roadmap',
+      title: 'Project Roadmap',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          name: 'roadmapPhase',
+          fields: [
+            {
+              name: 'phase',
+              title: 'Phase',
+              type: 'string',
+              options: {
+                list: [
+                  { title: 'MVP (Minimum Viable Product)', value: 'mvp' },
+                  { title: 'Stretch Goals', value: 'stretch' },
+                  { title: 'Future Vision', value: 'future' },
+                ],
+              },
+              validation: (rule: any) => rule.required(),
+            },
+            {
+              name: 'title',
+              title: 'Phase Title',
+              type: 'string',
+              description: 'Custom title for this phase (e.g., "Core Platform", "AI Integration")',
+            },
+            {
+              name: 'description',
+              title: 'Phase Description',
+              type: 'text',
+              rows: 2,
+              description: 'Brief overview of what this phase accomplishes',
+            },
+            {
+              name: 'status',
+              title: 'Status',
+              type: 'string',
+              options: {
+                list: [
+                  { title: 'Completed', value: 'completed' },
+                  { title: 'In Progress', value: 'in-progress' },
+                  { title: 'Planned', value: 'planned' },
+                ],
+              },
+              initialValue: 'planned',
+            },
+            {
+              name: 'milestones',
+              title: 'Milestones',
+              type: 'array',
+              of: [
+                {
+                  type: 'object',
+                  name: 'milestone',
+                  fields: [
+                    {
+                      name: 'title',
+                      title: 'Milestone Title',
+                      type: 'string',
+                      description: 'e.g., "User Authentication", "Payment Integration"',
+                      validation: (rule: any) => rule.required(),
+                    },
+                    {
+                      name: 'description',
+                      title: 'Description',
+                      type: 'text',
+                      rows: 2,
+                      description: 'What this milestone includes',
+                    },
+                    {
+                      name: 'status',
+                      title: 'Status',
+                      type: 'string',
+                      options: {
+                        list: [
+                          { title: 'Completed', value: 'completed' },
+                          { title: 'In Progress', value: 'in-progress' },
+                          { title: 'Planned', value: 'planned' },
+                        ],
+                      },
+                      initialValue: 'planned',
+                    },
+                    {
+                      name: 'features',
+                      title: 'Features',
+                      type: 'array',
+                      of: [{ type: 'string' }],
+                      description: 'Specific features or tasks within this milestone',
+                    },
+                    {
+                      name: 'techUsed',
+                      title: 'Technologies Used',
+                      type: 'array',
+                      of: [{ type: 'reference', to: [{ type: 'skill' }] }],
+                      description: 'Key technologies for this milestone',
+                    },
+                  ],
+                  preview: {
+                    select: {
+                      title: 'title',
+                      subtitle: 'status',
+                    },
+                    prepare({ title, subtitle }: { title?: string; subtitle?: string }) {
+                      const statusEmoji = subtitle === 'completed' ? '✅' : subtitle === 'in-progress' ? '🚧' : '📋';
+                      return {
+                        title: title || 'Untitled Milestone',
+                        subtitle: `${statusEmoji} ${subtitle || 'planned'}`,
+                      };
+                    },
+                  },
+                },
+              ],
+              description: 'Key milestones within this phase',
+            },
+          ],
+          preview: {
+            select: {
+              phase: 'phase',
+              title: 'title',
+              status: 'status',
+            },
+            prepare({ phase, title, status }: { phase?: string; title?: string; status?: string }) {
+              const phaseLabels: Record<string, string> = {
+                mvp: '🚀 MVP',
+                stretch: '🎯 Stretch',
+                future: '🔮 Future',
+              };
+              const statusEmoji = status === 'completed' ? '✅' : status === 'in-progress' ? '🚧' : '📋';
+              return {
+                title: title || phaseLabels[phase || 'mvp'] || 'Phase',
+                subtitle: `${phaseLabels[phase || 'mvp']} - ${statusEmoji} ${status || 'planned'}`,
+              };
+            },
+          },
+        },
+      ],
+      description: 'Visual roadmap showing MVP, stretch goals, and future vision - like roadmap.sh',
     },
 
     {

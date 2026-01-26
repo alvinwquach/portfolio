@@ -104,153 +104,30 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://alvinquach.dev"),
 
   // Title configuration - template applies to all pages
+  // SEO: ≤60 characters, primary identity + key technologies
   title: {
-    default: "Alvin Quach | Full Stack Developer | React, Next.js, TypeScript",
+    default: "Alvin Quach | Senior Full-Stack Engineer | Next.js & TypeScript",
     template: "%s | Alvin Quach",
   },
 
   // Primary description - appears in search results
+  // SEO: ≤155 characters, reinforces title + availability signal
   description:
-    "Full Stack Developer in San Francisco specializing in React, Next.js, TypeScript, and PostgreSQL. Building performant web applications with modern tech stacks. Open to Full Stack Developer, Software Engineer, Web Developer, UX Engineer, and DevOps roles.",
+    "Senior full-stack engineer building production systems with Next.js, TypeScript, and PostgreSQL. Open to senior roles and early-stage teams in the Bay Area.",
 
-  // Extensive keywords for search discovery
+  // Core keywords (Google ignores excessive keywords - keep it focused)
   keywords: [
-    // Name variations
     "Alvin Quach",
-    "Alvin W Quach",
-    "alvinwquach",
-
-    // Primary roles
     "Full Stack Developer",
-    "Full Stack Engineer",
     "Software Engineer",
-    "Web Developer",
-    "Web Engineer",
-    "Frontend Developer",
-    "Backend Developer",
-    "UX Engineer",
-    "UI Engineer",
-
-    // Secondary roles
-    "DevOps Engineer",
-    "Data Engineer",
-    "Data Analyst",
-    "Developer Advocate",
-    "Community Manager",
-    "Product Manager",
-    "Program Manager",
-
-    // Location
+    "React",
+    "Next.js",
+    "TypeScript",
+    "Node.js",
+    "GraphQL",
+    "PostgreSQL",
     "San Francisco",
     "Bay Area",
-    "California",
-    "SF Developer",
-    "Bay Area Engineer",
-
-    // Frontend skills
-    "React",
-    "React.js",
-    "Next.js",
-    "Next.js 15",
-    "TypeScript",
-    "JavaScript",
-    "TailwindCSS",
-    "Tailwind CSS",
-    "CSS",
-    "HTML",
-    "Zustand",
-    "React Query",
-    "Material UI",
-    "Gatsby",
-    "D3.js",
-    "Three.js",
-    "Mapbox",
-    "CodeMirror",
-
-    // Backend skills
-    "Node.js",
-    "Express.js",
-    "FastAPI",
-    "Python",
-    "GraphQL",
-    "REST API",
-    "WebSockets",
-    "Drizzle ORM",
-    "Docker",
-
-    // Database skills
-    "PostgreSQL",
-    "MySQL",
-    "MongoDB",
-    "SQLite",
-    "Firebase",
-    "pgvector",
-    "Vector Database",
-    "Database Design",
-
-    // AI/ML skills
-    "OpenAI",
-    "AI Integration",
-    "LLM",
-    "RAG",
-    "Machine Learning",
-    "Pandas",
-    "NumPy",
-    "Scikit-learn",
-    "XGBoost",
-    "Jupyter Notebooks",
-
-    // Testing
-    "Jest",
-    "Cypress",
-    "Playwright",
-    "Testing",
-    "E2E Testing",
-    "Unit Testing",
-
-    // DevOps & Tools
-    "Git",
-    "GitHub",
-    "CI/CD",
-    "Vercel",
-    "Docker",
-    "Sentry",
-    "Amplitude",
-
-    // CMS & Content
-    "Sanity",
-    "Headless CMS",
-    "Content Management",
-
-    // Payments & APIs
-    "Stripe",
-    "Payment Integration",
-    "OAuth",
-    "API Integration",
-
-    // Soft skills
-    "Technical Writing",
-    "Documentation",
-    "Developer Relations",
-    "Public Speaking",
-    "Community Management",
-    "User Research",
-    "A/B Testing",
-
-    // Project types
-    "Web Applications",
-    "SaaS",
-    "E-commerce",
-    "Data Visualization",
-    "Real-time Applications",
-    "Performance Optimization",
-
-    // Career keywords
-    "Hire Developer",
-    "Hire Engineer",
-    "Available for Work",
-    "Portfolio",
-    "Stanford",
   ],
 
   // Author information
@@ -440,6 +317,9 @@ export default async function RootLayout({
        * - Injected as a script tag for search engines to parse
        */}
       <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#1D428A" />
+        <link rel="apple-touch-icon" href="/icon-192.png" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

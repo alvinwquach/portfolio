@@ -81,7 +81,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     skill,          // Tech stack - referenced by projects
     testimonial,    // Recommendations from others
     interviewQuestion, // Interview prep content
-    knowledgeNode,     // Blog posts, notes, tutorials, charts
+    knowledgeNode,     // Blog posts with charts, code, visualizations
     tag,               // Reusable tags for filtering
     integration,       // API integrations and third-party services
     resource,          // External resources and references
