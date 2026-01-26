@@ -12,6 +12,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { formatDate } from '@/lib/utils';
 import { Search, X, FileText } from 'lucide-react';
+import { LogoMark } from '@/components/ui/Logo';
 import type { KnowledgeNode, Tag } from '@/lib/graphql/queries';
 
 // Node type configuration for labels
@@ -32,6 +33,15 @@ interface BlogPageClientProps {
   tags: Tag[];
 }
 
+// Calculate reading time based on summary length (approximation)
+function getReadingTime(node: KnowledgeNode): number {
+  const wordsPerMinute = 200;
+  // Use summary word count as approximation (full content would be better but summary is available)
+  const wordCount = node.summary?.split(/\s+/).length || 0;
+  // Minimum 1 minute, add extra time for technical content
+  return Math.max(1, Math.ceil(wordCount / wordsPerMinute) + 2);
+}
+
 // Count nodes per type
 function countNodesByType(nodes: KnowledgeNode[], type: string): number {
   return nodes.filter((node) => node.nodeType === type).length;
@@ -41,12 +51,15 @@ function countNodesByType(nodes: KnowledgeNode[], type: string): number {
  * Featured Post Card - Apollo GraphQL style (single large card)
  */
 function FeaturedPostCard({ node }: { node: KnowledgeNode }) {
+  const readingTime = getReadingTime(node);
   return (
     <Link href={`/blog/${node.slug.current}`} className="group block">
       <article className="relative p-8 md:p-10 rounded-xl bg-card border border-border/50 hover:border-border transition-all duration-300">
-        {/* Date */}
+        {/* Date and Reading Time */}
         <div className="text-sm text-muted-foreground mb-4">
           {node.publishedAt ? formatDate(node.publishedAt) : 'Draft'}
+          <span className="mx-2">·</span>
+          <span>{readingTime} min read</span>
         </div>
 
         {/* Title - Large */}
@@ -67,14 +80,17 @@ function FeaturedPostCard({ node }: { node: KnowledgeNode }) {
  * Regular Post Card - Apollo style with date, title, separator, author
  */
 function PostCard({ node }: { node: KnowledgeNode }) {
+  const readingTime = getReadingTime(node);
   return (
     <Link href={`/blog/${node.slug.current}`} className="group block h-full">
       <article className="h-full p-5 rounded-xl bg-card border border-border/50 hover:border-border transition-all duration-200 flex flex-col">
-        {/* Date with orange dot */}
+        {/* Date with orange dot and reading time */}
         <div className="flex items-center gap-2 mb-3">
           <span className="w-2 h-2 rounded-full bg-orange-500" />
           <span className="text-sm text-muted-foreground">
             {node.publishedAt ? formatDate(node.publishedAt) : 'Draft'}
+            <span className="mx-1.5">·</span>
+            {readingTime} min
           </span>
         </div>
 
@@ -88,9 +104,7 @@ function PostCard({ node }: { node: KnowledgeNode }) {
 
         {/* Author */}
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center text-white text-xs font-medium">
-            AQ
-          </div>
+          <LogoMark size={32} />
           <span className="text-sm text-muted-foreground">Alvin Quach</span>
         </div>
       </article>
@@ -99,14 +113,16 @@ function PostCard({ node }: { node: KnowledgeNode }) {
 }
 
 /**
- * Tag Filter Link - Apollo style plain text
+ * Tag Filter Link - Apollo style plain text with counts
  */
 function TagLink({
   label,
+  count,
   active,
   onClick,
 }: {
   label: string;
+  count?: number;
   active: boolean;
   onClick: () => void;
 }) {
@@ -120,6 +136,9 @@ function TagLink({
       }`}
     >
       {label}
+      {count !== undefined && (
+        <span className="ml-1 text-muted-foreground">({count})</span>
+      )}
     </button>
   );
 }
@@ -204,10 +223,11 @@ export function BlogPageClient({ knowledgeNodes, tags }: BlogPageClientProps) {
           <h1 className="text-3xl md:text-4xl font-light mb-2">Blog</h1>
         </div>
 
-        {/* Tag Filters - Apollo style rows */}
+        {/* Tag Filters - Apollo style rows with counts */}
         <div className="flex flex-wrap items-center gap-x-6 gap-y-2 mb-8 pb-6 border-b border-border/30">
           <TagLink
             label="All"
+            count={knowledgeNodes.length}
             active={activeTab === 'all'}
             onClick={() => handleTabChange('all')}
           />
@@ -215,6 +235,7 @@ export function BlogPageClient({ knowledgeNodes, tags }: BlogPageClientProps) {
             <TagLink
               key={type}
               label={nodeTypeLabels[type] || type}
+              count={countNodesByType(knowledgeNodes, type)}
               active={activeTab === type}
               onClick={() => handleTabChange(type)}
             />
