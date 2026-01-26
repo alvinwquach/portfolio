@@ -468,6 +468,9 @@ export const knowledgeNode = defineType({
           { title: "Concept", value: "concept" },
           { title: "Tutorial", value: "tutorial" },
           { title: "Chart", value: "chart" },
+          { title: "Deep Dive", value: "deep_dive" },
+          { title: "Lesson Learned", value: "lesson_learned" },
+          { title: "Tool Review", value: "tool_review" },
         ],
         layout: "radio",
       },
@@ -644,6 +647,9 @@ export const knowledgeNode = defineType({
         concept: "💡",
         tutorial: "📚",
         chart: "📊",
+        "deep_dive": "🔬",
+        "lesson_learned": "🎓",
+        "tool_review": "🔧",
       };
       return {
         title,

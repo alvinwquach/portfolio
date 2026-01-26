@@ -151,3 +151,15 @@ export const client = createClient({
     studioUrl: process.env.NEXT_PUBLIC_SANITY_STUDIO_URL,
   },
 })
+
+/**
+ * Client without CDN caching
+ * Used for GraphQL resolvers to ensure fresh data
+ */
+export const clientWithoutCdn = createClient({
+  projectId,
+  dataset,
+  apiVersion,
+  useCdn: false,
+  token: process.env.SANITY_VIEWER_TOKEN,
+})

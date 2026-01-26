@@ -188,6 +188,13 @@ export const profile = {
       description: 'Link to your GitHub profile',
     },
 
+    {
+      name: 'twitter',
+      title: 'Twitter / X URL',
+      type: 'url',
+      description: 'Link to your Twitter/X profile (e.g., https://x.com/mistersjc)',
+    },
+
     /**
      * FILE UPLOAD FIELD
      * - type: 'file' allows any file upload
