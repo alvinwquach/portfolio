@@ -167,9 +167,9 @@ function FeaturedProjectCard({ project }: { project: Project }) {
           {/* Results */}
           {project.results && project.results.length > 0 && (
             <div className="mb-6 p-4 rounded-lg bg-green-500/5 border border-green-500/10">
-              <h4 className="text-xs font-semibold text-green-500 uppercase tracking-wider mb-2">
+              <p className="text-xs font-semibold text-green-500 uppercase tracking-wider mb-2">
                 Key Outcomes
-              </h4>
+              </p>
               <ul className="space-y-1.5">
                 {project.results.slice(0, 3).map((result, i) => (
                   <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">

@@ -54,9 +54,9 @@ const categoryConfig: Record<string, { icon: typeof Code; label: string; color: 
 };
 
 const difficultyColors: Record<string, string> = {
-  easy: 'bg-green-500/10 text-green-600 border-green-500/20',
-  medium: 'bg-yellow-500/10 text-yellow-600 border-yellow-500/20',
-  hard: 'bg-red-500/10 text-red-600 border-red-500/20',
+  easy: 'bg-green-500/20 text-green-500 border-green-500/30',
+  medium: 'bg-yellow-500/20 text-yellow-500 border-yellow-500/30',
+  hard: 'bg-red-500/20 text-red-500 border-red-500/30',
 };
 
 export function InterviewPrepClient({ questions }: InterviewPrepClientProps) {
@@ -372,7 +372,7 @@ export function InterviewPrepClient({ questions }: InterviewPrepClientProps) {
           </span>{' '}
           of {filteredQuestions.length} questions
           {filteredQuestions.length !== totalQuestions && (
-            <span className="text-muted-foreground/60"> (filtered from {totalQuestions})</span>
+            <span className="text-muted-foreground"> (filtered from {totalQuestions})</span>
           )}
         </p>
       </div>

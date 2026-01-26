@@ -29,11 +29,11 @@ export default function BlogLoading() {
 
         {/* What's new section */}
         <Skeleton className="h-8 w-36 mb-6" />
-        <div className="p-8 md:p-10 rounded-xl bg-slate-800 mb-12">
-          <Skeleton className="h-4 w-24 mb-4 bg-slate-700" />
-          <Skeleton className="h-8 w-3/4 mb-2 bg-slate-700" />
-          <Skeleton className="h-8 w-1/2 mb-6 bg-slate-700" />
-          <Skeleton className="h-10 w-32 rounded-full bg-slate-700" />
+        <div className="p-8 md:p-10 rounded-xl bg-card border border-border/50 mb-12">
+          <Skeleton className="h-4 w-24 mb-4" />
+          <Skeleton className="h-8 w-3/4 mb-2" />
+          <Skeleton className="h-8 w-1/2 mb-6" />
+          <Skeleton className="h-10 w-32 rounded-full" />
         </div>
 
         {/* Post Grid */}

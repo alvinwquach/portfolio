@@ -72,7 +72,7 @@ const nextConfig: NextConfig = {
           },
         ],
       },
-      // Cache static assets
+      // Cache static assets aggressively (1 year)
       {
         source: '/(.*)\\.(ico|png|jpg|jpeg|gif|webp|avif|svg|woff|woff2)',
         headers: [
@@ -82,7 +82,46 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      // Cache JS/CSS chunks (hashed filenames make them safe to cache long-term)
+      {
+        source: '/_next/static/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
     ];
+  },
+
+  // Redirects for SEO and URL normalization
+  async redirects() {
+    return [
+      // Redirect old URLs if you ever had them (examples)
+      // { source: '/portfolio', destination: '/projects', permanent: true },
+      // { source: '/work', destination: '/projects', permanent: true },
+      // { source: '/about', destination: '/', permanent: true },
+
+      // Remove trailing slashes for consistency
+      {
+        source: '/:path+/',
+        destination: '/:path+',
+        permanent: true,
+      },
+    ];
+  },
+
+  // Rewrites for clean URLs or API proxies
+  async rewrites() {
+    return {
+      beforeFiles: [
+        // Example: Proxy resume PDF for tracking
+        // { source: '/resume', destination: '/api/resume' },
+      ],
+      afterFiles: [],
+      fallback: [],
+    };
   },
 
   // Hide X-Powered-By header
@@ -94,11 +133,21 @@ const nextConfig: NextConfig = {
   // Compress responses
   compress: true,
 
+  // Logging configuration
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
+  },
+
   // Experimental features for performance
   experimental: {
-    // Optimize package imports
-    optimizePackageImports: ['lucide-react', 'd3', 'gsap'],
+    // Optimize package imports (tree-shaking)
+    optimizePackageImports: ['lucide-react', 'd3', 'gsap', '@radix-ui/react-accordion'],
   },
+
+  // Generate source maps in production for debugging
+  productionBrowserSourceMaps: true,
 };
 
 export default nextConfig;

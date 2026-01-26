@@ -351,7 +351,10 @@ function MilestoneCard({
               {milestone.title}
             </h5>
             {hasDetails && (
-              <button className="flex-shrink-0 text-muted-foreground hover:text-foreground transition-colors p-0.5">
+              <button
+                className="flex-shrink-0 text-muted-foreground hover:text-foreground transition-colors p-0.5"
+                aria-label={isExpanded ? 'Collapse milestone details' : 'Expand milestone details'}
+              >
                 {isExpanded ? (
                   <ChevronDown className="w-4 h-4" />
                 ) : (
