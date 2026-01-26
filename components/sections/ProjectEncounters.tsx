@@ -93,7 +93,7 @@ function ProjectEncounter({
         {project.tech.map((t) => (
           <span
             key={t}
-            className="text-xs text-muted-foreground/60 px-2 py-1 bg-secondary/30 rounded"
+            className="text-xs text-muted-foreground px-2 py-1 bg-secondary/30 rounded"
           >
             {t}
           </span>
@@ -148,7 +148,7 @@ export function ProjectEncounters({ className }: ProjectEncountersProps) {
           {/* Section header */}
           <p
             className={cn(
-              'text-sm text-muted-foreground/60 uppercase tracking-widest mb-12',
+              'text-sm text-muted-foreground uppercase tracking-widest mb-12',
               'transition-opacity duration-500',
               isVisible ? 'opacity-100' : 'opacity-0'
             )}

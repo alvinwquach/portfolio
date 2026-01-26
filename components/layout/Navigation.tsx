@@ -44,104 +44,47 @@ export function Navigation() {
   }, [isOpen]);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center justify-between">
-        {/* Logo */}
-        <Link
-          href="/"
-          className="flex items-center gap-2.5 transition-colors hover:opacity-80"
-        >
-          <Logo size={36} />
-          <div className="flex flex-col leading-tight">
-            <span className="font-semibold text-base text-foreground">Alvin Quach</span>
-            <span className="text-xs text-muted-foreground hidden sm:block">Full Stack Developer</span>
-          </div>
-        </Link>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={cn(
-                'px-4 py-2 text-sm font-medium rounded-md transition-all duration-[var(--timing-micro)]',
-                pathname === link.href
-                  ? 'text-cyan bg-cyan/10'
-                  : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
-              )}
-              aria-current={pathname === link.href ? 'page' : undefined}
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
-
-        {/* CTA Button (Desktop) */}
-        <div className="hidden md:flex items-center gap-4">
-          <Button
-            variant="gold"
-            size="sm"
-            onClick={() => {
-              // If on homepage, scroll to contact. Otherwise navigate to homepage with hash.
-              if (pathname === '/') {
-                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-              } else {
-                window.location.href = '/#contact';
-              }
-            }}
+    <>
+      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container flex h-16 items-center justify-between">
+          {/* Logo */}
+          <Link
+            href="/"
+            className="flex items-center gap-2.5 transition-colors hover:opacity-80"
           >
-            Let's Talk
-          </Button>
-        </div>
+            <Logo size={36} />
+            <div className="flex flex-col leading-tight">
+              <span className="font-semibold text-base text-foreground">Alvin Quach</span>
+              <span className="text-xs text-muted-foreground hidden sm:block">Full Stack Developer</span>
+            </div>
+          </Link>
 
-        {/* Mobile Menu Button */}
-        <Button
-          variant="ghost"
-          size="icon"
-          className="md:hidden"
-          onClick={() => setIsOpen(!isOpen)}
-          aria-label={isOpen ? 'Close menu' : 'Open menu'}
-          aria-expanded={isOpen}
-        >
-          {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </Button>
-      </div>
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={cn(
+                  'px-4 py-2 text-sm font-medium rounded-md transition-all duration-[var(--timing-micro)]',
+                  pathname === link.href
+                    ? 'text-cyan bg-cyan/10'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
+                )}
+                aria-current={pathname === link.href ? 'page' : undefined}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
 
-      {/* Mobile Navigation */}
-      <div
-        className={cn(
-          'fixed inset-x-0 top-16 bottom-0 z-50 bg-background/95 backdrop-blur md:hidden transition-all duration-[var(--timing-beat)]',
-          isOpen
-            ? 'opacity-100 translate-y-0'
-            : 'opacity-0 -translate-y-4 pointer-events-none'
-        )}
-      >
-        <nav className="container flex flex-col gap-2 py-6" aria-label="Mobile navigation">
-          {navLinks.map((link, index) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={cn(
-                'px-4 py-3 text-lg font-medium rounded-md transition-all',
-                'animate-fade-in',
-                pathname === link.href
-                  ? 'text-cyan bg-cyan/10'
-                  : 'text-foreground hover:bg-secondary'
-              )}
-              style={{ animationDelay: `${index * 0.05}s` }}
-              aria-current={pathname === link.href ? 'page' : undefined}
-            >
-              {link.label}
-            </Link>
-          ))}
-          <div className="pt-4 mt-4 border-t">
+          {/* CTA Button (Desktop) */}
+          <div className="hidden md:flex items-center gap-4">
             <Button
               variant="gold"
-              className="w-full"
-              size="lg"
+              size="sm"
               onClick={() => {
-                setIsOpen(false);
+                // If on homepage, scroll to contact. Otherwise navigate to homepage with hash.
                 if (pathname === '/') {
                   document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
                 } else {
@@ -152,8 +95,65 @@ export function Navigation() {
               Let's Talk
             </Button>
           </div>
+
+          {/* Mobile Menu Button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden relative z-[60]"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label={isOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={isOpen}
+          >
+            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </Button>
+        </div>
+      </header>
+
+      {/* Mobile Navigation - rendered outside header to escape stacking context */}
+      <div
+        className={cn(
+          'fixed inset-x-0 top-16 z-[9999] bg-background border-b border-border md:hidden transition-all duration-[var(--timing-beat)]',
+          isOpen
+            ? 'opacity-100 visible'
+            : 'opacity-0 invisible pointer-events-none'
+        )}
+      >
+        <nav className="container flex flex-col gap-2 py-4" aria-label="Mobile navigation">
+          {navLinks.map((link, index) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={cn(
+                'px-4 py-3 text-lg font-medium rounded-md transition-all',
+                isOpen && 'animate-fade-in',
+                pathname === link.href
+                  ? 'text-cyan bg-cyan/10'
+                  : 'text-foreground hover:bg-secondary'
+              )}
+              style={{ animationDelay: isOpen ? `${index * 0.05}s` : '0s' }}
+              aria-current={pathname === link.href ? 'page' : undefined}
+            >
+              {link.label}
+            </Link>
+          ))}
+          <Button
+            variant="gold"
+            className="w-full mt-2"
+            size="default"
+            onClick={() => {
+              setIsOpen(false);
+              if (pathname === '/') {
+                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+              } else {
+                window.location.href = '/#contact';
+              }
+            }}
+          >
+            Let's Talk
+          </Button>
         </nav>
       </div>
-    </header>
+    </>
   );
 }
