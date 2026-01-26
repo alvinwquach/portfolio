@@ -822,7 +822,7 @@ export async function getLandingPageData(): Promise<LandingPageData> {
           description
         }
       }
-      projects(featured: true, limit: 4) {
+      projects(featured: true, limit: 5) {
         ${PROJECT_CARD_FRAGMENT}
       }
       testimonials(featured: true, limit: 3) {

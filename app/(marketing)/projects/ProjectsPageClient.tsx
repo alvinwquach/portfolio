@@ -294,7 +294,7 @@ function ProjectCard({ project }: { project: Project }) {
 
         {/* Actions */}
         <div className="flex items-center gap-2">
-          <Button asChild variant="ghost" size="sm" className="flex-1">
+          <Button asChild size="sm" className="flex-1">
             <Link href={`/projects/${project.slug.current}`}>
               View Case Study
               <ArrowRight className="ml-2 h-3.5 w-3.5" />
