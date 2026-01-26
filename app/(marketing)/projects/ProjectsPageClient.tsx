@@ -77,7 +77,7 @@ function FilterLink({
     >
       {label}
       {count !== undefined && (
-        <span className="ml-1 text-muted-foreground/60">({count})</span>
+        <span className="ml-1 text-muted-foreground">({count})</span>
       )}
     </button>
   );

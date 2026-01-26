@@ -112,7 +112,7 @@ function StatAnnotation({
       <p className="text-2xl md:text-3xl font-light text-foreground/80 tabular-nums">
         {displayValue}
       </p>
-      <p className="text-sm text-muted-foreground/60">{label}</p>
+      <p className="text-sm text-muted-foreground">{label}</p>
     </div>
   );
 }
@@ -148,7 +148,7 @@ export function CompetitionSection({ className }: CompetitionSectionProps) {
       <div className="container relative z-10">
         <div className="max-w-2xl">
           {/* Section label */}
-          <p className="text-sm text-muted-foreground/60 uppercase tracking-widest mb-6">
+          <p className="text-sm text-muted-foreground uppercase tracking-widest mb-6">
             Domain
           </p>
 

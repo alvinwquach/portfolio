@@ -344,8 +344,9 @@ export default async function RootLayout({
          * - Sets up real-time content subscriptions
          * - Content updates appear without page refresh
          * - Uses Sanity's Live Content API
+         * - Only enabled in development or draft mode to avoid CORS issues in production
          */}
-        <SanityLive />
+        {(process.env.NODE_ENV === 'development' || (await draftMode()).isEnabled) && <SanityLive />}
 
         {/**
          * Conditional Visual Editing:

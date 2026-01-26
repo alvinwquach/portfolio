@@ -54,7 +54,7 @@ export function EditorMockup({ className }: EditorMockupProps) {
         <div className="flex">
           {/* Sidebar */}
           <div className="w-48 bg-[#181825] border-r border-border/30 py-2 hidden sm:block">
-            <div className="px-3 py-1 text-xs text-muted-foreground/60 uppercase tracking-wider">
+            <div className="px-3 py-1 text-xs text-muted-foreground uppercase tracking-wider">
               Explorer
             </div>
             <div className="mt-2">
@@ -118,7 +118,7 @@ export function EditorMockup({ className }: EditorMockupProps) {
 
             {/* Scroll Hint Indicator */}
             {showScrollHint && (
-              <div className="absolute bottom-2 right-2 flex items-center gap-1.5 text-xs text-muted-foreground/60 animate-pulse">
+              <div className="absolute bottom-2 right-2 flex items-center gap-1.5 text-xs text-muted-foreground animate-pulse">
                 <span>Scroll</span>
                 <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />

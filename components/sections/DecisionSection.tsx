@@ -195,7 +195,7 @@ export function DecisionSection({ className }: DecisionSectionProps) {
       <div className="container relative z-10">
         <div className="max-w-2xl ml-auto">
           {/* Section label */}
-          <p className="text-sm text-muted-foreground/60 uppercase tracking-widest mb-6">
+          <p className="text-sm text-muted-foreground uppercase tracking-widest mb-6">
             Philosophy
           </p>
 

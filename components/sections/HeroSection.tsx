@@ -113,7 +113,7 @@ export function HeroSection({ profile }: HeroSectionProps) {
           scrolled ? 'opacity-0' : 'opacity-100'
         }`}
       >
-        <div className="flex flex-col items-center gap-2 text-muted-foreground/60">
+        <div className="flex flex-col items-center gap-2 text-muted-foreground">
           <div className="w-5 h-8 rounded-full border border-muted-foreground/30 flex items-start justify-center p-1">
             <div className="w-1 h-1.5 bg-muted-foreground/40 rounded-full animate-pulse" />
           </div>

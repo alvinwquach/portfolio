@@ -312,7 +312,7 @@ export function InterviewPrepClient({ questions }: InterviewPrepClientProps) {
                     >
                       <Icon className={cn('h-3 w-3', isSelected ? 'text-cyan' : config.color)} />
                       {config.label}
-                      <span className="text-muted-foreground/60">({count})</span>
+                      <span className="text-muted-foreground">({count})</span>
                     </button>
                   );
                 })}
