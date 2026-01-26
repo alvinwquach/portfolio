@@ -355,7 +355,7 @@ export default async function ProjectPage({ params }: Props) {
                   className="group rounded-lg border bg-card/50 overflow-hidden"
                 >
                   <summary className="flex items-center gap-3 p-3 cursor-pointer list-none hover:bg-muted/50 transition-colors">
-                    <span className="text-purple-500 font-mono text-xs bg-purple-500/10 px-2 py-0.5 rounded">Q{index + 1}</span>
+                    <span className="text-purple-400 font-mono text-xs bg-purple-500/20 px-2 py-0.5 rounded">Q{index + 1}</span>
                     <span className="text-sm font-medium flex-1">{decision.question}</span>
                     <ChevronRight className="h-4 w-4 text-muted-foreground transition-transform group-open:rotate-90" />
                   </summary>

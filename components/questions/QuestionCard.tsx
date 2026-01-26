@@ -41,9 +41,9 @@ interface QuestionCardProps {
 }
 
 const difficultyColors: Record<string, string> = {
-  easy: 'bg-green-500/10 text-green-600 border-green-500/20',
-  medium: 'bg-yellow-500/10 text-yellow-600 border-yellow-500/20',
-  hard: 'bg-red-500/10 text-red-600 border-red-500/20',
+  easy: 'bg-green-500/20 text-green-500 border-green-500/30',
+  medium: 'bg-yellow-500/20 text-yellow-500 border-yellow-500/30',
+  hard: 'bg-red-500/20 text-red-500 border-red-500/30',
 };
 
 export function QuestionCard({ question, onClick }: QuestionCardProps) {
@@ -51,9 +51,9 @@ export function QuestionCard({ question, onClick }: QuestionCardProps) {
     <button
       onClick={onClick}
       className={cn(
-        'group text-left w-full rounded-xl border bg-card/30 p-5',
+        'group text-left w-full rounded-xl border bg-card p-5',
         'transition-all duration-200',
-        'hover:border-cyan/30 hover:bg-card/50 hover:shadow-md',
+        'hover:border-cyan/30 hover:bg-card/80 hover:shadow-md',
         'focus:outline-none focus:ring-2 focus:ring-cyan/50',
         question.isStarred ? 'border-amber/20' : 'border-border/50'
       )}
@@ -80,9 +80,9 @@ export function QuestionCard({ question, onClick }: QuestionCardProps) {
       </div>
 
       {/* Question Text */}
-      <h3 className="font-semibold text-base leading-snug line-clamp-3 mb-3 group-hover:text-cyan transition-colors">
+      <p className="font-semibold text-base leading-snug line-clamp-3 mb-3 group-hover:text-cyan transition-colors">
         {question.question}
-      </h3>
+      </p>
 
       {/* Tags */}
       {question.tags && question.tags.length > 0 && (

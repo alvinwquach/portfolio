@@ -182,7 +182,7 @@ export default async function ExperiencePage() {
                           <h2 className="text-lg font-semibold">{item.title}</h2>
                         )}
                         {item.isCurrent && (
-                          <Badge className="bg-emerald-500 text-white text-xs py-0">
+                          <Badge className="bg-emerald-600 text-white text-xs py-0">
                             Current
                           </Badge>
                         )}

@@ -8,7 +8,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 function QuestionCardSkeleton() {
   return (
-    <div className="rounded-xl border border-border/50 bg-card/30 p-5 space-y-3">
+    <div className="rounded-xl border border-border/50 bg-card p-5 space-y-3">
       {/* Header row with star and difficulty */}
       <div className="flex items-center gap-2">
         <Skeleton className="h-4 w-4 rounded-full" />

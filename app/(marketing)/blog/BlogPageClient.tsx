@@ -43,19 +43,19 @@ function countNodesByType(nodes: KnowledgeNode[], type: string): number {
 function FeaturedPostCard({ node }: { node: KnowledgeNode }) {
   return (
     <Link href={`/blog/${node.slug.current}`} className="group block">
-      <article className="relative p-8 md:p-10 rounded-xl bg-slate-800 hover:bg-slate-700 transition-all duration-300">
+      <article className="relative p-8 md:p-10 rounded-xl bg-card border border-border/50 hover:border-border transition-all duration-300">
         {/* Date */}
-        <div className="text-sm text-slate-400 mb-4">
+        <div className="text-sm text-muted-foreground mb-4">
           {node.publishedAt ? formatDate(node.publishedAt) : 'Draft'}
         </div>
 
         {/* Title - Large */}
-        <h2 className="text-2xl md:text-3xl font-semibold text-white group-hover:text-orange-300 transition-colors mb-6 max-w-3xl">
+        <h2 className="text-2xl md:text-3xl font-semibold text-foreground group-hover:text-primary transition-colors mb-6 max-w-3xl">
           {node.title}
         </h2>
 
         {/* Read article button */}
-        <span className="inline-flex items-center text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded-full transition-colors">
+        <span className="inline-flex items-center text-sm font-medium text-primary-foreground bg-primary hover:bg-primary/90 px-4 py-2 rounded-full transition-colors">
           Read article
         </span>
       </article>
