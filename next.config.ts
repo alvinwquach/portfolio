@@ -35,18 +35,18 @@ const nextConfig: NextConfig = {
             key: 'X-Frame-Options',
             value: 'SAMEORIGIN',
           },
-          // Content Security Policy - allow SoundCloud iframe and scripts
+          // Content Security Policy - allow SoundCloud iframe and scripts, plus Sanity Studio resources
           {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://w.soundcloud.com https://api.soundcloud.com",
-              "style-src 'self' 'unsafe-inline'",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://w.soundcloud.com https://api.soundcloud.com https://core.sanity-cdn.com https://*.sanity-cdn.com",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "img-src 'self' data: blob: https://cdn.sanity.io https://*.sndcdn.com https://i1.sndcdn.com",
               "media-src 'self' https://*.sndcdn.com https://*.soundcloud.com blob:",
               "frame-src https://w.soundcloud.com https://api.soundcloud.com",
               "connect-src 'self' https://api.soundcloud.com https://*.sndcdn.com https://*.sanity.io wss://*.sanity.io",
-              "font-src 'self' data:",
+              "font-src 'self' data: https://fonts.gstatic.com https://fonts.googleapis.com",
               "frame-ancestors 'self'",
             ].join('; '),
           },
