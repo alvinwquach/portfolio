@@ -141,5 +141,17 @@ export default defineCliConfig({
   api: {
     projectId,  // Which Sanity project
     dataset,    // Which dataset in that project
-  }
+  },
+  /**
+   * Studio Host Configuration
+   *
+   * This specifies the hostname for Sanity-hosted Studio deployment.
+   * When you run `sanity deploy`, it will deploy to: <studioHost>.sanity.studio
+   * 
+   * This avoids the interactive prompt that can cause errors.
+   * Choose a unique hostname (letters only, no numbers or symbols).
+   * 
+   * Your Studio will be available at: https://alvinquach.sanity.studio
+   */
+  studioHost: process.env.SANITY_STUDIO_HOSTNAME || 'alvinquach',
 })
