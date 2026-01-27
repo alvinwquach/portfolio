@@ -10,6 +10,7 @@
 import dynamic from 'next/dynamic';
 import { Music } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { LogoTurntableAnimated } from '@/components/ui/logo-new/LogoTurntableAnimated';
 
 // Dynamic import to avoid SSR issues with Three.js
 const DJScene3D = dynamic(
@@ -17,8 +18,8 @@ const DJScene3D = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="aspect-square max-w-lg mx-auto flex items-center justify-center">
-        <div className="w-16 h-16 border-4 border-amber/30 border-t-amber rounded-full animate-spin" />
+      <div className="w-full h-full flex items-center justify-center bg-background/50">
+        <LogoTurntableAnimated size={200} autoPlay showControls={false} />
       </div>
     ),
   }

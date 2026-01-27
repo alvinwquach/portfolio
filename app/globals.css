@@ -90,23 +90,8 @@
   --radius: 0.5rem;
 }
 
-/* Light mode override (optional - most users will see dark) */
-@media (prefers-color-scheme: light) {
-  :root {
-    --background: var(--slate-50);
-    --foreground: var(--slate-900);
-    --muted: var(--slate-100);
-    --muted-foreground: var(--slate-500);
-    --border: var(--slate-200);
-    --card: var(--slate-50);
-    --card-foreground: var(--slate-900);
-    --popover: var(--slate-50);
-    --popover-foreground: var(--slate-900);
-    --secondary: var(--slate-100);
-    --secondary-foreground: var(--slate-900);
-    --input: var(--slate-200);
-  }
-}
+/* Dark mode only - no light mode override */
+/* Site is always dark regardless of system preference */
 
 /* ============================================
    TAILWIND THEME INLINE

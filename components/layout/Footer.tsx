@@ -4,10 +4,13 @@
  * GreatFrontEnd-style footer with large brand on left, link columns on right.
  */
 
+'use client';
+
 import * as React from 'react';
 import Link from 'next/link';
 import { Github, Linkedin } from 'lucide-react';
 import { Logo } from '@/components/ui/Logo';
+import { LogoTurntableAnimated } from '@/components/ui/logo-new/LogoTurntableAnimated';
 
 // X (Twitter) icon - lucide doesn't have the X logo
 function XIcon({ className }: { className?: string }) {
@@ -68,14 +71,14 @@ const footerLinks = {
 export function Footer({ github, linkedin, twitter }: FooterProps) {
   return (
     <footer className="border-t border-border/30 bg-background">
-      <div className="container py-16 md:py-20">
+      <div className="container max-w-7xl py-16 md:py-20">
         {/* Main footer grid - Brand left, links right */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
           {/* Brand column - larger like GreatFrontEnd */}
           <div className="lg:col-span-4">
             <Link href="/" className="flex items-center gap-3 mb-6">
-              <Logo size={40} />
-              <span className="font-semibold text-foreground text-xl">alvinquach</span>
+              <Logo size={48} />
+              <span className="font-semibold text-foreground text-2xl">alvinquach</span>
             </Link>
             <p className="text-sm text-muted-foreground max-w-[280px] mb-6">
               Full Stack Developer building systems that respect complexity.
@@ -84,13 +87,21 @@ export function Footer({ github, linkedin, twitter }: FooterProps) {
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
               Open to opportunities
             </p>
+
+            {/* Interactive turntable - click play to spin */}
+            <div className="mt-6">
+              <LogoTurntableAnimated
+                size={200}
+                showControls={true}
+              />
+            </div>
           </div>
 
           {/* Link columns */}
           <div className="lg:col-span-8 grid grid-cols-2 sm:grid-cols-4 gap-8">
             {Object.entries(footerLinks).map(([key, section]) => (
               <div key={key}>
-                <h3 className="font-medium text-foreground text-sm mb-4">
+                <h3 className="font-medium text-muted-foreground/70 text-xs mb-3">
                   {section.title}
                 </h3>
                 <ul className="space-y-3">
