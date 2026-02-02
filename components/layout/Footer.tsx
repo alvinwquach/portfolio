@@ -38,7 +38,8 @@ const footerLinks = {
     title: 'Projects',
     links: [
       { label: 'All Projects', href: '/projects' },
-      { label: 'Lacoda Capital Holdings', href: '/projects/lacoda-capital-holdings' },
+      { label: 'Hoparc Physical Therapy', href: '/projects/hoparc' },
+      { label: 'OpportunIQ', href: '/projects/opportuniq' },
       { label: 'Hoop Almanac', href: '/projects/hoop-almanac' },
       { label: 'SculptQL', href: '/projects/sculptql' },
     ],
