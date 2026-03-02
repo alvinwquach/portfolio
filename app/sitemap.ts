@@ -173,58 +173,61 @@
  */
 
 import { MetadataRoute } from "next";
+import { client } from "@/sanity/lib/client";
 
 /**
- * Generate sitemap.xml configuration
- *
- * MetadataRoute.Sitemap is the return type from Next.js
- * It's an array of URL objects with optional metadata
- *
- * @returns Array of sitemap URL entries
+ * Generate sitemap.xml with both static pages and dynamic Sanity content.
+ * Fetches all published projects and blog posts so Google can discover them.
  */
-export default function sitemap(): MetadataRoute.Sitemap {
-  /**
-   * BASE URL
-   * The production domain for your site
-   * All URLs are built from this base
-   */
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://alvinquach.dev";
 
-  /**
-   * ROUTE DEFINITIONS
-   * Array of route paths (without the domain)
-   *
-   * "" = homepage (/)
-   * "/projects" = /projects
-   * etc.
-   *
-   * Add new routes here as you build pages
-   */
-  const routes = [
-    "",           // Home - most important page
-    "/projects",  // Projects page - showcase work
-    "/experience",// Experience page - work history
-    "/skills",    // Skills page - technical abilities
-    "/contact",   // Contact page - how to reach you
+  // Static pages
+  const staticRoutes = [
+    "",
+    "/projects",
+    "/blog",
+    "/experience",
+    "/skills",
+    "/contact",
   ];
 
-  /**
-   * TRANSFORM ROUTES TO SITEMAP ENTRIES
-   *
-   * .map() iterates over each route and returns an object
-   * with the sitemap metadata
-   */
-  return routes.map((route) => ({
-    // Full URL = base + route (e.g., "https://alvinquach.dev/projects")
+  const staticPages: MetadataRoute.Sitemap = staticRoutes.map((route) => ({
     url: `${baseUrl}${route}`,
-
-    // Current date as last modified (update when you have real dates)
     lastModified: new Date(),
-
-    // Weekly updates - adjust based on how often you update
     changeFrequency: "weekly" as const,
-
-    // Homepage (empty route) gets priority 1.0, others get 0.8
     priority: route === "" ? 1 : 0.8,
   }));
+
+  // Fetch dynamic content from Sanity
+  const [projects, posts] = await Promise.all([
+    client.fetch<{ slug: string; _updatedAt: string }[]>(
+      `*[_type == "project" && defined(slug.current)]{
+        "slug": slug.current,
+        _updatedAt
+      }`
+    ),
+    client.fetch<{ slug: string; _updatedAt: string }[]>(
+      `*[_type == "knowledgeNode" && defined(slug.current) && status == "published"]{
+        "slug": slug.current,
+        _updatedAt
+      }`
+    ),
+  ]);
+
+  const projectPages: MetadataRoute.Sitemap = projects.map((project) => ({
+    url: `${baseUrl}/projects/${project.slug}`,
+    lastModified: new Date(project._updatedAt),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  const blogPages: MetadataRoute.Sitemap = posts.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: new Date(post._updatedAt),
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }));
+
+  return [...staticPages, ...projectPages, ...blogPages];
 }
