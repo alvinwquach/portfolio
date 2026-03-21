@@ -56,7 +56,7 @@ import {
   LogoControllerPro,
   LogoVinylSyntax,
   LogoGameDayMix,
-} from '@/components/ui/Logo';
+} from '@/components/ui/logos';
 import { LogoSignature } from '@/components/ui/logo-new/LogoSignature';
 import { LogoSignatureAlt } from '@/components/ui/logo-new/LogoSignatureAlt';
 import { LogoMinimal, LogoMark as LogoMarkNew } from '@/components/ui/logo-new/LogoMinimal';

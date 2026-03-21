@@ -12,7 +12,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { formatDate } from '@/lib/utils';
 import { Search, X, FileText } from 'lucide-react';
-import { LogoMark } from '@/components/ui/Logo';
+import { LogoMark } from '@/components/ui/logos';
 import type { KnowledgeNode, Tag } from '@/lib/graphql/queries';
 
 // Node type configuration for labels

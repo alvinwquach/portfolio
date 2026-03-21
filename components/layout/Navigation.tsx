@@ -13,7 +13,7 @@ import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { Logo } from '@/components/ui/Logo';
+import { Logo } from '@/components/ui/logos';
 
 const navLinks = [
   { href: '/', label: 'Home' },
