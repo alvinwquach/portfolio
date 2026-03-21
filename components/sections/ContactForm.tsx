@@ -6,10 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import {
-  submitContact,
-  initialContactState,
-} from '@/app/actions/contact';
+import { submitContact } from '@/app/actions/contact';
+import { initialContactState } from '@/app/actions/contact.types';
 import { Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 
 function SubmitButton() {
