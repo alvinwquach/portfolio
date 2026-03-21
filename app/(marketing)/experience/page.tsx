@@ -28,6 +28,7 @@ export const metadata = {
 function formatDate(dateString?: string): string {
   if (!dateString) return '';
   const date = new Date(dateString);
+  if (isNaN(date.getTime())) return '';
   return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
 }
 
@@ -35,7 +36,9 @@ function calculateDuration(startDate?: string, endDate?: string, isCurrent?: boo
   if (!startDate) return '';
 
   const start = new Date(startDate);
+  if (isNaN(start.getTime())) return '';
   const end = isCurrent ? new Date() : (endDate ? new Date(endDate) : new Date());
+  if (isNaN(end.getTime())) return '';
 
   const months = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
   const years = Math.floor(months / 12);
@@ -102,7 +105,6 @@ export default async function ExperiencePage() {
     title: proj.name,
     subtitle: proj.clientName || 'Client Project',
     clientIndustry: proj.clientIndustry,
-    startDate: proj.duration?.split(' - ')[0], // Parse from duration if available
     isCurrent: false,
     situation: proj.situation,
     results: proj.results,

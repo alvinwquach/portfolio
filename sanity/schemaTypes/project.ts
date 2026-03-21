@@ -690,6 +690,20 @@ export const project = {
     },
 
     {
+      name: 'startDate',
+      title: 'Start Date',
+      type: 'date',
+      description: 'When work on this project began (used for timeline sorting and duration calculation)',
+    },
+
+    {
+      name: 'endDate',
+      title: 'End Date',
+      type: 'date',
+      description: 'When work on this project ended (leave blank if ongoing)',
+    },
+
+    {
       name: 'duration',
       title: 'Project Duration',
       type: 'string',
