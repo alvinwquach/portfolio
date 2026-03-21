@@ -7,7 +7,8 @@
 
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useInView } from '@/lib/hooks';
 
 interface AnimatedCounterProps {
   value: number;
@@ -24,32 +25,13 @@ export function AnimatedCounter({
   suffix = '',
   className,
 }: AnimatedCounterProps) {
-  const spanRef = useRef<HTMLSpanElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const { ref, isInView } = useInView<HTMLSpanElement>({ threshold: 0.2 });
   const [hasAnimated, setHasAnimated] = useState(false);
   const [displayValue, setDisplayValue] = useState(0);
 
-  // Intersection Observer
-  useEffect(() => {
-    if (!spanRef.current || hasAnimated) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.5 }
-    );
-
-    observer.observe(spanRef.current);
-    return () => observer.disconnect();
-  }, [hasAnimated]);
-
   // Animate when visible
   useEffect(() => {
-    if (!isVisible || hasAnimated) return;
+    if (!isInView || hasAnimated) return;
 
     const animate = async () => {
       const gsapModule = await import('gsap');
@@ -72,10 +54,10 @@ export function AnimatedCounter({
     };
 
     animate();
-  }, [isVisible, value, duration, hasAnimated]);
+  }, [isInView, value, duration, hasAnimated]);
 
   return (
-    <span ref={spanRef} className={className}>
+    <span ref={ref} className={className}>
       {prefix}{displayValue}{suffix}
     </span>
   );

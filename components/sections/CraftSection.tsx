@@ -10,37 +10,21 @@
 'use client';
 
 import * as React from 'react';
-import { useRef, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
+import { useInView } from '@/lib/hooks';
 
 interface CraftSectionProps {
   className?: string;
 }
 
 export function CraftSection({ className }: CraftSectionProps) {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const { ref, isInView } = useInView({ threshold: 0.2 });
   const [score, setScore] = useState(0);
-
-  useEffect(() => {
-    if (!sectionRef.current) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.5 }
-    );
-
-    observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
 
   // Animate the score count
   useEffect(() => {
-    if (!isVisible) return;
+    if (!isInView) return;
 
     const target = 100;
     const duration = 2000;
@@ -61,11 +45,11 @@ export function CraftSection({ className }: CraftSectionProps) {
 
     const timer = setTimeout(animate, 500);
     return () => clearTimeout(timer);
-  }, [isVisible]);
+  }, [isInView]);
 
   return (
     <section
-      ref={sectionRef}
+      ref={ref}
       className={cn('relative py-40', className)}
     >
       <div className="container">
@@ -74,7 +58,7 @@ export function CraftSection({ className }: CraftSectionProps) {
           <div
             className={cn(
               'mb-8 transition-opacity duration-1000',
-              isVisible ? 'opacity-100' : 'opacity-0'
+              isInView ? 'opacity-100' : 'opacity-0'
             )}
           >
             <p className="text-7xl md:text-8xl font-light text-foreground/90 tabular-nums">
@@ -89,7 +73,7 @@ export function CraftSection({ className }: CraftSectionProps) {
           <p
             className={cn(
               'text-lg text-muted-foreground/70 transition-opacity duration-1000',
-              isVisible ? 'opacity-100' : 'opacity-0'
+              isInView ? 'opacity-100' : 'opacity-0'
             )}
             style={{ transitionDelay: '1s' }}
           >

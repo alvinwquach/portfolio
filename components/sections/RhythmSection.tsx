@@ -12,8 +12,8 @@
 'use client';
 
 import * as React from 'react';
-import { useRef, useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
+import { useInView } from '@/lib/hooks';
 
 interface RhythmSectionProps {
   className?: string;
@@ -49,32 +49,15 @@ function WaveformLines({ isVisible }: { isVisible: boolean }) {
 }
 
 export function RhythmSection({ className }: RhythmSectionProps) {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    if (!sectionRef.current) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.3 }
-    );
-
-    observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
+  const { ref, isInView } = useInView({ threshold: 0.2 });
 
   return (
     <section
-      ref={sectionRef}
+      ref={ref}
       className={cn('relative py-32 overflow-hidden', className)}
     >
       {/* Waveform accent */}
-      <WaveformLines isVisible={isVisible} />
+      <WaveformLines isVisible={isInView} />
 
       <div className="container relative z-10">
         <div className="max-w-2xl">

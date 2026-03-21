@@ -9,6 +9,7 @@
 
 import * as React from 'react';
 import { cn } from '@/lib/utils';
+import { useInView } from '@/lib/hooks';
 
 interface StaggerChildrenProps {
   children: React.ReactNode;
@@ -37,37 +38,18 @@ export function StaggerChildren({
   from = 'bottom',
   distance = 30,
 }: StaggerChildrenProps) {
-  const containerRef = React.useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = React.useState(false);
+  const { ref, isInView } = useInView<HTMLDivElement>({ threshold: 0.2 });
   const [hasAnimated, setHasAnimated] = React.useState(false);
-
-  // Intersection Observer
-  React.useEffect(() => {
-    if (!containerRef.current || hasAnimated) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1, rootMargin: '50px' }
-    );
-
-    observer.observe(containerRef.current);
-    return () => observer.disconnect();
-  }, [hasAnimated]);
 
   // Dynamic GSAP import and stagger animation
   React.useEffect(() => {
-    if (!isVisible || !containerRef.current || hasAnimated) return;
+    if (!isInView || !ref.current || hasAnimated) return;
 
     const animate = async () => {
       const gsapModule = await import('gsap');
       const gsap = gsapModule.default;
 
-      const container = containerRef.current;
+      const container = ref.current;
       if (!container) return;
 
       // Get children to animate
@@ -107,10 +89,10 @@ export function StaggerChildren({
     };
 
     animate();
-  }, [isVisible, stagger, duration, delay, childSelector, from, distance, hasAnimated]);
+  }, [isInView, stagger, duration, delay, childSelector, from, distance, hasAnimated, ref]);
 
   return (
-    <div ref={containerRef} className={cn(!hasAnimated && '[&>*]:opacity-0', className)}>
+    <div ref={ref} className={cn(!hasAnimated && '[&>*]:opacity-0', className)}>
       {children}
     </div>
   );

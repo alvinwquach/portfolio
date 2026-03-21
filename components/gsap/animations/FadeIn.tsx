@@ -9,6 +9,7 @@
 
 import * as React from 'react';
 import { cn } from '@/lib/utils';
+import { useInView } from '@/lib/hooks';
 
 type ElementType = 'div' | 'section' | 'article' | 'aside' | 'main' | 'header' | 'footer' | 'nav' | 'span' | 'p' | 'li' | 'ul';
 
@@ -48,44 +49,19 @@ export function FadeIn({
   start = 'top 80%',
   as: Component = 'div',
 }: FadeInProps) {
-  const containerRef = React.useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = React.useState(false);
+  const { ref, isInView } = useInView<HTMLDivElement>({ threshold: 0.2, once });
   const [hasAnimated, setHasAnimated] = React.useState(false);
-
-  // Intersection Observer for visibility detection
-  React.useEffect(() => {
-    if (!containerRef.current || hasAnimated) return;
-
-    // If immediate, skip observer
-    if (immediate) {
-      setIsVisible(true);
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          if (once) observer.disconnect();
-        }
-      },
-      { threshold: 0.1, rootMargin: '50px' }
-    );
-
-    observer.observe(containerRef.current);
-    return () => observer.disconnect();
-  }, [immediate, once, hasAnimated]);
 
   // Dynamic GSAP import and animation
   React.useEffect(() => {
-    if (!isVisible || !containerRef.current || hasAnimated) return;
+    if (!(immediate || isInView) || !ref.current || hasAnimated) return;
 
     const animate = async () => {
       // Dynamic import - keeps GSAP out of initial bundle
       const gsapModule = await import('gsap');
       const gsap = gsapModule.default;
 
-      const element = containerRef.current;
+      const element = ref.current;
       if (!element) return;
 
       // Calculate from position based on direction
@@ -117,11 +93,11 @@ export function FadeIn({
     };
 
     animate();
-  }, [isVisible, from, distance, duration, delay, ease, hasAnimated]);
+  }, [immediate, isInView, from, distance, duration, delay, ease, hasAnimated, ref]);
 
   return (
     <Component
-      ref={containerRef as React.RefObject<any>}
+      ref={ref as React.RefObject<any>}
       className={cn(!hasAnimated && 'opacity-0', className)}
     >
       {children}

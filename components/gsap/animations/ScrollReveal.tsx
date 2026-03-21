@@ -7,8 +7,9 @@
 
 'use client';
 
-import { useEffect, useRef, useState, type ReactNode, type CSSProperties } from 'react';
+import { useEffect, useState, type ReactNode, type CSSProperties } from 'react';
 import { cn } from '@/lib/utils';
+import { useInView } from '@/lib/hooks';
 
 interface ScrollRevealProps {
   children: ReactNode;
@@ -65,38 +66,12 @@ export function ScrollReveal({
   fromVars,
   toVars,
 }: ScrollRevealProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const { ref, isInView } = useInView<HTMLDivElement>({ threshold: 0.2, once });
   const [hasAnimated, setHasAnimated] = useState(false);
-
-  // Use IntersectionObserver to detect when element enters viewport
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          if (once) {
-            observer.disconnect();
-          }
-        } else if (!once) {
-          setIsVisible(false);
-        }
-      },
-      {
-        threshold: 0.1,
-        rootMargin: '50px',
-      }
-    );
-
-    observer.observe(containerRef.current);
-    return () => observer.disconnect();
-  }, [once]);
 
   // Dynamically load GSAP and animate when visible
   useEffect(() => {
-    if (!isVisible || hasAnimated || !containerRef.current) return;
+    if (!isInView || hasAnimated || !ref.current) return;
 
     const animate = async () => {
       const gsapModule = await import('gsap');
@@ -108,7 +83,7 @@ export function ScrollReveal({
       // Wait for next frame to ensure DOM is ready
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          const element = containerRef.current;
+          const element = ref.current;
           if (!element) return;
 
           // Get targets (either children with selector or the container itself)
@@ -159,11 +134,11 @@ export function ScrollReveal({
     };
 
     animate();
-  }, [isVisible, hasAnimated, animation, duration, delay, stagger, staggerSelector, start, once, fromVars, toVars]);
+  }, [isInView, hasAnimated, animation, duration, delay, stagger, staggerSelector, start, once, fromVars, toVars, ref]);
 
   return (
     <div
-      ref={containerRef}
+      ref={ref}
       className={cn(className)}
       style={!hasAnimated ? getInitialStyles(animation) : undefined}
     >
