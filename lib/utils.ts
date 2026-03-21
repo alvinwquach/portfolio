@@ -21,14 +21,37 @@ export function cn(...inputs: ClassValue[]) {
 /**
  * Format a date string for display
  */
-export function formatDate(date: string | Date, options?: Intl.DateTimeFormatOptions): string {
+export function formatDate(date: string | Date | undefined, options?: Intl.DateTimeFormatOptions): string {
+  if (!date) return '';
   const d = typeof date === 'string' ? new Date(date) : date;
+  if (isNaN(d.getTime())) return '';
   return d.toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
     ...options,
   });
+}
+
+/**
+ * Calculate a human-readable duration between two dates
+ */
+export function calculateDuration(startDate?: string, endDate?: string, isCurrent?: boolean): string {
+  if (!startDate) return '';
+  const start = new Date(startDate);
+  if (isNaN(start.getTime())) return '';
+  const end = isCurrent ? new Date() : (endDate ? new Date(endDate) : new Date());
+  if (isNaN(end.getTime())) return '';
+  const months = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
+  const years = Math.floor(months / 12);
+  const remainingMonths = months % 12;
+  if (years === 0) {
+    return `${remainingMonths} mo${remainingMonths !== 1 ? 's' : ''}`;
+  } else if (remainingMonths === 0) {
+    return `${years} yr${years !== 1 ? 's' : ''}`;
+  } else {
+    return `${years} yr${years !== 1 ? 's' : ''} ${remainingMonths} mo${remainingMonths !== 1 ? 's' : ''}`;
+  }
 }
 
 /**

@@ -18,40 +18,12 @@ import {
   ExternalLink,
 } from 'lucide-react';
 import Link from 'next/link';
-import { cn } from '@/lib/utils';
+import { cn, formatDate, calculateDuration } from '@/lib/utils';
 
 export const metadata = {
   title: 'Experience | Work History',
   description: 'Professional work experience and career timeline. Full Stack Developer with experience across manufacturing, tech, and creative industries.',
 };
-
-function formatDate(dateString?: string): string {
-  if (!dateString) return '';
-  const date = new Date(dateString);
-  if (isNaN(date.getTime())) return '';
-  return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-}
-
-function calculateDuration(startDate?: string, endDate?: string, isCurrent?: boolean): string {
-  if (!startDate) return '';
-
-  const start = new Date(startDate);
-  if (isNaN(start.getTime())) return '';
-  const end = isCurrent ? new Date() : (endDate ? new Date(endDate) : new Date());
-  if (isNaN(end.getTime())) return '';
-
-  const months = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
-  const years = Math.floor(months / 12);
-  const remainingMonths = months % 12;
-
-  if (years === 0) {
-    return `${remainingMonths} mo${remainingMonths !== 1 ? 's' : ''}`;
-  } else if (remainingMonths === 0) {
-    return `${years} yr${years !== 1 ? 's' : ''}`;
-  } else {
-    return `${years} yr${years !== 1 ? 's' : ''} ${remainingMonths} mo${remainingMonths !== 1 ? 's' : ''}`;
-  }
-}
 
 // Unified timeline item type
 interface TimelineItem {
@@ -162,7 +134,7 @@ export default async function ExperiencePage() {
                 {/* Date badge - positioned to left on desktop */}
                 <div className="md:absolute md:left-0 md:top-0 md:w-16 md:text-right md:pr-4 mb-1 md:mb-0">
                   <span className="text-xs text-muted-foreground font-medium">
-                    {formatDate(item.startDate)}
+                    {formatDate(item.startDate, { month: 'short', year: 'numeric' })}
                   </span>
                 </div>
 
