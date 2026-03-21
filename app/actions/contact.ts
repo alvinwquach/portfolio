@@ -1,16 +1,7 @@
 'use server';
 
 import { sendContactMessage } from '@/lib/graphql/queries';
-
-export interface ContactFormState {
-  status: 'idle' | 'success' | 'error';
-  message: string;
-}
-
-export const initialContactState: ContactFormState = {
-  status: 'idle',
-  message: '',
-};
+import type { ContactFormState } from './contact.types';
 
 export async function submitContact(
   _prevState: ContactFormState,
