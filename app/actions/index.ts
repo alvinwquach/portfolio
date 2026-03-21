@@ -27,3 +27,4 @@
  * The actual Server Actions have 'use server' in their own files
  */
 export { disableDraftMode } from './draft'
+export { submitContact } from './contact'
