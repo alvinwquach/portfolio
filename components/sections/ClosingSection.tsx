@@ -11,8 +11,8 @@
 'use client';
 
 import * as React from 'react';
-import { useRef, useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
+import { useInView } from '@/lib/hooks';
 
 interface ClosingSectionProps {
   email?: string;
@@ -27,28 +27,11 @@ export function ClosingSection({
   linkedin = 'https://linkedin.com/in/alvinwquach',
   className,
 }: ClosingSectionProps) {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    if (!sectionRef.current) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.5 }
-    );
-
-    observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
+  const { ref, isInView } = useInView({ threshold: 0.2 });
 
   return (
     <section
-      ref={sectionRef}
+      ref={ref}
       className={cn('py-32', className)}
     >
       <div className="container">
@@ -58,7 +41,7 @@ export function ClosingSection({
             className={cn(
               'text-2xl md:text-3xl font-light text-foreground/80 mb-12 leading-relaxed',
               'transition-opacity duration-1000',
-              isVisible ? 'opacity-100' : 'opacity-0'
+              isInView ? 'opacity-100' : 'opacity-0'
             )}
           >
             Let's build something that respects people's time.
@@ -69,7 +52,7 @@ export function ClosingSection({
             className={cn(
               'flex flex-wrap justify-center gap-8 text-muted-foreground',
               'transition-opacity duration-1000',
-              isVisible ? 'opacity-100' : 'opacity-0'
+              isInView ? 'opacity-100' : 'opacity-0'
             )}
             style={{ transitionDelay: '500ms' }}
           >

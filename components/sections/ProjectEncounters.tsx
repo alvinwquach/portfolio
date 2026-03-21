@@ -11,10 +11,10 @@
 'use client';
 
 import * as React from 'react';
-import { useRef, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useInView } from '@/lib/hooks';
 
 interface Project {
   slug: string;
@@ -119,28 +119,11 @@ function ProjectEncounter({
 }
 
 export function ProjectEncounters({ className }: ProjectEncountersProps) {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    if (!sectionRef.current) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
+  const { ref, isInView } = useInView({ threshold: 0.2 });
 
   return (
     <section
-      ref={sectionRef}
+      ref={ref}
       className={cn('py-24', className)}
     >
       <div className="container">
@@ -150,7 +133,7 @@ export function ProjectEncounters({ className }: ProjectEncountersProps) {
             className={cn(
               'text-sm text-muted-foreground uppercase tracking-widest mb-12',
               'transition-opacity duration-500',
-              isVisible ? 'opacity-100' : 'opacity-0'
+              isInView ? 'opacity-100' : 'opacity-0'
             )}
           >
             Selected Work
@@ -162,7 +145,7 @@ export function ProjectEncounters({ className }: ProjectEncountersProps) {
               key={project.slug}
               project={project}
               index={i}
-              isVisible={isVisible}
+              isVisible={isInView}
             />
           ))}
         </div>

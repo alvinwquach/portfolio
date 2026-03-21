@@ -11,8 +11,9 @@
 'use client';
 
 import * as React from 'react';
-import { useRef, useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
+import { useInView } from '@/lib/hooks';
 
 interface CompetitionSectionProps {
   className?: string;
@@ -118,32 +119,15 @@ function StatAnnotation({
 }
 
 export function CompetitionSection({ className }: CompetitionSectionProps) {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    if (!sectionRef.current) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.3 }
-    );
-
-    observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
+  const { ref, isInView } = useInView({ threshold: 0.2 });
 
   return (
     <section
-      ref={sectionRef}
+      ref={ref}
       className={cn('relative py-32 overflow-hidden', className)}
     >
       {/* Shot arc */}
-      <ShotArc isVisible={isVisible} />
+      <ShotArc isVisible={isInView} />
 
       <div className="container relative z-10">
         <div className="max-w-2xl">
@@ -180,19 +164,19 @@ export function CompetitionSection({ className }: CompetitionSectionProps) {
               value="95ms"
               label="Latency"
               delay={800}
-              isVisible={isVisible}
+              isVisible={isInView}
             />
             <StatAnnotation
               value="150"
               label="Concurrent users"
               delay={1000}
-              isVisible={isVisible}
+              isVisible={isInView}
             />
             <StatAnnotation
               value="99.9%"
               label="Uptime"
               delay={1200}
-              isVisible={isVisible}
+              isVisible={isInView}
             />
           </div>
         </div>

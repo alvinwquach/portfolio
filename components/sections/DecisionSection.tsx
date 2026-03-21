@@ -10,8 +10,9 @@
 'use client';
 
 import * as React from 'react';
-import { useRef, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
+import { useInView } from '@/lib/hooks';
 
 interface DecisionSectionProps {
   className?: string;
@@ -149,29 +150,14 @@ function DecisionTree({ isVisible, progress }: { isVisible: boolean; progress: n
 }
 
 export function DecisionSection({ className }: DecisionSectionProps) {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const { ref, isInView } = useInView({ threshold: 0.2 });
   const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
-    if (!sectionRef.current) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsVisible(entry.isIntersecting);
-      },
-      { threshold: 0.2 }
-    );
-
-    observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!sectionRef.current || !isVisible) return;
+    if (!ref.current || !isInView) return;
 
     const handleScroll = () => {
-      const rect = sectionRef.current!.getBoundingClientRect();
+      const rect = ref.current!.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
       const progress = Math.max(0, Math.min(1,
         1 - (rect.top / viewportHeight)
@@ -182,15 +168,15 @@ export function DecisionSection({ className }: DecisionSectionProps) {
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [isVisible]);
+  }, [isInView, ref]);
 
   return (
     <section
-      ref={sectionRef}
+      ref={ref}
       className={cn('relative py-32 overflow-hidden', className)}
     >
       {/* Decision tree */}
-      <DecisionTree isVisible={isVisible} progress={scrollProgress} />
+      <DecisionTree isVisible={isInView} progress={scrollProgress} />
 
       <div className="container relative z-10">
         <div className="max-w-2xl ml-auto">

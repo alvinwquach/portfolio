@@ -9,6 +9,7 @@
 
 import * as React from 'react';
 import { cn } from '@/lib/utils';
+import { useInView } from '@/lib/hooks';
 
 interface TextRevealProps {
   children: string;
@@ -34,8 +35,7 @@ export function TextReveal({
   delay = 0,
   as: Component = 'div',
 }: TextRevealProps) {
-  const containerRef = React.useRef<HTMLElement>(null);
-  const [isVisible, setIsVisible] = React.useState(false);
+  const { ref, isInView } = useInView<HTMLElement>({ threshold: 0.2 });
   const [hasAnimated, setHasAnimated] = React.useState(false);
 
   // Split text into elements
@@ -54,33 +54,15 @@ export function TextReveal({
     ));
   }, [children, by]);
 
-  // Intersection Observer
-  React.useEffect(() => {
-    if (!containerRef.current || hasAnimated) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.2 }
-    );
-
-    observer.observe(containerRef.current);
-    return () => observer.disconnect();
-  }, [hasAnimated]);
-
   // Dynamic GSAP import and animation
   React.useEffect(() => {
-    if (!isVisible || !containerRef.current || hasAnimated) return;
+    if (!isInView || !ref.current || hasAnimated) return;
 
     const animate = async () => {
       const gsapModule = await import('gsap');
       const gsap = gsapModule.default;
 
-      const container = containerRef.current;
+      const container = ref.current;
       if (!container) return;
 
       const spans = container.querySelectorAll('span');
@@ -106,10 +88,10 @@ export function TextReveal({
     };
 
     animate();
-  }, [isVisible, duration, delay, stagger, hasAnimated]);
+  }, [isInView, duration, delay, stagger, hasAnimated, ref]);
 
   return (
-    <Component ref={containerRef as React.RefObject<any>} className={className}>
+    <Component ref={ref as React.RefObject<any>} className={className}>
       {elements}
     </Component>
   );

@@ -8,8 +8,9 @@
 
 'use client';
 
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { cn } from '@/lib/utils';
+import { useInView } from '@/lib/hooks';
 
 interface AnimatedSectionProps {
   children: ReactNode;
@@ -30,31 +31,12 @@ export function AnimatedSection({
   staggerAmount = 0.1,
   threshold = 0.2,
 }: AnimatedSectionProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const { ref, isInView } = useInView<HTMLDivElement>({ threshold: 0.2 });
   const [hasAnimated, setHasAnimated] = useState(false);
-
-  // Intersection Observer to detect visibility
-  useEffect(() => {
-    if (!containerRef.current || hasAnimated) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold, rootMargin: '50px' }
-    );
-
-    observer.observe(containerRef.current);
-    return () => observer.disconnect();
-  }, [threshold, hasAnimated]);
 
   // Dynamic GSAP import and animation
   useEffect(() => {
-    if (!isVisible || !containerRef.current || hasAnimated) return;
+    if (!isInView || !ref.current || hasAnimated) return;
 
     const animate = async () => {
       // Dynamic import - GSAP not in initial bundle
@@ -64,7 +46,7 @@ export function AnimatedSection({
 
       gsap.registerPlugin(ScrollTrigger);
 
-      const element = containerRef.current;
+      const element = ref.current;
       if (!element) return;
 
       // Get animation targets
@@ -109,11 +91,11 @@ export function AnimatedSection({
     };
 
     animate();
-  }, [isVisible, animation, delay, duration, staggerAmount, hasAnimated]);
+  }, [isInView, animation, delay, duration, staggerAmount, hasAnimated, ref]);
 
   return (
     <div
-      ref={containerRef}
+      ref={ref}
       className={cn(
         // Start invisible, CSS handles initial state
         !hasAnimated && 'opacity-0',
