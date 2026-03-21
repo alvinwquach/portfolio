@@ -6,9 +6,6 @@
  * Includes window, door frame, baseboards, and wall details.
  */
 
-'use client';
-
-import * as React from 'react';
 import * as THREE from 'three';
 
 interface RoomProps {

@@ -5,9 +5,6 @@
  * Represents continuous learning and knowledge sharing.
  */
 
-'use client';
-
-import * as React from 'react';
 import * as THREE from 'three';
 
 interface MiniBookshelfProps {

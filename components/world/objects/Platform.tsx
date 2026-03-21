@@ -5,9 +5,6 @@
  * Forms the foundation of the miniature studio diorama.
  */
 
-'use client';
-
-import * as React from 'react';
 import * as THREE from 'three';
 
 interface PlatformProps {
