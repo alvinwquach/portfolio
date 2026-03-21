@@ -24,8 +24,6 @@
  * without requiring the user to read text.
  */
 
-'use client';
-
 import { cn } from '@/lib/utils';
 import type { Language, TabName } from './types';
 import { getFileExtension } from './syntax-highlighter';

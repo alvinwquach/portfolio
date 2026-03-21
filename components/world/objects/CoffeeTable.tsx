@@ -4,10 +4,6 @@
  * A low coffee table with some items on top.
  */
 
-'use client';
-
-import * as React from 'react';
-
 interface CoffeeTableProps {
   position?: [number, number, number];
   rotation?: [number, number, number];

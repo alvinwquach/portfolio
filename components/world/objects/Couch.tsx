@@ -4,10 +4,6 @@
  * A simple but cozy couch with cushions and throw pillows.
  */
 
-'use client';
-
-import * as React from 'react';
-
 interface CouchProps {
   position?: [number, number, number];
   rotation?: [number, number, number];

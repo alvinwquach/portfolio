@@ -4,9 +4,6 @@
  * GreatFrontEnd-style footer with large brand on left, link columns on right.
  */
 
-'use client';
-
-import * as React from 'react';
 import Link from 'next/link';
 import { Github, Linkedin } from 'lucide-react';
 import { Logo } from '@/components/ui/Logo';

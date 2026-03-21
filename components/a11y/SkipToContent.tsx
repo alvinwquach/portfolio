@@ -5,8 +5,6 @@
  * Allows users to skip directly to main content
  */
 
-'use client';
-
 export function SkipToContent() {
   return (
     <a
