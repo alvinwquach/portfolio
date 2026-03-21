@@ -6,7 +6,7 @@
 
 import Link from 'next/link';
 import { Github, Linkedin } from 'lucide-react';
-import { Logo } from '@/components/ui/Logo';
+import { Logo } from '@/components/ui/logos';
 import { LogoTurntableAnimated } from '@/components/ui/logo-new/LogoTurntableAnimated';
 
 // X (Twitter) icon - lucide doesn't have the X logo
