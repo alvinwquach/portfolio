@@ -43,7 +43,7 @@ export function FeaturedProjects({ projects }: FeaturedProjectsProps) {
               <div className="flex items-end justify-between mb-12">
                 <div>
                   <p className="text-xs font-medium text-amber mb-2">
-                    Client Work
+                    T Creative Studio
                   </p>
                   <h2 className="text-3xl md:text-4xl font-bold mb-2">
                     Professional Projects
@@ -84,10 +84,10 @@ export function FeaturedProjects({ projects }: FeaturedProjectsProps) {
               <div className="flex items-end justify-between mb-12">
                 <div>
                   <p className="text-xs font-medium text-cyan mb-2">
-                    Personal Projects
+                    Products
                   </p>
                   <h2 className="text-3xl md:text-4xl font-bold mb-2">
-                    Side Projects & Experiments
+                    Products
                   </h2>
                   <p className="text-lg text-muted-foreground">
                     Ideas I've built to learn, explore, and solve problems
@@ -133,7 +133,7 @@ function ClientProjectCard({ project, isFeatured = false }: { project: Project; 
     <div className="relative rounded-2xl border border-amber/20 bg-gradient-to-br from-amber/5 via-background to-background overflow-hidden">
       <div className="grid lg:grid-cols-2 gap-8">
         {/* Image Side */}
-        <div className="relative aspect-[16/10] lg:aspect-auto lg:min-h-[500px]">
+        <div className="relative aspect-[16/10] lg:aspect-auto">
           {project.image?.url ? (
             <Image
               src={project.image.url}
@@ -174,7 +174,7 @@ function ClientProjectCard({ project, isFeatured = false }: { project: Project; 
           </div>
 
           {/* Title */}
-          <h3 className="text-3xl md:text-4xl font-bold mb-3">
+          <h3 className="text-2xl md:text-3xl font-bold mb-3">
             <Link
               href={`/projects/${project.slug.current}`}
               className="hover:text-amber transition-colors"
@@ -190,44 +190,33 @@ function ClientProjectCard({ project, isFeatured = false }: { project: Project; 
             </p>
           )}
 
-          {/* Situation/Problem */}
-          {project.situation && (
-            <p className="text-muted-foreground mb-6 line-clamp-3">
-              {project.situation}
-            </p>
-          )}
-
-          {/* Full Tech Stack */}
+          {/* Tech Stack - max 5 pills */}
           {project.techStack && project.techStack.length > 0 && (
             <div className="mb-6">
               <p className="text-xs font-medium text-muted-foreground mb-2">
                 Tech Stack
               </p>
               <div className="flex flex-wrap gap-1.5">
-                {project.techStack.map((skill) => (
+                {project.techStack.slice(0, 5).map((skill) => (
                   <Badge key={skill._id} variant="outline" className="text-xs">
                     {skill.name}
                   </Badge>
                 ))}
+                {project.techStack.length > 5 && (
+                  <Badge variant="outline" className="text-xs text-muted-foreground">
+                    +{project.techStack.length - 5} more
+                  </Badge>
+                )}
               </div>
             </div>
           )}
 
-          {/* Key Results */}
+          {/* Key Result - 1 headline only */}
           {project.results && project.results.length > 0 && (
-            <div className="mb-6">
-              <p className="text-xs font-medium text-muted-foreground mb-2">
-                Key Results
-              </p>
-              <ul className="space-y-1">
-                {project.results.slice(0, 3).map((result, i) => (
-                  <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
-                    <span className="text-amber mt-1">•</span>
-                    <span>{result}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <p className="text-sm text-muted-foreground mb-6 flex items-start gap-2">
+              <span className="text-amber mt-0.5">•</span>
+              <span>{project.results[0]}</span>
+            </p>
           )}
 
           {/* Actions - Always visible */}
@@ -344,18 +333,12 @@ function ClientProjectCardCompact({ project }: { project: Project }) {
           </div>
         )}
 
-        {/* Key Results - Show top 2 */}
+        {/* Key Result - 1 headline only */}
         {project.results && project.results.length > 0 && (
-          <div className="mb-4">
-            <ul className="space-y-1">
-              {project.results.slice(0, 2).map((result, i) => (
-                <li key={i} className="text-xs text-muted-foreground flex items-start gap-2">
-                  <span className="text-amber mt-0.5">•</span>
-                  <span className="line-clamp-1">{result}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <p className="text-xs text-muted-foreground mb-4 flex items-start gap-2">
+            <span className="text-amber mt-0.5">•</span>
+            <span className="line-clamp-1">{project.results[0]}</span>
+          </p>
         )}
 
         {/* Actions */}
@@ -441,14 +424,19 @@ function PersonalProjectCard({ project, priority = false }: { project: Project; 
           </p>
         )}
 
-        {/* Tech Stack - Full */}
+        {/* Tech Stack - max 5 pills */}
         {project.techStack && project.techStack.length > 0 && (
           <div className="flex flex-wrap gap-1 mb-4">
-            {project.techStack.map((skill) => (
+            {project.techStack.slice(0, 5).map((skill) => (
               <Badge key={skill._id} variant="secondary" className="text-xs">
                 {skill.name}
               </Badge>
             ))}
+            {project.techStack.length > 5 && (
+              <Badge variant="secondary" className="text-xs text-muted-foreground">
+                +{project.techStack.length - 5}
+              </Badge>
+            )}
           </div>
         )}
 
