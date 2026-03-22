@@ -18,13 +18,31 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+const MONTH_ABBR: Record<string, number> = {
+  Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5,
+  Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11,
+};
+
+// Parses "MMM YYYY" strings (e.g. "Aug 2022") that new Date() can't handle reliably,
+// falling back to native parsing for ISO dates.
+function parseDate(date: string): Date | null {
+  const match = date.trim().match(/^([A-Za-z]{3})\s+(\d{4})$/);
+  if (match) {
+    const month = MONTH_ABBR[match[1]];
+    const year = parseInt(match[2], 10);
+    if (month !== undefined && !isNaN(year)) return new Date(year, month, 1);
+  }
+  const d = new Date(date);
+  return isNaN(d.getTime()) ? null : d;
+}
+
 /**
  * Format a date string for display
  */
 export function formatDate(date: string | Date | undefined, options?: Intl.DateTimeFormatOptions): string {
   if (!date) return '';
-  const d = typeof date === 'string' ? new Date(date) : date;
-  if (isNaN(d.getTime())) return '';
+  const d = typeof date === 'string' ? parseDate(date) : date;
+  if (!d || isNaN(d.getTime())) return '';
   return d.toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
@@ -38,9 +56,9 @@ export function formatDate(date: string | Date | undefined, options?: Intl.DateT
  */
 export function calculateDuration(startDate?: string, endDate?: string, isCurrent?: boolean): string {
   if (!startDate) return '';
-  const start = new Date(startDate);
-  if (isNaN(start.getTime())) return '';
-  const end = isCurrent ? new Date() : (endDate ? new Date(endDate) : new Date());
+  const start = parseDate(startDate);
+  if (!start) return '';
+  const end = isCurrent ? new Date() : (endDate ? parseDate(endDate) : null) ?? new Date();
   if (isNaN(end.getTime())) return '';
   const months = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
   const years = Math.floor(months / 12);
