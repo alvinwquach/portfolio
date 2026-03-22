@@ -43,7 +43,7 @@ export function FeaturedProjects({ projects }: FeaturedProjectsProps) {
               <div className="flex items-end justify-between mb-12">
                 <div>
                   <p className="text-xs font-medium text-amber mb-2">
-                    T Creative Studio
+                    Client Work
                   </p>
                   <h2 className="text-3xl md:text-4xl font-bold mb-2">
                     Professional Projects
