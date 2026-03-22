@@ -55,6 +55,8 @@ interface AnimatedTextProps {
   /** Total animation duration in seconds. Default varies per animation. */
   duration?:  number;
   className?: string;
+  /** Inline styles forwarded to the rendered element. */
+  style?:     React.CSSProperties;
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -70,6 +72,7 @@ export function AnimatedText({
   stagger,
   duration,
   className,
+  style,
 }: AnimatedTextProps) {
   const rootRef = useRef<HTMLElement>(null);
 
@@ -94,7 +97,7 @@ export function AnimatedText({
     { dependencies: [animation, trigger, delay, stagger, duration] },
   );
 
-  return createElement(as as ElementType, { ref: rootRef, className }, children);
+  return createElement(as as ElementType, { ref: rootRef, className, style }, children);
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
