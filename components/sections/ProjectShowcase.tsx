@@ -217,7 +217,7 @@ export function ProjectShowcase({ projects, className }: ProjectShowcaseProps) {
                     <AccordionItem value="results">
                       <AccordionTrigger className="hover:no-underline">
                         <div className="flex items-center gap-2">
-                          <TrendingUp className="h-4 w-4 text-green-600" />
+                          <TrendingUp className="h-4 w-4 text-success" />
                           <span className="font-semibold">Results</span>
                           <span className="text-xs text-muted-foreground ml-2">
                             Measurable outcomes
@@ -231,7 +231,7 @@ export function ProjectShowcase({ projects, className }: ProjectShowcaseProps) {
                               key={i}
                               className="flex gap-2 text-muted-foreground"
                             >
-                              <span className="text-green-600 shrink-0">✓</span>
+                              <span className="text-success shrink-0">✓</span>
                               <span className="font-medium">{result}</span>
                             </li>
                           ))}

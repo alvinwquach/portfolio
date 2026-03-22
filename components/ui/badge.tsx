@@ -22,19 +22,19 @@ const badgeVariants = cva(
         outline: 'text-foreground',
         gold:
           'border-transparent bg-accent text-accent-foreground',
-        // Node type variants
+        // Node type variants — MODIFIED(feat/design-system): Late Night Session palette
         build:
-          'border-transparent bg-cyan/10 text-cyan',
+          'border-transparent bg-info/10 text-info',
         bug:
-          'border-transparent bg-coral/10 text-coral',
+          'border-transparent bg-error/10 text-error',
         decision:
-          'border-transparent bg-amber/10 text-amber-700',
+          'border-transparent bg-accent-warm/10 text-accent-warm',
         concept:
-          'border-transparent bg-emerald-500/10 text-emerald-700',
+          'border-transparent bg-success/10 text-success',
         tutorial:
-          'border-transparent bg-purple-500/10 text-purple-700',
+          'border-transparent bg-accent/10 text-accent',
         chart:
-          'border-transparent bg-cyan-500/10 text-cyan-700',
+          'border-transparent bg-info/10 text-info',
       },
     },
     defaultVariants: {

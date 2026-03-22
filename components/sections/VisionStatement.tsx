@@ -53,15 +53,15 @@ export function VisionStatement({
       icon: Code,
       title: 'Impact',
       description: 'Building products that serve education, research, and real people — beyond profit metrics',
-      color: 'text-green-600',
-      bg: 'bg-green-600/10',
+      color: 'text-success',
+      bg: 'bg-success/10',
     },
     {
       icon: Lightbulb,
       title: 'Deep Expertise',
       description: 'Real-time systems, data-intensive applications, edge computing, headless CMS',
-      color: 'text-purple-600',
-      bg: 'bg-purple-600/10',
+      color: 'text-accent',
+      bg: 'bg-accent/10',
     },
   ];
 

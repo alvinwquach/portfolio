@@ -231,17 +231,17 @@ export default async function ProjectPage({ params }: Props) {
           <section className="mb-12">
             <SectionHeader
               icon={Rocket}
-              iconColor="text-emerald-500"
-              iconBg="bg-emerald-500/10"
+              iconColor="text-success"
+              iconBg="bg-success/10"
               title="The Outcome"
             />
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {project.results.map((result, index) => (
                 <div
                   key={index}
-                  className="flex items-start gap-2.5 p-3 rounded-lg bg-emerald-500/5 border border-emerald-500/10"
+                  className="flex items-start gap-2.5 p-3 rounded-lg bg-success/5 border border-success/10"
                 >
-                  <CheckCircle2 className="h-4 w-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <CheckCircle2 className="h-4 w-4 text-success flex-shrink-0 mt-0.5" />
                   <p className="text-sm text-foreground leading-snug">{result}</p>
                 </div>
               ))}
@@ -254,8 +254,8 @@ export default async function ProjectPage({ params }: Props) {
           <section className="mb-12">
             <SectionHeader
               icon={Map}
-              iconColor="text-purple-500"
-              iconBg="bg-purple-500/10"
+              iconColor="text-accent"
+              iconBg="bg-accent/10"
               title="Project Roadmap"
               subtitle="MVP, stretch goals, and future vision"
             />
@@ -343,8 +343,8 @@ export default async function ProjectPage({ params }: Props) {
           <section className="mb-12">
             <SectionHeader
               icon={HelpCircle}
-              iconColor="text-purple-500"
-              iconBg="bg-purple-500/10"
+              iconColor="text-accent"
+              iconBg="bg-accent/10"
               title="Technical Decisions"
               subtitle="Quick answers to 'Why did you choose X?' questions"
             />
@@ -355,12 +355,12 @@ export default async function ProjectPage({ params }: Props) {
                   className="group rounded-lg border bg-card/50 overflow-hidden"
                 >
                   <summary className="flex items-center gap-3 p-3 cursor-pointer list-none hover:bg-muted/50 transition-colors">
-                    <span className="text-purple-400 font-mono text-xs bg-purple-500/20 px-2 py-0.5 rounded">Q{index + 1}</span>
+                    <span className="text-accent font-mono text-xs bg-accent/20 px-2 py-0.5 rounded">Q{index + 1}</span>
                     <span className="text-sm font-medium flex-1">{decision.question}</span>
                     <ChevronRight className="h-4 w-4 text-muted-foreground transition-transform group-open:rotate-90" />
                   </summary>
                   <div className="px-4 pb-4 pt-1">
-                    <div className="ml-10 pl-4 border-l-2 border-purple-500/20">
+                    <div className="ml-10 pl-4 border-l-2 border-accent/20">
                       <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-wrap">
                         {decision.answer}
                       </p>
@@ -394,13 +394,13 @@ export default async function ProjectPage({ params }: Props) {
                   <div className="p-4 grid md:grid-cols-3 gap-4 text-sm">
                     {tradeoff.prosGained && tradeoff.prosGained.length > 0 && (
                       <div>
-                        <h4 className="text-xs font-semibold text-emerald-500 mb-2 flex items-center gap-1.5">
+                        <h4 className="text-xs font-semibold text-success mb-2 flex items-center gap-1.5">
                           <CheckCircle2 className="h-3.5 w-3.5" /> Gained
                         </h4>
                         <ul className="space-y-1.5 text-muted-foreground">
                           {tradeoff.prosGained.map((pro, i) => (
                             <li key={i} className="flex gap-2">
-                              <span className="text-emerald-500">+</span>
+                              <span className="text-success">+</span>
                               {pro}
                             </li>
                           ))}
@@ -409,13 +409,13 @@ export default async function ProjectPage({ params }: Props) {
                     )}
                     {tradeoff.consAccepted && tradeoff.consAccepted.length > 0 && (
                       <div>
-                        <h4 className="text-xs font-semibold text-red-400 mb-2 flex items-center gap-1.5">
+                        <h4 className="text-xs font-semibold text-error mb-2 flex items-center gap-1.5">
                           <XCircle className="h-3.5 w-3.5" /> Gave Up
                         </h4>
                         <ul className="space-y-1.5 text-muted-foreground">
                           {tradeoff.consAccepted.map((con, i) => (
                             <li key={i} className="flex gap-2">
-                              <span className="text-red-400">−</span>
+                              <span className="text-error">−</span>
                               {con}
                             </li>
                           ))}
@@ -444,8 +444,8 @@ export default async function ProjectPage({ params }: Props) {
           <section className="mb-12">
             <SectionHeader
               icon={AlertTriangle}
-              iconColor="text-red-400"
-              iconBg="bg-red-500/10"
+              iconColor="text-error"
+              iconBg="bg-error/10"
               title="Challenges & Solutions"
               subtitle="The hardest problems I solved on this project"
             />
@@ -456,7 +456,7 @@ export default async function ProjectPage({ params }: Props) {
                   className="group rounded-lg border bg-card/50 overflow-hidden"
                 >
                   <summary className="flex items-center gap-3 p-3 cursor-pointer list-none hover:bg-muted/50 transition-colors">
-                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-red-500/10 text-red-400 text-xs font-bold flex items-center justify-center">
+                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-error/10 text-error text-xs font-bold flex items-center justify-center">
                       {index + 1}
                     </span>
                     <span className="text-sm font-medium flex-1">{challenge.problem}</span>
@@ -472,7 +472,7 @@ export default async function ProjectPage({ params }: Props) {
                       )}
                       {challenge.solution && (
                         <div>
-                          <h4 className="text-xs font-semibold text-emerald-500 mb-1">Solution</h4>
+                          <h4 className="text-xs font-semibold text-success mb-1">Solution</h4>
                           <p className="text-muted-foreground leading-relaxed">{challenge.solution}</p>
                         </div>
                       )}
@@ -690,9 +690,9 @@ function STARBlock({
 }) {
   const colorClasses = {
     amber: 'bg-amber/5 border-amber/10 text-amber',
-    blue: 'bg-blue-500/5 border-blue-500/10 text-blue-500',
+    blue: 'bg-info/5 border-info/10 text-info',
     cyan: 'bg-cyan/5 border-cyan/10 text-cyan',
-    emerald: 'bg-emerald-500/5 border-emerald-500/10 text-emerald-500',
+    emerald: 'bg-success/5 border-success/10 text-success',
   };
 
   return (
@@ -701,9 +701,9 @@ function STARBlock({
         <span className={cn(
           'w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold',
           color === 'amber' && 'bg-amber/20 text-amber',
-          color === 'blue' && 'bg-blue-500/20 text-blue-500',
+          color === 'blue' && 'bg-info/20 text-info',
           color === 'cyan' && 'bg-cyan/20 text-cyan',
-          color === 'emerald' && 'bg-emerald-500/20 text-emerald-500'
+          color === 'emerald' && 'bg-success/20 text-success'
         )}>
           {letter}
         </span>

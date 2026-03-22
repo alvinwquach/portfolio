@@ -30,10 +30,15 @@ import type { Metadata } from "next";
  * - Automatically applies size-adjust to minimize CLS (layout shift)
  * - Returns object with className and variable properties
  *
- * variable: Creates a CSS custom property (--font-geist-sans)
+ * variable: Creates a CSS custom property used by globals.css @theme inline
  * subsets: Which character sets to include (reduces file size)
+ *
+ * MODIFIED(feat/design-system): Late Night Session typography
+ *   display → Space Mono   (retro-future headings, brand moments)
+ *   body    → DM Sans      (clean geometric sans; Satoshi not on @fontsource)
+ *   code    → Fira Code    (ligature-rich monospace for editor + code blocks)
  */
-import { Geist, Geist_Mono } from "next/font/google";
+import { Space_Mono, DM_Sans, Fira_Code } from "next/font/google";
 
 /**
  * Global CSS:
@@ -70,21 +75,37 @@ import { SanityLive } from "@/sanity/lib/live";
 import { getProfile } from "@/lib/graphql/queries";
 
 /**
- * Font Configuration:
- * - Geist: Sans-serif font for body text
- * - Geist_Mono: Monospace font for code
+ * Font Configuration — Late Night Session typography
+ * ---------------------------------------------------
+ * Three fonts, three roles:
  *
- * variable property creates CSS custom property:
- * - --font-geist-sans can be used in CSS/Tailwind
- * - Tailwind config can reference these: fontFamily: { sans: ['var(--font-geist-sans)'] }
+ * Space Mono  → display  Brand identity, hero headings, section titles.
+ *               Retro-future monospace. Signals "engineer who also designs."
+ *
+ * DM Sans     → body     Body copy, UI labels, nav, prose.
+ *               Clean geometric sans — nearest open-source match to Satoshi.
+ *               (Satoshi is Fontshare-only; not on npm/@fontsource.)
+ *
+ * Fira Code   → code     Code editor, inline <code>, terminal output.
+ *               Ligature-rich monospace designed specifically for code.
+ *
+ * Each `variable` creates a CSS custom property consumed by globals.css:
+ *   --font-space-mono, --font-dm-sans, --font-fira-code
+ * globals.css @theme inline maps those → --font-display/body/code
  */
-const geistSans = Geist({
-  variable: "--font-geist-sans",  // CSS variable name
-  subsets: ["latin"],             // Only include latin characters
+const spaceMono = Space_Mono({
+  variable: "--font-space-mono",  // display role: headings, hero
+  weight: ["400", "700"],
+  subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",     // body role: UI, prose
+  subsets: ["latin"],
+});
+
+const firaCode = Fira_Code({
+  variable: "--font-fira-code",   // code role: editor, mono UI
   subsets: ["latin"],
 });
 
@@ -267,7 +288,7 @@ export default async function RootLayout({
        * Template literal (`${var}`) combines multiple class names
        */}
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${spaceMono.variable} ${dmSans.variable} ${firaCode.variable} antialiased`}
       >
         {/* Page content from child routes */}
         {children}

@@ -33,9 +33,9 @@ interface QuestionDetailPanelProps {
 }
 
 const difficultyColors: Record<string, string> = {
-  easy: 'bg-green-500/10 text-green-600 border-green-500/20',
+  easy: 'bg-success/10 text-success border-success/20',
   medium: 'bg-yellow-500/10 text-yellow-600 border-yellow-500/20',
-  hard: 'bg-red-500/10 text-red-600 border-red-500/20',
+  hard: 'bg-error/10 text-error border-error/20',
 };
 
 // Portable Text components for rich text rendering
@@ -223,7 +223,7 @@ export function QuestionDetailPanel({
           {question.keyPoints && question.keyPoints.length > 0 && (
             <div>
               <div className="flex items-center gap-2 mb-3">
-                <CheckCircle2 className="h-4 w-4 text-green-500" />
+                <CheckCircle2 className="h-4 w-4 text-success" />
                 <h4 className="text-sm font-semibold text-muted-foreground">
                   Key Points to Hit
                 </h4>
@@ -231,7 +231,7 @@ export function QuestionDetailPanel({
               <ul className="space-y-2 pl-6">
                 {question.keyPoints.map((point, i) => (
                   <li key={i} className="flex gap-2 text-sm">
-                    <span className="text-green-500 shrink-0">✓</span>
+                    <span className="text-success shrink-0">✓</span>
                     <span>{point}</span>
                   </li>
                 ))}
@@ -288,14 +288,14 @@ export function QuestionDetailPanel({
 
           {/* Red Flags */}
           {question.redFlags && question.redFlags.length > 0 && (
-            <div className="p-4 bg-red-500/5 border border-red-500/20 rounded-lg">
-              <h4 className="text-sm font-semibold text-red-600 mb-2 flex items-center gap-2">
+            <div className="p-4 bg-error/5 border border-error/20 rounded-lg">
+              <h4 className="text-sm font-semibold text-error mb-2 flex items-center gap-2">
                 <AlertTriangle className="h-4 w-4" />
                 Avoid Saying
               </h4>
               <ul className="space-y-1">
                 {question.redFlags.map((flag, i) => (
-                  <li key={i} className="text-sm text-red-600/80 flex gap-2">
+                  <li key={i} className="text-sm text-error/80 flex gap-2">
                     <span>✕</span>
                     <span>{flag}</span>
                   </li>

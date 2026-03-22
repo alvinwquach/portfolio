@@ -61,14 +61,15 @@ interface EditorTabBarProps {
  * Tab configuration for rendering.
  * Extracted here to keep render logic clean.
  */
+// MODIFIED(feat/design-system): Late Night Session palette
 const TABS: Array<{
   id: TabName;
   label: string;
   activeColor: string;
 }> = [
-  { id: 'developer', label: 'Developer', activeColor: 'border-t-emerald-500' },
-  { id: 'skills', label: 'skills', activeColor: 'border-t-amber-500' },
-  { id: 'career', label: 'career', activeColor: 'border-t-purple-500' },
+  { id: 'developer', label: 'Developer', activeColor: 'border-t-success' },
+  { id: 'skills', label: 'skills', activeColor: 'border-t-accent-warm' },
+  { id: 'career', label: 'career', activeColor: 'border-t-accent' },
 ];
 
 export function EditorTabBar({
@@ -89,14 +90,14 @@ export function EditorTabBar({
   };
 
   const getIconColor = (tabId: TabName) => {
-    if (language === 'python') return 'text-yellow-400';
-    if (tabId === 'developer') return 'text-blue-400';
-    if (tabId === 'skills') return 'text-amber-500';
-    return 'text-purple-400';
+    if (language === 'python') return 'text-warning';
+    if (tabId === 'developer') return 'text-info';
+    if (tabId === 'skills') return 'text-accent-warm';
+    return 'text-accent';
   };
 
   return (
-    <div className="flex items-center justify-between bg-slate-800 border-b border-slate-700/50">
+    <div className="flex items-center justify-between bg-overlay border-b border-line/50">
       {/* File Tabs */}
       <div className="flex items-center">
         {TABS.map((tab) => (
@@ -106,8 +107,8 @@ export function EditorTabBar({
             className={cn(
               'flex items-center gap-2 px-4 py-2 text-sm transition-colors',
               activeTab === tab.id
-                ? `bg-[#1e1e1e] text-slate-200 border-t-2 ${tab.activeColor}`
-                : 'text-slate-500 hover:text-slate-300 hover:bg-slate-700/50'
+                ? `bg-base text-text border-t-2 ${tab.activeColor}`
+                : 'text-text-muted hover:text-text hover:bg-line/30'
             )}
           >
             <span className={getIconColor(tab.id)}>{getTabIcon(tab.id)}</span>
@@ -125,8 +126,8 @@ export function EditorTabBar({
           className={cn(
             'px-2 py-1 text-xs rounded transition-colors flex items-center gap-1',
             showComments
-              ? 'bg-gray-500/20 text-gray-400 border border-gray-500/50'
-              : 'text-slate-500 hover:text-slate-300 hover:bg-slate-700/50'
+              ? 'bg-text-muted/20 text-text-muted border border-text-muted/50'
+              : 'text-text-muted hover:text-text hover:bg-line/30'
           )}
           title={showComments ? 'Hide comments' : 'Show comments'}
           aria-label={showComments ? 'Hide code comments' : 'Show code comments'}
@@ -143,8 +144,8 @@ export function EditorTabBar({
             className={cn(
               'px-2 py-1 text-xs rounded transition-colors',
               language === 'typescript'
-                ? 'bg-blue-500/20 text-blue-400 border border-blue-500/50'
-                : 'text-slate-500 hover:text-slate-300 hover:bg-slate-700/50'
+                ? 'bg-info/20 text-info border border-info/50'
+                : 'text-text-muted hover:text-text hover:bg-line/30'
             )}
             aria-label="TypeScript"
             aria-pressed={language === 'typescript'}
@@ -156,8 +157,8 @@ export function EditorTabBar({
             className={cn(
               'px-2 py-1 text-xs rounded transition-colors',
               language === 'python'
-                ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/50'
-                : 'text-slate-500 hover:text-slate-300 hover:bg-slate-700/50'
+                ? 'bg-warning/20 text-warning border border-warning/50'
+                : 'text-text-muted hover:text-text hover:bg-line/30'
             )}
             aria-label="Python"
             aria-pressed={language === 'python'}

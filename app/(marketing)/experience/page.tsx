@@ -78,7 +78,7 @@ function ExperienceCard({ item, isCurrent }: { item: ExperienceItem; isCurrent?:
           <div className="flex items-center gap-2 mb-0.5">
             <h3 className="text-lg font-semibold">{item.title}</h3>
             {isCurrent && (
-              <Badge className="bg-emerald-600 text-white text-xs py-0">Current</Badge>
+              <Badge className="bg-success text-base text-xs py-0">Current</Badge>
             )}
           </div>
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -116,7 +116,7 @@ function ExperienceCard({ item, isCurrent }: { item: ExperienceItem; isCurrent?:
           <ul className="grid gap-1">
             {item.results.slice(0, 3).map((result, i) => (
               <li key={i} className="flex items-start gap-2 text-sm">
-                <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0 mt-0.5" />
+                <CheckCircle2 className="h-3.5 w-3.5 text-success shrink-0 mt-0.5" />
                 <span className="line-clamp-1">{result}</span>
               </li>
             ))}
@@ -187,7 +187,7 @@ function ClientSubItem({ item }: { item: ClientItem }) {
         <ul className="grid gap-0.5">
           {item.results.slice(0, 2).map((result, i) => (
             <li key={i} className="flex items-start gap-1.5 text-xs text-muted-foreground">
-              <CheckCircle2 className="h-3 w-3 text-emerald-500 shrink-0 mt-0.5" />
+              <CheckCircle2 className="h-3 w-3 text-success shrink-0 mt-0.5" />
               <span className="line-clamp-1">{result}</span>
             </li>
           ))}
@@ -265,7 +265,7 @@ export default async function ExperiencePage() {
                         {/* Timeline dot */}
                         <div className={cn(
                           'absolute left-0 md:left-8 -translate-x-1/2 w-3 h-3 rounded-full border-2 border-background',
-                          exp.isCurrent ? 'bg-emerald-500' : 'bg-muted-foreground'
+                          exp.isCurrent ? 'bg-success' : 'bg-text-muted'
                         )} />
 
                         {/* Date badge */}

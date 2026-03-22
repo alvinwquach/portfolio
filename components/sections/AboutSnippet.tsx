@@ -14,11 +14,12 @@ interface AboutSnippetProps {
 }
 
 export function AboutSnippet({ bio, location, availabilityStatus }: AboutSnippetProps) {
+  // MODIFIED(feat/design-system): Late Night Session palette
   const statusColors: Record<string, string> = {
-    open: 'bg-green-500',
-    freelance: 'bg-blue-500',
-    both: 'bg-purple-500',
-    unavailable: 'bg-gray-500',
+    open: 'bg-success',
+    freelance: 'bg-info',
+    both: 'bg-accent',
+    unavailable: 'bg-text-muted',
   };
 
   const statusLabels: Record<string, string> = {

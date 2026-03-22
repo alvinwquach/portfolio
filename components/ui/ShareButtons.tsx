@@ -139,7 +139,7 @@ export function ShareButtons({ url, title, summary, className }: ShareButtonsPro
         aria-label={copied ? 'Link copied!' : 'Copy link'}
       >
         {copied ? (
-          <Check className="h-4 w-4 text-emerald-500" />
+          <Check className="h-4 w-4 text-success" />
         ) : (
           <Link2 className="h-4 w-4" />
         )}

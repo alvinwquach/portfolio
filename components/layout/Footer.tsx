@@ -82,7 +82,7 @@ export function Footer({ github, linkedin, twitter }: FooterProps) {
               Full Stack Developer building systems that respect complexity.
             </p>
             <p className="text-sm text-muted-foreground flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
               Open to opportunities
             </p>
 

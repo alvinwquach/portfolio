@@ -168,14 +168,14 @@ function FeaturedProjectCard({ project }: { project: Project }) {
 
           {/* Results */}
           {project.results && project.results.length > 0 && (
-            <div className="mb-6 p-4 rounded-lg bg-green-500/5 border border-green-500/10">
-              <p className="text-xs font-semibold text-green-500 uppercase tracking-wider mb-2">
+            <div className="mb-6 p-4 rounded-lg bg-success/5 border border-success/10">
+              <p className="text-xs font-semibold text-success uppercase tracking-wider mb-2">
                 Key Outcomes
               </p>
               <ul className="space-y-1.5">
                 {project.results.slice(0, 3).map((result, i) => (
                   <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                    <CheckCircle2 className="h-4 w-4 text-green-500 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="h-4 w-4 text-success mt-0.5 shrink-0" />
                     <span>{result}</span>
                   </li>
                 ))}

@@ -100,7 +100,7 @@ export function ContactForm() {
 
       {/* Status Messages */}
       {state.status === 'success' && (
-        <div className="flex items-center gap-2 p-4 bg-green-500/10 border border-green-500/20 rounded-lg text-green-600">
+        <div className="flex items-center gap-2 p-4 bg-success/10 border border-success/20 rounded-lg text-success">
           <CheckCircle className="h-5 w-5 flex-shrink-0" />
           <p>{state.message}</p>
         </div>

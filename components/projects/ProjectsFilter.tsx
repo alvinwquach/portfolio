@@ -22,14 +22,14 @@ interface ProjectsFilterProps {
   onSearchChange: (term: string) => void;
 }
 
-// Category display names and colors
+// Category display names and colors — MODIFIED(feat/design-system): Late Night Session palette
 const CATEGORY_CONFIG: Record<string, { label: string; color: string }> = {
-  frontend: { label: 'Frontend', color: 'bg-cyan/10 text-cyan border-cyan/20 hover:bg-cyan/20' },
-  backend: { label: 'Backend', color: 'bg-purple-500/10 text-purple-400 border-purple-500/20 hover:bg-purple-500/20' },
-  databases: { label: 'Databases', color: 'bg-amber/10 text-amber border-amber/20 hover:bg-amber/20' },
-  'data-ml': { label: 'Data & ML', color: 'bg-pink-500/10 text-pink-400 border-pink-500/20 hover:bg-pink-500/20' },
-  testing: { label: 'Testing', color: 'bg-green-500/10 text-green-400 border-green-500/20 hover:bg-green-500/20' },
-  'project-tools': { label: 'DevOps', color: 'bg-orange-500/10 text-orange-400 border-orange-500/20 hover:bg-orange-500/20' },
+  frontend: { label: 'Frontend', color: 'bg-info/10 text-info border-info/20 hover:bg-info/20' },
+  backend: { label: 'Backend', color: 'bg-accent/10 text-accent border-accent/20 hover:bg-accent/20' },
+  databases: { label: 'Databases', color: 'bg-accent-warm/10 text-accent-warm border-accent-warm/20 hover:bg-accent-warm/20' },
+  'data-ml': { label: 'Data & ML', color: 'bg-error/10 text-error border-error/20 hover:bg-error/20' },
+  testing: { label: 'Testing', color: 'bg-success/10 text-success border-success/20 hover:bg-success/20' },
+  'project-tools': { label: 'DevOps', color: 'bg-warning/10 text-warning border-warning/20 hover:bg-warning/20' },
 };
 
 export function ProjectsFilter({

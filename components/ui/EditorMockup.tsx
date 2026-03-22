@@ -36,9 +36,9 @@ export function EditorMockup({ className }: EditorMockupProps) {
         <div className="flex items-center px-4 py-3 bg-[#181825] border-b border-border/30">
           {/* Traffic Lights */}
           <div className="flex items-center gap-2 w-16">
-            <div className="w-3 h-3 rounded-full bg-red-500" />
-            <div className="w-3 h-3 rounded-full bg-yellow-500" />
-            <div className="w-3 h-3 rounded-full bg-green-500" />
+            <div className="w-3 h-3 rounded-full bg-[#ff5f57]" />
+            <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
+            <div className="w-3 h-3 rounded-full bg-[#28ca41]" />
           </div>
 
           {/* URL Bar - Centered */}
@@ -67,13 +67,13 @@ export function EditorMockup({ className }: EditorMockupProps) {
                 <span>src</span>
               </div>
               <div className="flex items-center gap-2 px-6 py-1 text-sm bg-[#1e1e2e] text-foreground">
-                <span className={language === 'typescript' ? 'text-blue-400' : 'text-yellow-400'}>
+                <span className={language === 'typescript' ? 'text-info' : 'text-warning'}>
                   {language === 'typescript' ? 'TS' : 'PY'}
                 </span>
                 <span>{language === 'typescript' ? 'developer.ts' : 'developer.py'}</span>
               </div>
               <div className="flex items-center gap-2 px-6 py-1 text-sm text-muted-foreground">
-                <span className="text-green-400">{'{ }'}</span>
+                <span className="text-success">{'{ }'}</span>
                 <span>types.d.ts</span>
               </div>
               <div className="flex items-center gap-2 px-6 py-1 text-sm text-muted-foreground">
@@ -89,13 +89,13 @@ export function EditorMockup({ className }: EditorMockupProps) {
             <div className="flex items-center justify-between mb-4 -mt-1 -mx-1">
               <div className="flex items-center gap-1">
                 <div className="flex items-center gap-2 px-3 py-1.5 bg-[#1e1e2e] rounded-t text-foreground text-xs border-b-2 border-cyan">
-                  <span className={language === 'typescript' ? 'text-blue-400' : 'text-yellow-400'}>
+                  <span className={language === 'typescript' ? 'text-info' : 'text-warning'}>
                     {language === 'typescript' ? 'TS' : 'PY'}
                   </span>
                   {language === 'typescript' ? 'developer.ts' : 'developer.py'}
                 </div>
                 <div className="flex items-center gap-2 px-3 py-1.5 text-muted-foreground text-xs hidden sm:flex">
-                  <span className="text-green-400">{'{ }'}</span>
+                  <span className="text-success">{'{ }'}</span>
                   types.d.ts
                 </div>
               </div>
@@ -107,7 +107,7 @@ export function EditorMockup({ className }: EditorMockupProps) {
                   className={cn(
                     'px-2 py-1 text-xs rounded transition-colors',
                     language === 'typescript'
-                      ? 'bg-blue-500/20 text-blue-400 border border-blue-500/50'
+                      ? 'bg-info/20 text-info border border-info/50'
                       : 'text-muted-foreground hover:text-foreground hover:bg-[#181825]'
                   )}
                 >
@@ -118,7 +118,7 @@ export function EditorMockup({ className }: EditorMockupProps) {
                   className={cn(
                     'px-2 py-1 text-xs rounded transition-colors',
                     language === 'python'
-                      ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/50'
+                      ? 'bg-warning/20 text-warning border border-warning/50'
                       : 'text-muted-foreground hover:text-foreground hover:bg-[#181825]'
                   )}
                 >
@@ -168,34 +168,34 @@ function CodeLine({ num, content }: { num: number; content: ReactNode }) {
 function TypeScriptCode() {
   return (
     <>
-      <CodeLine num={1} content={<><span className="text-gray-500">{"// Types catch bugs at compile time, not runtime"}</span></>} />
-      <CodeLine num={2} content={<><span className="text-purple-400">type</span> <span className="text-cyan">Status</span> = <span className="text-amber">"available"</span> | <span className="text-amber">"busy"</span> | <span className="text-amber">"open-to-work"</span>;</>} />
+      <CodeLine num={1} content={<><span className="text-text-muted">{"// Types catch bugs at compile time, not runtime"}</span></>} />
+      <CodeLine num={2} content={<><span className="text-accent">type</span> <span className="text-cyan">Status</span> = <span className="text-amber">"available"</span> | <span className="text-amber">"busy"</span> | <span className="text-amber">"open-to-work"</span>;</>} />
       <CodeLine num={3} content="" />
-      <CodeLine num={4} content={<><span className="text-purple-400">interface</span> <span className="text-cyan">Developer</span> {'{'}</>} />
-      <CodeLine num={5} content={<>  <span className="text-purple-400">readonly</span> <span className="text-foreground">name</span>: <span className="text-green-400">string</span>;   <span className="text-gray-500">{"// immutable after creation"}</span></>} />
-      <CodeLine num={6} content={<>  <span className="text-foreground">role</span>: <span className="text-green-400">string</span>;</>} />
-      <CodeLine num={7} content={<>  <span className="text-foreground">stack</span>: <span className="text-green-400">readonly string[]</span>; <span className="text-gray-500">{"// prevent accidental mutations"}</span></>} />
-      <CodeLine num={8} content={<>  <span className="text-foreground">status</span>: <span className="text-cyan">Status</span>;           <span className="text-gray-500">{"// union type = only these values"}</span></>} />
-      <CodeLine num={9} content={<>  <span className="text-foreground">yearsExp</span>: <span className="text-green-400">number</span>;</>} />
+      <CodeLine num={4} content={<><span className="text-accent">interface</span> <span className="text-cyan">Developer</span> {'{'}</>} />
+      <CodeLine num={5} content={<>  <span className="text-accent">readonly</span> <span className="text-foreground">name</span>: <span className="text-success">string</span>;   <span className="text-text-muted">{"// immutable after creation"}</span></>} />
+      <CodeLine num={6} content={<>  <span className="text-foreground">role</span>: <span className="text-success">string</span>;</>} />
+      <CodeLine num={7} content={<>  <span className="text-foreground">stack</span>: <span className="text-success">readonly string[]</span>; <span className="text-text-muted">{"// prevent accidental mutations"}</span></>} />
+      <CodeLine num={8} content={<>  <span className="text-foreground">status</span>: <span className="text-cyan">Status</span>;           <span className="text-text-muted">{"// union type = only these values"}</span></>} />
+      <CodeLine num={9} content={<>  <span className="text-foreground">yearsExp</span>: <span className="text-success">number</span>;</>} />
       <CodeLine num={10} content={<>{'}'}</>} />
       <CodeLine num={11} content="" />
-      <CodeLine num={12} content={<><span className="text-gray-500">{"// Object satisfies the interface - TS validates every field"}</span></>} />
-      <CodeLine num={13} content={<><span className="text-purple-400">const</span> <span className="text-foreground">alvin</span>: <span className="text-cyan">Developer</span> = {'{'}</>} />
+      <CodeLine num={12} content={<><span className="text-text-muted">{"// Object satisfies the interface - TS validates every field"}</span></>} />
+      <CodeLine num={13} content={<><span className="text-accent">const</span> <span className="text-foreground">alvin</span>: <span className="text-cyan">Developer</span> = {'{'}</>} />
       <CodeLine num={14} content={<>  <span className="text-foreground">name</span>: <span className="text-amber">"Alvin Quach"</span>,</>} />
       <CodeLine num={15} content={<>  <span className="text-foreground">role</span>: <span className="text-amber">"Full Stack Developer"</span>,</>} />
       <CodeLine num={16} content={<>  <span className="text-foreground">stack</span>: [<span className="text-amber">"React"</span>, <span className="text-amber">"Next.js"</span>, <span className="text-amber">"TypeScript"</span>, <span className="text-amber">"Node.js"</span>],</>} />
       <CodeLine num={17} content={<>  <span className="text-foreground">status</span>: <span className="text-amber">"open-to-work"</span>,</>} />
-      <CodeLine num={18} content={<>  <span className="text-foreground">yearsExp</span>: <span className="text-purple-400">5</span>,</>} />
-      <CodeLine num={19} content={<>{'}'} <span className="text-purple-400">as const</span>;  <span className="text-gray-500">{"// as const = deeply readonly"}</span></>} />
+      <CodeLine num={18} content={<>  <span className="text-foreground">yearsExp</span>: <span className="text-accent">5</span>,</>} />
+      <CodeLine num={19} content={<>{'}'} <span className="text-accent">as const</span>;  <span className="text-text-muted">{"// as const = deeply readonly"}</span></>} />
       <CodeLine num={20} content="" />
-      <CodeLine num={21} content={<><span className="text-gray-500">{"// Generic function - works with any type, stays type-safe"}</span></>} />
-      <CodeLine num={22} content={<><span className="text-purple-400">function</span> <span className="text-blue-400">buildsWith</span>{'<'}<span className="text-cyan">T</span> <span className="text-purple-400">extends</span> <span className="text-green-400">string</span>{'>'}(<span className="text-foreground">tech</span>: <span className="text-cyan">T</span>): <span className="text-green-400">boolean</span> {'{'}</>} />
-      <CodeLine num={23} content={<>  <span className="text-purple-400">return</span> alvin.stack.<span className="text-blue-400">includes</span>(tech);</>} />
+      <CodeLine num={21} content={<><span className="text-text-muted">{"// Generic function - works with any type, stays type-safe"}</span></>} />
+      <CodeLine num={22} content={<><span className="text-accent">function</span> <span className="text-info">buildsWith</span>{'<'}<span className="text-cyan">T</span> <span className="text-accent">extends</span> <span className="text-success">string</span>{'>'}(<span className="text-foreground">tech</span>: <span className="text-cyan">T</span>): <span className="text-success">boolean</span> {'{'}</>} />
+      <CodeLine num={23} content={<>  <span className="text-accent">return</span> alvin.stack.<span className="text-info">includes</span>(tech);</>} />
       <CodeLine num={24} content={<>{'}'}</>} />
       <CodeLine num={25} content="" />
-      <CodeLine num={26} content={<><span className="text-gray-500">{"// Type inference - TS knows this returns boolean"}</span></>} />
-      <CodeLine num={27} content={<><span className="text-purple-400">const</span> <span className="text-foreground">usesTypeScript</span> = <span className="text-blue-400">buildsWith</span>(<span className="text-amber">"TypeScript"</span>); <span className="text-gray-500">{"// ✓ true"}</span></>} />
-      <CodeLine num={28} content={<><span className="text-purple-400">const</span> <span className="text-foreground">usesRust</span> = <span className="text-blue-400">buildsWith</span>(<span className="text-amber">"Rust"</span>);       <span className="text-gray-500">{"// ✗ false"}</span></>} />
+      <CodeLine num={26} content={<><span className="text-text-muted">{"// Type inference - TS knows this returns boolean"}</span></>} />
+      <CodeLine num={27} content={<><span className="text-accent">const</span> <span className="text-foreground">usesTypeScript</span> = <span className="text-info">buildsWith</span>(<span className="text-amber">"TypeScript"</span>); <span className="text-text-muted">{"// ✓ true"}</span></>} />
+      <CodeLine num={28} content={<><span className="text-accent">const</span> <span className="text-foreground">usesRust</span> = <span className="text-info">buildsWith</span>(<span className="text-amber">"Rust"</span>);       <span className="text-text-muted">{"// ✗ false"}</span></>} />
     </>
   );
 }
@@ -203,36 +203,36 @@ function TypeScriptCode() {
 function PythonCode() {
   return (
     <>
-      <CodeLine num={1} content={<><span className="text-gray-500">{"# Type hints catch bugs before runtime with mypy"}</span></>} />
-      <CodeLine num={2} content={<><span className="text-purple-400">from</span> <span className="text-foreground">typing</span> <span className="text-purple-400">import</span> <span className="text-foreground">Literal</span>, <span className="text-foreground">Final</span></>} />
-      <CodeLine num={3} content={<><span className="text-purple-400">from</span> <span className="text-foreground">dataclasses</span> <span className="text-purple-400">import</span> <span className="text-foreground">dataclass</span>, <span className="text-foreground">field</span></>} />
+      <CodeLine num={1} content={<><span className="text-text-muted">{"# Type hints catch bugs before runtime with mypy"}</span></>} />
+      <CodeLine num={2} content={<><span className="text-accent">from</span> <span className="text-foreground">typing</span> <span className="text-accent">import</span> <span className="text-foreground">Literal</span>, <span className="text-foreground">Final</span></>} />
+      <CodeLine num={3} content={<><span className="text-accent">from</span> <span className="text-foreground">dataclasses</span> <span className="text-accent">import</span> <span className="text-foreground">dataclass</span>, <span className="text-foreground">field</span></>} />
       <CodeLine num={4} content="" />
-      <CodeLine num={5} content={<><span className="text-gray-500">{"# Literal restricts values - like union types in TS"}</span></>} />
+      <CodeLine num={5} content={<><span className="text-text-muted">{"# Literal restricts values - like union types in TS"}</span></>} />
       <CodeLine num={6} content={<><span className="text-cyan">Status</span> = <span className="text-foreground">Literal</span>[<span className="text-amber">"available"</span>, <span className="text-amber">"busy"</span>, <span className="text-amber">"open-to-work"</span>]</>} />
       <CodeLine num={7} content="" />
-      <CodeLine num={8} content={<><span className="text-yellow-400">@dataclass</span>(<span className="text-foreground">frozen</span>=<span className="text-purple-400">True</span>)  <span className="text-gray-500">{"# frozen = immutable"}</span></>} />
-      <CodeLine num={9} content={<><span className="text-purple-400">class</span> <span className="text-cyan">Developer</span>:</>} />
-      <CodeLine num={10} content={<>  <span className="text-foreground">name</span>: <span className="text-cyan">Final</span>[<span className="text-green-400">str</span>]         <span className="text-gray-500">{"# Final = can't reassign"}</span></>} />
-      <CodeLine num={11} content={<>  <span className="text-foreground">role</span>: <span className="text-green-400">str</span></>} />
-      <CodeLine num={12} content={<>  <span className="text-foreground">stack</span>: <span className="text-green-400">tuple</span>[<span className="text-green-400">str</span>, ...]   <span className="text-gray-500">{"# tuple = immutable list"}</span></>} />
+      <CodeLine num={8} content={<><span className="text-warning">@dataclass</span>(<span className="text-foreground">frozen</span>=<span className="text-accent">True</span>)  <span className="text-text-muted">{"# frozen = immutable"}</span></>} />
+      <CodeLine num={9} content={<><span className="text-accent">class</span> <span className="text-cyan">Developer</span>:</>} />
+      <CodeLine num={10} content={<>  <span className="text-foreground">name</span>: <span className="text-cyan">Final</span>[<span className="text-success">str</span>]         <span className="text-text-muted">{"# Final = can't reassign"}</span></>} />
+      <CodeLine num={11} content={<>  <span className="text-foreground">role</span>: <span className="text-success">str</span></>} />
+      <CodeLine num={12} content={<>  <span className="text-foreground">stack</span>: <span className="text-success">tuple</span>[<span className="text-success">str</span>, ...]   <span className="text-text-muted">{"# tuple = immutable list"}</span></>} />
       <CodeLine num={13} content={<>  <span className="text-foreground">status</span>: <span className="text-cyan">Status</span></>} />
-      <CodeLine num={14} content={<>  <span className="text-foreground">years_exp</span>: <span className="text-green-400">int</span></>} />
+      <CodeLine num={14} content={<>  <span className="text-foreground">years_exp</span>: <span className="text-success">int</span></>} />
       <CodeLine num={15} content="" />
-      <CodeLine num={16} content={<><span className="text-gray-500">{"# Dataclass validates types when used with mypy"}</span></>} />
+      <CodeLine num={16} content={<><span className="text-text-muted">{"# Dataclass validates types when used with mypy"}</span></>} />
       <CodeLine num={17} content={<><span className="text-foreground">alvin</span> = <span className="text-cyan">Developer</span>(</>} />
       <CodeLine num={18} content={<>  <span className="text-foreground">name</span>=<span className="text-amber">"Alvin Quach"</span>,</>} />
       <CodeLine num={19} content={<>  <span className="text-foreground">role</span>=<span className="text-amber">"Full Stack Developer"</span>,</>} />
       <CodeLine num={20} content={<>  <span className="text-foreground">stack</span>=(<span className="text-amber">"React"</span>, <span className="text-amber">"Next.js"</span>, <span className="text-amber">"TypeScript"</span>, <span className="text-amber">"Node.js"</span>),</>} />
       <CodeLine num={21} content={<>  <span className="text-foreground">status</span>=<span className="text-amber">"open-to-work"</span>,</>} />
-      <CodeLine num={22} content={<>  <span className="text-foreground">years_exp</span>=<span className="text-purple-400">5</span>,</>} />
+      <CodeLine num={22} content={<>  <span className="text-foreground">years_exp</span>=<span className="text-accent">5</span>,</>} />
       <CodeLine num={23} content={<>)</>} />
       <CodeLine num={24} content="" />
-      <CodeLine num={25} content={<><span className="text-gray-500">{"# Generic function with type bounds"}</span></>} />
-      <CodeLine num={26} content={<><span className="text-purple-400">def</span> <span className="text-blue-400">builds_with</span>(<span className="text-foreground">tech</span>: <span className="text-green-400">str</span>) -{'>'} <span className="text-green-400">bool</span>:</>} />
-      <CodeLine num={27} content={<>  <span className="text-purple-400">return</span> tech <span className="text-purple-400">in</span> alvin.stack</>} />
+      <CodeLine num={25} content={<><span className="text-text-muted">{"# Generic function with type bounds"}</span></>} />
+      <CodeLine num={26} content={<><span className="text-accent">def</span> <span className="text-info">builds_with</span>(<span className="text-foreground">tech</span>: <span className="text-success">str</span>) -{'>'} <span className="text-success">bool</span>:</>} />
+      <CodeLine num={27} content={<>  <span className="text-accent">return</span> tech <span className="text-accent">in</span> alvin.stack</>} />
       <CodeLine num={28} content="" />
-      <CodeLine num={29} content={<><span className="text-foreground">uses_typescript</span> = <span className="text-blue-400">builds_with</span>(<span className="text-amber">"TypeScript"</span>)  <span className="text-gray-500">{"# ✓ True"}</span></>} />
-      <CodeLine num={30} content={<><span className="text-foreground">uses_rust</span> = <span className="text-blue-400">builds_with</span>(<span className="text-amber">"Rust"</span>)        <span className="text-gray-500">{"# ✗ False"}</span></>} />
+      <CodeLine num={29} content={<><span className="text-foreground">uses_typescript</span> = <span className="text-info">builds_with</span>(<span className="text-amber">"TypeScript"</span>)  <span className="text-text-muted">{"# ✓ True"}</span></>} />
+      <CodeLine num={30} content={<><span className="text-foreground">uses_rust</span> = <span className="text-info">builds_with</span>(<span className="text-amber">"Rust"</span>)        <span className="text-text-muted">{"# ✗ False"}</span></>} />
     </>
   );
 }

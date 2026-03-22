@@ -88,26 +88,27 @@ export interface CodeGeneratorProps {
  * - Can be imported in tests for consistency
  * - Enables data-driven rendering with .map()
  */
+// MODIFIED(feat/design-system): Late Night Session palette
 export const TAB_CONFIGS: TabConfig[] = [
   {
     id: 'developer',
     label: 'Developer',
-    tsColor: 'text-blue-400',
-    pyColor: 'text-yellow-400',
-    activeColor: 'border-t-emerald-500',
+    tsColor: 'text-info',
+    pyColor: 'text-warning',
+    activeColor: 'border-t-success',
   },
   {
     id: 'skills',
     label: 'skills',
-    tsColor: 'text-amber-500',
-    pyColor: 'text-yellow-400',
-    activeColor: 'border-t-amber-500',
+    tsColor: 'text-accent-warm',
+    pyColor: 'text-warning',
+    activeColor: 'border-t-accent-warm',
   },
   {
     id: 'career',
     label: 'career',
-    tsColor: 'text-purple-400',
-    pyColor: 'text-yellow-400',
-    activeColor: 'border-t-purple-500',
+    tsColor: 'text-accent',
+    pyColor: 'text-warning',
+    activeColor: 'border-t-accent',
   },
 ];

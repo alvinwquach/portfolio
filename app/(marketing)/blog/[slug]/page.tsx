@@ -44,11 +44,11 @@ const nodeTypeConfig: Record<string, { icon: typeof Code; label: string; color: 
   bug: { icon: Bug, label: 'Bug Fix', color: 'text-coral', variant: 'bug' },
   decision: { icon: Lightbulb, label: 'Decision', color: 'text-amber', variant: 'decision' },
   concept: { icon: BookOpen, label: 'Concept', color: 'text-cyan', variant: 'concept' },
-  tutorial: { icon: GraduationCap, label: 'Tutorial', color: 'text-green-600', variant: 'tutorial' },
-  chart: { icon: BarChart3, label: 'Chart', color: 'text-purple-600', variant: 'chart' },
+  tutorial: { icon: GraduationCap, label: 'Tutorial', color: 'text-success', variant: 'tutorial' },
+  chart: { icon: BarChart3, label: 'Chart', color: 'text-accent', variant: 'chart' },
   deep_dive: { icon: BookOpen, label: 'Deep Dive', color: 'text-indigo-600', variant: 'concept' },
   lesson_learned: { icon: Lightbulb, label: 'Lesson Learned', color: 'text-amber', variant: 'decision' },
-  tool_review: { icon: Code, label: 'Tool Review', color: 'text-emerald-600', variant: 'build' },
+  tool_review: { icon: Code, label: 'Tool Review', color: 'text-success', variant: 'build' },
 };
 
 /**

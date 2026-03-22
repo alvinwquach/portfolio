@@ -37,11 +37,12 @@ const defaultPosts: BlogPost[] = [
   },
 ];
 
+// MODIFIED(feat/design-system): Late Night Session palette
 const categoryColors: Record<string, string> = {
-  build: 'text-green-400 bg-green-500/20 border-green-500/30',
-  bug: 'text-red-400 bg-red-500/20 border-red-500/30',
-  decision: 'text-amber-400 bg-amber-500/20 border-amber-500/30',
-  concept: 'text-purple-400 bg-purple-500/20 border-purple-500/30',
+  build: 'text-success bg-success/20 border-success/30',
+  bug: 'text-error bg-error/20 border-error/30',
+  decision: 'text-accent-warm bg-accent-warm/20 border-accent-warm/30',
+  concept: 'text-accent bg-accent/20 border-accent/30',
 };
 
 function PostCard({ post }: { post: BlogPost }) {

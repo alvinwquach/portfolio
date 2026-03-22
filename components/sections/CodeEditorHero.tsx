@@ -90,16 +90,17 @@ export function CodeEditorHero({ profile, skillGroups }: CodeEditorHeroProps) {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-start gap-4">
+              {/* MODIFIED(feat/design-system): Late Night Session palette */}
               <Link
                 href="/projects"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-500 text-slate-900 rounded-lg font-medium hover:bg-emerald-400 transition-colors group"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-accent text-base rounded-lg font-medium hover:bg-accent/80 transition-colors group"
               >
                 View Projects
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
                 href="/#contact"
-                className="inline-flex items-center gap-2 px-6 py-3 border border-slate-700 text-foreground rounded-lg font-medium hover:bg-slate-800/50 transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-3 border border-line text-foreground rounded-lg font-medium hover:bg-overlay/50 transition-colors"
               >
                 Let's Talk
               </Link>
