@@ -521,7 +521,10 @@ export const resolvers = {
         tagSlug: args.tagSlug,
       });
 
-      return results.map((node: any) => ({ ...node, tags: node.tags ?? [] }));
+      return results.map((node: any) => ({
+        ...node,
+        tags: (node.tags ?? []).filter((tag: any) => tag?._id && tag?.slug?.current),
+      }));
     },
 
     knowledgeNode: async (_: any, args: { slug: string }) => {
@@ -555,7 +558,7 @@ export const resolvers = {
           featured
         }
       `, { slug: args.slug });
-      return node ? { ...node, tags: node.tags ?? [] } : null;
+      return node ? { ...node, tags: (node.tags ?? []).filter((tag: any) => tag?._id && tag?.slug?.current) } : null;
     },
 
     knowledgeGraph: async () => {
