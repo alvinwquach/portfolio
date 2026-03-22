@@ -11,7 +11,14 @@ import Image from 'next/image';
 import { getProject, getProjects } from '@/lib/graphql/queries';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ProjectRoadmap } from '@/components/projects';
+import {
+  ProjectRoadmap,
+  MetricCallout,
+  TechDecisionAccordion,
+  ScrollProgress,
+  HeroImagePlaceholder,
+  ArchitecturePlaceholder,
+} from '@/components/projects';
 import {
   ArrowLeft,
   ExternalLink,
@@ -79,6 +86,9 @@ export default async function ProjectPage({ params }: Props) {
 
   return (
     <div className="py-12">
+      {/* Reading progress bar — composited scaleX animation, no layout reflow */}
+      <ScrollProgress />
+
       <div className="container max-w-5xl">
         {/* Back link */}
         <Link
@@ -94,8 +104,8 @@ export default async function ProjectPage({ params }: Props) {
           {/* Mounts the page-enter animation (Flip or circle-expand). Renders nothing. */}
           <ProjectHeroEnter slug={slug} />
 
-          {/* Image */}
-          {project.image?.url && (
+          {/* Image — placeholder shown when CMS image not yet uploaded */}
+          {project.image?.url ? (
             <div
               className="aspect-[21/9] relative rounded-xl overflow-hidden bg-muted mb-8"
               data-flip-id={`project-image-${slug}`}
@@ -109,6 +119,11 @@ export default async function ProjectPage({ params }: Props) {
                 priority
               />
             </div>
+          ) : (
+            <HeroImagePlaceholder
+              name={project.name}
+              data-flip-id={`project-image-${slug}`}
+            />
           )}
 
           {/* Info */}
@@ -233,8 +248,8 @@ export default async function ProjectPage({ params }: Props) {
           </section>
         )}
 
-        {/* The Outcome (Results) - Compact grid with icons */}
-        {project.results && project.results.length > 0 && (
+        {/* The Outcome — metrics first, then qualitative results */}
+        {((project.results && project.results.length > 0) || (project.metrics && project.metrics.length > 0)) && (
           <section className="mb-12">
             <SectionHeader
               icon={Rocket}
@@ -242,17 +257,52 @@ export default async function ProjectPage({ params }: Props) {
               iconBg="bg-success/10"
               title="The Outcome"
             />
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-              {project.results.map((result, index) => (
-                <div
-                  key={index}
-                  className="flex items-start gap-2.5 p-3 rounded-lg bg-success/5 border border-success/10"
-                >
-                  <CheckCircle2 className="h-4 w-4 text-success flex-shrink-0 mt-0.5" />
-                  <p className="text-sm text-foreground leading-snug">{result}</p>
-                </div>
-              ))}
-            </div>
+
+            {/* Before→after metrics with count-up animation */}
+            {project.metrics && project.metrics.length > 0 && (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                {project.metrics.map((metric, index) => (
+                  <MetricCallout
+                    key={index}
+                    before={metric.before}
+                    after={metric.after}
+                    label={metric.label}
+                    prefix={metric.prefix}
+                    suffix={metric.suffix}
+                    lowerIsBetter={metric.lowerIsBetter}
+                  />
+                ))}
+              </div>
+            )}
+
+            {/* Qualitative results */}
+            {project.results && project.results.length > 0 && (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                {project.results.map((result, index) => (
+                  <div
+                    key={index}
+                    className="flex items-start gap-2.5 p-3 rounded-lg bg-success/5 border border-success/10"
+                  >
+                    <CheckCircle2 className="h-4 w-4 text-success flex-shrink-0 mt-0.5" />
+                    <p className="text-sm text-foreground leading-snug">{result}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
+        )}
+
+        {/* Architecture — placeholder shown until a real diagram is authored in CMS */}
+        {project.architectureNotes && (
+          <section className="mb-12">
+            <SectionHeader
+              icon={Code}
+              iconColor="text-cyan"
+              iconBg="bg-cyan/10"
+              title="Architecture"
+              subtitle="System design and component relationships"
+            />
+            <ArchitecturePlaceholder />
           </section>
         )}
 
@@ -345,7 +395,7 @@ export default async function ProjectPage({ params }: Props) {
           </section>
         )}
 
-        {/* Technical Q&A - Clean list */}
+        {/* Technical Q&A — GSAP accordion (expand 0.4s / collapse 0.3s) */}
         {project.technicalDecisions && project.technicalDecisions.length > 0 && (
           <section className="mb-12">
             <SectionHeader
@@ -355,27 +405,7 @@ export default async function ProjectPage({ params }: Props) {
               title="Technical Decisions"
               subtitle="Quick answers to 'Why did you choose X?' questions"
             />
-            <div className="space-y-3">
-              {project.technicalDecisions.map((decision, index) => (
-                <details
-                  key={index}
-                  className="group rounded-lg border bg-card/50 overflow-hidden"
-                >
-                  <summary className="flex items-center gap-3 p-3 cursor-pointer list-none hover:bg-muted/50 transition-colors">
-                    <span className="text-accent font-mono text-xs bg-accent/20 px-2 py-0.5 rounded">Q{index + 1}</span>
-                    <span className="text-sm font-medium flex-1">{decision.question}</span>
-                    <ChevronRight className="h-4 w-4 text-muted-foreground transition-transform group-open:rotate-90" />
-                  </summary>
-                  <div className="px-4 pb-4 pt-1">
-                    <div className="ml-10 pl-4 border-l-2 border-accent/20">
-                      <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-wrap">
-                        {decision.answer}
-                      </p>
-                    </div>
-                  </div>
-                </details>
-              ))}
-            </div>
+            <TechDecisionAccordion items={project.technicalDecisions} />
           </section>
         )}
 

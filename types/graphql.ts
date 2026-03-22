@@ -143,6 +143,15 @@ export interface RoadmapPhase {
   milestones?: RoadmapMilestone[];
 }
 
+export interface Metric {
+  before:  number;
+  after:   number;
+  label:   string;
+  prefix?: string;
+  suffix?: string;
+  lowerIsBetter?: boolean;
+}
+
 export interface Project {
   _id: string;
   name: string;
@@ -156,6 +165,7 @@ export interface Project {
   task?: string;
   actions?: string[];
   results?: string[];
+  metrics?: Metric[];
   narrative?: any[];
   interviewQuestions?: InterviewQuestion[];
   tradeoffs?: Tradeoff[];
