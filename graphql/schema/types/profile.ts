@@ -15,6 +15,7 @@ export const profileType = `#graphql
     bio: PortableText
     location: String
     availabilityStatus: AvailabilityStatus
+    availabilityLabel: String
     openToRoles: [String!]
     email: String!
     linkedin: String
@@ -29,6 +30,10 @@ export const profileType = `#graphql
     growthAreas: [String!]
     previousCareers: [PreviousCareer!]
     hobbiesAndInterests: [HobbyOrInterest!]
+    country: String
+    employmentTypes: [String!]
+    seoDescription: String
+    seoKeywords: [String!]
   }
 
   enum AvailabilityStatus {

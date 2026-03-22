@@ -67,6 +67,7 @@ import { draftMode } from "next/headers";
  * - When content changes in Sanity, page updates automatically
  */
 import { SanityLive } from "@/sanity/lib/live";
+import { getProfile } from "@/lib/graphql/queries";
 
 /**
  * Font Configuration:
@@ -99,188 +100,75 @@ const geistMono = Geist_Mono({
  * - OpenGraph for social sharing (LinkedIn, Twitter)
  * - Structured data hints for search engines
  */
-export const metadata: Metadata = {
-  // Base URL for canonical links and OpenGraph
-  metadataBase: new URL("https://alvinquach.dev"),
+export async function generateMetadata(): Promise<Metadata> {
+  const profile = await getProfile();
 
-  // Title configuration - template applies to all pages
-  // SEO: ≤60 characters, primary identity + key technologies
-  title: {
-    default: "Alvin Quach | Senior Full-Stack Engineer | Next.js & TypeScript",
-    template: "%s | Alvin Quach",
-  },
-
-  // Primary description - appears in search results
-  // SEO: ≤155 characters, reinforces title + availability signal
-  description:
-    "Senior full-stack engineer building production systems with Next.js, TypeScript, and PostgreSQL. Open to senior roles and early-stage teams in the Bay Area.",
-
-  // Core keywords (Google ignores excessive keywords - keep it focused)
-  keywords: [
-    "Alvin Quach",
+  const name = profile?.name ?? "Alvin Quach";
+  const headline = profile?.headline ?? "Full Stack Developer";
+  const description =
+    profile?.seoDescription ??
+    `${headline} building production systems with Next.js, TypeScript, and PostgreSQL.`;
+  const keywords = profile?.seoKeywords ?? [
+    name,
     "Full Stack Developer",
     "Software Engineer",
     "React",
     "Next.js",
     "TypeScript",
-    "Node.js",
-    "GraphQL",
-    "PostgreSQL",
-    "San Francisco",
-    "Bay Area",
-  ],
+  ];
 
-  // Author information
-  authors: [{ name: "Alvin Quach", url: "https://github.com/alvinwquach" }],
-  creator: "Alvin Quach",
-  publisher: "Alvin Quach",
-
-  // OpenGraph for social sharing (LinkedIn, Facebook)
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: "https://alvinquach.dev",
-    siteName: "Alvin Quach | Full Stack Developer",
-    title: "Alvin Quach | Full Stack Developer | React, Next.js, TypeScript",
-    description:
-      "Full Stack Developer in San Francisco building performant web applications with React, Next.js, TypeScript, and PostgreSQL. Experienced in AI integration, real-time features, and data visualization. Open to developer and engineering roles.",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Alvin Quach - Full Stack Developer",
-      },
-    ],
-  },
-
-  // Twitter Card
-  twitter: {
-    card: "summary_large_image",
-    title: "Alvin Quach | Full Stack Developer",
-    description:
-      "Full Stack Developer specializing in React, Next.js, TypeScript, and PostgreSQL. Building performant web applications in San Francisco.",
-    images: ["/og-image.png"],
-    creator: "@alvinwquach",
-  },
-
-  // Robots directives
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+  return {
+    metadataBase: new URL("https://alvinquach.dev"),
+    title: {
+      default: `${name} | ${headline} | Next.js & TypeScript`,
+      template: `%s | ${name}`,
+    },
+    description,
+    keywords,
+    authors: [{ name, url: profile?.github ?? "https://github.com/alvinwquach" }],
+    creator: name,
+    publisher: name,
+    openGraph: {
+      type: "website",
+      locale: "en_US",
+      url: "https://alvinquach.dev",
+      siteName: `${name} | ${headline}`,
+      title: `${name} | ${headline} | React, Next.js, TypeScript`,
+      description,
+      images: [
+        {
+          url: "/og-image.png",
+          width: 1200,
+          height: 630,
+          alt: `${name} - ${headline}`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${name} | ${headline}`,
+      description,
+      images: ["/og-image.png"],
+      creator: "@alvinwquach",
+    },
+    robots: {
       index: true,
       follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
-
-  // Verification for search consoles (add your IDs when you have them)
-  // verification: {
-  //   google: "your-google-verification-code",
-  //   yandex: "your-yandex-verification-code",
-  // },
-
-  // Alternate languages (if you add translations later)
-  alternates: {
-    canonical: "https://alvinquach.dev",
-  },
-
-  // Category for better classification
-  category: "technology",
-};
-
-/**
- * JSON-LD Structured Data
- * =======================
- * Rich snippets for Google search results.
- * This helps search engines understand who you are and what you do.
- * Can result in enhanced search listings with additional info.
- */
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: "Alvin Quach",
-  url: "https://alvinquach.dev",
-  image: "https://alvinquach.dev/profile-photo.jpg",
-  sameAs: [
-    "https://github.com/alvinwquach",
-    "https://www.linkedin.com/in/a-quach/",
-  ],
-  jobTitle: "Full Stack Developer",
-  worksFor: {
-    "@type": "Organization",
-    name: "Available for Hire",
-  },
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "San Francisco",
-    addressRegion: "CA",
-    addressCountry: "US",
-  },
-  email: "alvinwquach@gmail.com",
-  description:
-    "Full Stack Developer specializing in React, Next.js, TypeScript, and PostgreSQL. Building performant web applications with modern tech stacks.",
-  knowsAbout: [
-    "React",
-    "Next.js",
-    "TypeScript",
-    "JavaScript",
-    "Node.js",
-    "PostgreSQL",
-    "MongoDB",
-    "GraphQL",
-    "REST APIs",
-    "TailwindCSS",
-    "Python",
-    "FastAPI",
-    "Docker",
-    "Git",
-    "OpenAI",
-    "Machine Learning",
-    "Data Visualization",
-    "D3.js",
-    "Sanity CMS",
-    "Stripe",
-    "WebSockets",
-  ],
-  hasOccupation: {
-    "@type": "Occupation",
-    name: "Full Stack Developer",
-    occupationLocation: {
-      "@type": "City",
-      name: "San Francisco",
-    },
-    skills: [
-      "React",
-      "Next.js",
-      "TypeScript",
-      "Node.js",
-      "PostgreSQL",
-      "Python",
-      "GraphQL",
-      "Docker",
-    ],
-  },
-  seeks: {
-    "@type": "JobPosting",
-    title: "Full Stack Developer",
-    description:
-      "Seeking Full Stack Developer, Software Engineer, Web Developer, or UX Engineer roles",
-    employmentType: ["FULL_TIME", "CONTRACT"],
-    jobLocation: {
-      "@type": "Place",
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: "San Francisco",
-        addressRegion: "CA",
-        addressCountry: "US",
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
       },
     },
-  },
-};
+    alternates: {
+      canonical: "https://alvinquach.dev",
+    },
+    category: "technology",
+  };
+}
+
 
 /**
  * RootLayout Component
@@ -304,6 +192,51 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const profile = await getProfile();
+
+  const name = profile?.name ?? "Alvin Quach";
+  const headline = profile?.headline ?? "Full Stack Developer";
+  const country = profile?.country ?? "US";
+  const sameAs = [profile?.github, profile?.linkedin].filter(Boolean);
+
+  const worksForName = profile?.availabilityLabel;
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name,
+    url: "https://alvinquach.dev",
+    image: profile?.image?.url,
+    sameAs,
+    jobTitle: headline,
+    worksFor: worksForName
+      ? { "@type": "Organization", name: worksForName }
+      : undefined,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: profile?.location,
+      addressCountry: country,
+    },
+    email: profile?.email,
+    description: profile?.seoDescription,
+    seeks: {
+      "@type": "JobPosting",
+      title: headline,
+      description: profile?.openToRoles?.length
+        ? `Seeking ${profile.openToRoles.join(", ")} roles`
+        : undefined,
+      employmentType: profile?.employmentTypes,
+      jobLocation: {
+        "@type": "Place",
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: profile?.location,
+          addressCountry: country,
+        },
+      },
+    },
+  };
+
   return (
     /**
      * HTML Element:

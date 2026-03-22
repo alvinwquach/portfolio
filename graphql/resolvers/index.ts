@@ -112,6 +112,7 @@ export const resolvers = {
           bio,
           location,
           availabilityStatus,
+          availabilityLabel,
           openToRoles,
           email,
           linkedin,
@@ -125,7 +126,11 @@ export const resolvers = {
           strengths,
           growthAreas,
           previousCareers,
-          hobbiesAndInterests
+          hobbiesAndInterests,
+          country,
+          employmentTypes,
+          seoDescription,
+          seoKeywords
         }
       `);
       if (!result) return null;
