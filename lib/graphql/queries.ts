@@ -191,6 +191,7 @@ export async function getProfile(): Promise<Profile | null> {
         bio
         location
         availabilityStatus
+        availabilityLabel
         openToRoles
         email
         linkedin
@@ -213,6 +214,10 @@ export async function getProfile(): Promise<Profile | null> {
           name
           description
         }
+        country
+        employmentTypes
+        seoDescription
+        seoKeywords
       }
     }`,
     {},

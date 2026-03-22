@@ -149,6 +149,13 @@ export const profile = {
      * - Good for tags, skills, bullet points
      */
     {
+      name: 'availabilityLabel',
+      title: 'Availability Label',
+      type: 'string',
+      description: 'Human-readable label shown in search engine structured data (e.g., "Open to Full-Time & Contract Roles", "Available for Freelance"). Shown as your current employer/status in Google search results.',
+    },
+
+    {
       name: 'openToRoles',
       title: 'Open to Roles',
       type: 'array',
@@ -312,6 +319,48 @@ export const profile = {
         },
       ],
       description: 'Previous career experience before software engineering - shows diverse background',
+    },
+
+    {
+      name: 'country',
+      title: 'Country',
+      type: 'string',
+      description: 'Your country (e.g., "US", "Canada"). Used in structured data for search engines.',
+      initialValue: 'US',
+    },
+
+    {
+      name: 'employmentTypes',
+      title: 'Employment Types',
+      type: 'array',
+      of: [{ type: 'string' }],
+      description: 'Types of employment you are open to. Used in structured data for search engines.',
+      options: {
+        list: [
+          { title: 'Full-Time', value: 'FULL_TIME' },
+          { title: 'Part-Time', value: 'PART_TIME' },
+          { title: 'Contract', value: 'CONTRACT' },
+          { title: 'Temporary', value: 'TEMPORARY' },
+          { title: 'Internship', value: 'INTERN' },
+          { title: 'Volunteer', value: 'VOLUNTEER' },
+        ],
+      },
+    },
+
+    {
+      name: 'seoDescription',
+      title: 'SEO Description',
+      type: 'text',
+      rows: 3,
+      description: 'Meta description for search results (≤155 characters). Appears in Google previews and social shares.',
+    },
+
+    {
+      name: 'seoKeywords',
+      title: 'SEO Keywords',
+      type: 'array',
+      of: [{ type: 'string' }],
+      description: 'Keywords for search engines (e.g., "Full Stack Developer", "React", "Next.js", "San Francisco")',
     },
 
     {

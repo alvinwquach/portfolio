@@ -48,6 +48,7 @@ export interface Profile {
   bio?: any[];
   location?: string;
   availabilityStatus?: 'open' | 'freelance' | 'both' | 'unavailable';
+  availabilityLabel?: string;
   openToRoles?: string[];
   email: string;
   linkedin?: string;
@@ -70,6 +71,10 @@ export interface Profile {
     name?: string;
     description?: string;
   }[];
+  country?: string;
+  employmentTypes?: string[];
+  seoDescription?: string;
+  seoKeywords?: string[];
 }
 
 export interface Skill {
