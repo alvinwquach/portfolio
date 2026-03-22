@@ -73,6 +73,7 @@ import { draftMode } from "next/headers";
  */
 import { SanityLive } from "@/sanity/lib/live";
 import { getProfile } from "@/lib/graphql/queries";
+import { GSAPProvider } from "@/components/animation/GSAPProvider";
 
 /**
  * Font Configuration — Late Night Session typography
@@ -291,7 +292,7 @@ export default async function RootLayout({
         className={`${spaceMono.variable} ${dmSans.variable} ${firaCode.variable} antialiased`}
       >
         {/* Page content from child routes */}
-        {children}
+        <GSAPProvider>{children}</GSAPProvider>
 
         {/**
          * SanityLive Component:

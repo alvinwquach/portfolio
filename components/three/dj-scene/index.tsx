@@ -39,7 +39,6 @@
 
 import { Suspense, memo } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { EffectComposer, Bloom } from '@react-three/postprocessing';
 
 import { useSoundCloud } from './useSoundCloud';
 import { NowPlayingOverlay } from './NowPlayingOverlay';
@@ -59,24 +58,6 @@ interface DJScene3DProps {
 /* ============================================================================
  * CONFIGURATION
  * ============================================================================ */
-
-/**
- * Bloom effect settings
- *
- * WHAT IS BLOOM?
- * A post-processing effect that makes bright objects appear to glow.
- * Simulates how bright lights "bleed" in real cameras.
- *
- * luminanceThreshold: Only pixels brighter than this value bloom
- * luminanceSmoothing: Softens the threshold transition
- * mipmapBlur: Uses GPU mipmaps for efficient, high-quality blur
- */
-const BLOOM_CONFIG = {
-  active: { intensity: 0.8 },
-  idle: { intensity: 0.4 },
-  luminanceThreshold: 0.6,
-  luminanceSmoothing: 0.9,
-} as const;
 
 /** Background color for the 3D scene (dark purple-gray) */
 const SCENE_BACKGROUND_COLOR = '#1e1e2a';
@@ -196,23 +177,6 @@ export const DJScene3D = memo(function DJScene3D({ className }: DJScene3DProps) 
             onTurntableClick={togglePlay}
           />
 
-          {/* ============================================================
-           * POST-PROCESSING EFFECTS
-           * ============================================================
-           * EffectComposer applies GPU post-processing to the rendered frame.
-           * Think of it like Instagram filters for 3D.
-           *
-           * BLOOM: Makes emissive/bright objects glow
-           * - Intensity increases when playing for more energy
-           */}
-          <EffectComposer>
-            <Bloom
-              intensity={isPlaying ? BLOOM_CONFIG.active.intensity : BLOOM_CONFIG.idle.intensity}
-              luminanceThreshold={BLOOM_CONFIG.luminanceThreshold}
-              luminanceSmoothing={BLOOM_CONFIG.luminanceSmoothing}
-              mipmapBlur
-            />
-          </EffectComposer>
         </Suspense>
       </Canvas>
     </div>
