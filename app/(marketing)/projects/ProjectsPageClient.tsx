@@ -29,6 +29,7 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 import type { Project } from '@/lib/graphql/queries';
+import { TransitionLink } from '@/components/transitions/TransitionLink';
 
 // Category display names
 const CATEGORY_LABELS: Record<string, string> = {
@@ -95,7 +96,10 @@ function FeaturedProjectCard({ project }: { project: Project }) {
       <div className="grid lg:grid-cols-2 gap-0">
         {/* Image */}
         {project.image?.url && (
-          <div className="aspect-video lg:aspect-auto lg:h-full relative overflow-hidden bg-muted">
+          <div
+            className="aspect-video lg:aspect-auto lg:h-full relative overflow-hidden bg-muted"
+            data-flip-id={`project-image-${project.slug.current}`}
+          >
             <Image
               src={project.image.url}
               alt={project.name}
@@ -116,9 +120,9 @@ function FeaturedProjectCard({ project }: { project: Project }) {
               Featured Project
             </span>
             <h2 className="text-2xl lg:text-3xl font-bold mt-2 mb-2 group-hover:text-cyan transition-colors">
-              <Link href={`/projects/${project.slug.current}`}>
+              <TransitionLink href={`/projects/${project.slug.current}`} slug={project.slug.current}>
                 {project.name}
-              </Link>
+              </TransitionLink>
             </h2>
             {project.tagline && (
               <p className="text-lg text-muted-foreground">
@@ -186,10 +190,10 @@ function FeaturedProjectCard({ project }: { project: Project }) {
           {/* Actions */}
           <div className="mt-auto flex items-center gap-3">
             <Button asChild>
-              <Link href={`/projects/${project.slug.current}`}>
+              <TransitionLink href={`/projects/${project.slug.current}`} slug={project.slug.current}>
                 View Case Study
                 <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
+              </TransitionLink>
             </Button>
 
             {project.liveUrl && (
@@ -231,7 +235,10 @@ function ProjectCard({ project }: { project: Project }) {
     <div className="group rounded-xl border border-border/50 bg-card/30 overflow-hidden hover:border-border hover:bg-card/50 transition-all">
       {/* Image */}
       {project.image?.url && (
-        <div className="aspect-video relative overflow-hidden bg-muted">
+        <div
+          className="aspect-video relative overflow-hidden bg-muted"
+          data-flip-id={`project-image-${project.slug.current}`}
+        >
           <Image
             src={project.image.url}
             alt={project.name}
@@ -245,9 +252,9 @@ function ProjectCard({ project }: { project: Project }) {
       <div className="p-5">
         {/* Title */}
         <h3 className="text-lg font-semibold mb-1 group-hover:text-cyan transition-colors">
-          <Link href={`/projects/${project.slug.current}`}>
+          <TransitionLink href={`/projects/${project.slug.current}`} slug={project.slug.current}>
             {project.name}
-          </Link>
+          </TransitionLink>
         </h3>
 
         {/* Tagline */}
@@ -297,10 +304,10 @@ function ProjectCard({ project }: { project: Project }) {
         {/* Actions */}
         <div className="flex items-center gap-2">
           <Button asChild size="sm" className="flex-1">
-            <Link href={`/projects/${project.slug.current}`}>
+            <TransitionLink href={`/projects/${project.slug.current}`} slug={project.slug.current}>
               View Case Study
               <ArrowRight className="ml-2 h-3.5 w-3.5" />
-            </Link>
+            </TransitionLink>
           </Button>
 
           {project.liveUrl && (

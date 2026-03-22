@@ -35,6 +35,7 @@ import {
   Zap,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { ProjectHeroEnter } from '@/components/transitions/ProjectHeroEnter';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -90,9 +91,15 @@ export default async function ProjectPage({ params }: Props) {
 
         {/* Hero */}
         <div className="mb-12">
+          {/* Mounts the page-enter animation (Flip or circle-expand). Renders nothing. */}
+          <ProjectHeroEnter slug={slug} />
+
           {/* Image */}
           {project.image?.url && (
-            <div className="aspect-[21/9] relative rounded-xl overflow-hidden bg-muted mb-8">
+            <div
+              className="aspect-[21/9] relative rounded-xl overflow-hidden bg-muted mb-8"
+              data-flip-id={`project-image-${slug}`}
+            >
               <Image
                 src={project.image.url}
                 alt={project.name}
