@@ -495,7 +495,7 @@ export const resolvers = {
           content,
           nodeType,
           status,
-          "tags": tags[]->{ _id, name, "slug": { "current": slug.current }, category, color }[defined(_id)],
+          "tags": tags[]->{ _id, name, "slug": { "current": slug.current }, category, color }[defined(_id) && defined(slug.current)],
           depthLevel,
           importance,
           relatedNodes[]-> {
@@ -534,7 +534,7 @@ export const resolvers = {
           content,
           nodeType,
           status,
-          "tags": tags[]->{ _id, name, "slug": { "current": slug.current }, category, color }[defined(_id)],
+          "tags": tags[]->{ _id, name, "slug": { "current": slug.current }, category, color }[defined(_id) && defined(slug.current)],
           depthLevel,
           importance,
           relatedNodes[]-> {
