@@ -18,16 +18,23 @@ export const metadata = {
   description: 'Technical insights, build logs, bug fixes, and architectural decisions. Not just blog posts — evidence of how I think.',
 };
 
-export default async function BlogPage() {
-  const [knowledgeNodes, tags] = await Promise.all([
+interface PageProps {
+  searchParams: Promise<{ type?: string; q?: string }>;
+}
+
+export default async function BlogPage({ searchParams }: PageProps) {
+  const [knowledgeNodes, tags, params] = await Promise.all([
     getKnowledgeNodes({ status: 'published' }),
     getTags(),
+    searchParams,
   ]);
 
   return (
     <BlogPageClient
       knowledgeNodes={knowledgeNodes}
       tags={tags}
+      initialType={params.type || 'all'}
+      initialSearch={params.q || ''}
     />
   );
 }

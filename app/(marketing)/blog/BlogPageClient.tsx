@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { formatDate } from '@/lib/utils';
 import { Search, X, FileText } from 'lucide-react';
@@ -31,6 +31,8 @@ const nodeTypeLabels: Record<string, string> = {
 interface BlogPageClientProps {
   knowledgeNodes: KnowledgeNode[];
   tags: Tag[];
+  initialType: string;
+  initialSearch: string;
 }
 
 // Calculate reading time based on summary length (approximation)
@@ -143,13 +145,8 @@ function TagLink({
   );
 }
 
-export function BlogPageClient({ knowledgeNodes, tags }: BlogPageClientProps) {
+export function BlogPageClient({ knowledgeNodes, tags, initialType, initialSearch }: BlogPageClientProps) {
   const router = useRouter();
-  const searchParams = useSearchParams();
-
-  // Initialize from URL params
-  const initialType = searchParams.get('type') || 'all';
-  const initialSearch = searchParams.get('q') || '';
 
   const [activeTab, setActiveTab] = React.useState(initialType);
   const [searchTerm, setSearchTerm] = React.useState(initialSearch);

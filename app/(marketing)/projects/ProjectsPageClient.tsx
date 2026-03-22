@@ -14,7 +14,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -43,6 +43,8 @@ const CATEGORY_LABELS: Record<string, string> = {
 interface ProjectsPageClientProps {
   projects: Project[];
   categories: string[];
+  initialCategory: string;
+  initialSearch: string;
 }
 
 // Count projects per category
@@ -330,13 +332,8 @@ function ProjectCard({ project }: { project: Project }) {
   );
 }
 
-export function ProjectsPageClient({ projects, categories }: ProjectsPageClientProps) {
+export function ProjectsPageClient({ projects, categories, initialCategory, initialSearch }: ProjectsPageClientProps) {
   const router = useRouter();
-  const searchParams = useSearchParams();
-
-  // Initialize from URL params
-  const initialCategory = searchParams.get('category') || 'all';
-  const initialSearch = searchParams.get('q') || '';
 
   const [activeTab, setActiveTab] = React.useState(initialCategory);
   const [searchTerm, setSearchTerm] = React.useState(initialSearch);

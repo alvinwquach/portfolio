@@ -13,8 +13,12 @@ export const metadata = {
   description: 'Full-stack systems designed, architected, and shipped under real constraints. Each project demonstrates technical decisions, articulated tradeoffs, and measured results.',
 };
 
-export default async function ProjectsPage() {
-  const projects = await getProjects();
+interface PageProps {
+  searchParams: Promise<{ category?: string; q?: string }>;
+}
+
+export default async function ProjectsPage({ searchParams }: PageProps) {
+  const [projects, params] = await Promise.all([getProjects(), searchParams]);
 
   // Extract unique categories from all projects
   const allCategories = new Set<string>();
@@ -30,6 +34,8 @@ export default async function ProjectsPage() {
     <ProjectsPageClient
       projects={projects}
       categories={Array.from(allCategories).sort()}
+      initialCategory={params.category || 'all'}
+      initialSearch={params.q || ''}
     />
   );
 }
