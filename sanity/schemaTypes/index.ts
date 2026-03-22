@@ -49,11 +49,6 @@ import { tag } from './tag'
 import { integration } from './integration'
 import { resource } from './resource'
 import { roadmap } from './roadmap'
-import { journal } from './journal'
-import { experiment } from './experiment'
-import { demo } from './demo'
-import { citation } from './citation'
-import { feedback } from './feedback'
 
 /**
  * Schema Export Object
@@ -86,10 +81,5 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     integration,       // API integrations and third-party services
     resource,          // External resources and references
     roadmap,           // Learning goals and milestones
-    journal,           // Daily logs and reflections
-    experiment,        // Technical experiments and prototypes
-    demo,              // Videos, screenshots, interactive demos
-    citation,          // Academic papers and research
-    feedback,          // Code reviews and feedback received
   ],
 }
