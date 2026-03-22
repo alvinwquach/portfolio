@@ -45,6 +45,7 @@ export interface Profile {
   _id: string;
   name: string;
   headline?: string;
+  tagline?: string;
   bio?: any[];
   location?: string;
   availabilityStatus?: 'open' | 'freelance' | 'both' | 'unavailable';

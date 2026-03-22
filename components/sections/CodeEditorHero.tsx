@@ -59,7 +59,8 @@ interface CodeEditorHeroProps {
  */
 const DEFAULT_PROFILE = {
   name: 'Alvin Quach',
-  headline: 'Full-Stack Developer',
+  headline: 'Full Stack Developer',
+  tagline: 'Turning ideas into products people use',
   location: 'San Francisco Bay Area',
   availabilityStatus: 'open' as const,
   openToRoles: ['Full Stack Developer', 'Frontend Engineer', 'Software Engineer'],
@@ -77,9 +78,7 @@ export function CodeEditorHero({ profile, skillGroups }: CodeEditorHeroProps) {
         <div className="pt-16 md:pt-20 pb-12">
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl font-light text-foreground mb-6 leading-tight">
-              Turning ideas into
-              <br />
-              <span className="text-muted-foreground">products people use</span>
+              {p.tagline || DEFAULT_PROFILE.tagline}
             </h1>
 
             <p className="text-lg text-muted-foreground/80 mb-8 max-w-2xl">
