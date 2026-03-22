@@ -12,6 +12,7 @@ export const profileType = `#graphql
     _id: ID!
     name: String!
     headline: String
+    tagline: String
     bio: PortableText
     location: String
     availabilityStatus: AvailabilityStatus

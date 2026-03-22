@@ -109,6 +109,7 @@ export const resolvers = {
           _id,
           name,
           headline,
+          tagline,
           bio,
           location,
           availabilityStatus,

@@ -21,7 +21,13 @@
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:headed": "playwright test --headed",
     "test:e2e:debug": "playwright test --debug",
-    "test:all": "npm run test && npm run test:e2e"
+    "test:all": "npm run test && npm run test:e2e",
+    "seed:profile": "npx tsx scripts/seed-profile.ts",
+    "seed:profile:update": "npx tsx scripts/seed-profile-update.ts",
+    "seed:education": "npx tsx scripts/seed-education.ts",
+    "seed:experience:diagnose": "npx tsx scripts/seed-experience-fix-dates.ts",
+    "seed:tags": "npx tsx scripts/seed-tags.ts",
+    "seed:blog": "npx tsx scripts/seed-blog-posts.ts"
   },
   "dependencies": {
     "@graphql-tools/schema": "^10.0.31",

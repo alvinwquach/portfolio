@@ -188,6 +188,7 @@ export async function getProfile(): Promise<Profile | null> {
         _id
         name
         headline
+        tagline
         bio
         location
         availabilityStatus
@@ -569,6 +570,7 @@ export async function getLandingPageData(): Promise<LandingPageData> {
         _id
         name
         headline
+        tagline
         bio
         location
         availabilityStatus

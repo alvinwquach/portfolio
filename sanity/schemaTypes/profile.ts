@@ -98,6 +98,14 @@ export const profile = {
       initialValue: 'Full Stack Developer',
     },
 
+    {
+      name: 'tagline',
+      title: 'Hero Tagline',
+      type: 'string',
+      description: 'The main h1 tagline shown on the hero section (e.g., "Turning ideas into products people use")',
+      initialValue: 'Turning ideas into products people use',
+    },
+
     /**
      * PORTABLE TEXT (RICH TEXT) FIELD
      * - type: 'array' with of: [{ type: 'block' }]
