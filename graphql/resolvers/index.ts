@@ -495,7 +495,7 @@ export const resolvers = {
           content,
           nodeType,
           status,
-          tags[]-> { _id, name, "slug": { "current": slug.current }, category, color },
+          "tags": tags[]->{ _id, name, "slug": { "current": slug.current }, category, color }[defined(_id)],
           depthLevel,
           importance,
           relatedNodes[]-> {
@@ -521,11 +521,11 @@ export const resolvers = {
         tagSlug: args.tagSlug,
       });
 
-      return results;
+      return results.map((node: any) => ({ ...node, tags: node.tags ?? [] }));
     },
 
     knowledgeNode: async (_: any, args: { slug: string }) => {
-      return client.fetch(`
+      const node = await client.fetch(`
         *[_type == "knowledgeNode" && slug.current == $slug][0] {
           _id,
           title,
@@ -534,7 +534,7 @@ export const resolvers = {
           content,
           nodeType,
           status,
-          tags[]-> { _id, name, "slug": { "current": slug.current }, category, color },
+          "tags": tags[]->{ _id, name, "slug": { "current": slug.current }, category, color }[defined(_id)],
           depthLevel,
           importance,
           relatedNodes[]-> {
@@ -555,6 +555,7 @@ export const resolvers = {
           featured
         }
       `, { slug: args.slug });
+      return node ? { ...node, tags: node.tags ?? [] } : null;
     },
 
     knowledgeGraph: async () => {
