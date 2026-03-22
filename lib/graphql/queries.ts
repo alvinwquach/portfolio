@@ -17,6 +17,7 @@ export type {
   Profile,
   Skill,
   SkillGroup,
+  Metric,
   Tradeoff,
   TechnicalDecision,
   Challenge,
