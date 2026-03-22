@@ -37,14 +37,14 @@ interface InterviewPrepClientProps {
 }
 
 const categoryConfig: Record<string, { icon: typeof Code; label: string; color: string }> = {
-  react: { icon: Code, label: 'React', color: 'text-blue-500' },
+  react: { icon: Code, label: 'React', color: 'text-info' },
   nextjs: { icon: Layers, label: 'Next.js', color: 'text-foreground' },
-  frontend: { icon: Code, label: 'Frontend', color: 'text-blue-500' },
-  fullstack: { icon: Layers, label: 'Full Stack', color: 'text-purple-500' },
-  'system-design': { icon: Layers, label: 'System Design', color: 'text-purple-500' },
-  system_design: { icon: Layers, label: 'System Design', color: 'text-purple-500' },
-  performance: { icon: Gauge, label: 'Performance', color: 'text-green-500' },
-  security: { icon: Shield, label: 'Security', color: 'text-red-500' },
+  frontend: { icon: Code, label: 'Frontend', color: 'text-info' },
+  fullstack: { icon: Layers, label: 'Full Stack', color: 'text-accent' },
+  'system-design': { icon: Layers, label: 'System Design', color: 'text-accent' },
+  system_design: { icon: Layers, label: 'System Design', color: 'text-accent' },
+  performance: { icon: Gauge, label: 'Performance', color: 'text-success' },
+  security: { icon: Shield, label: 'Security', color: 'text-error' },
   debugging: { icon: AlertTriangle, label: 'Debugging', color: 'text-orange-500' },
   behavioral: { icon: Users, label: 'Behavioral', color: 'text-amber' },
   behavioral_collaboration: { icon: Users, label: 'Collaboration', color: 'text-amber' },
@@ -54,9 +54,9 @@ const categoryConfig: Record<string, { icon: typeof Code; label: string; color: 
 };
 
 const difficultyColors: Record<string, string> = {
-  easy: 'bg-green-500/20 text-green-500 border-green-500/30',
+  easy: 'bg-success/20 text-success border-success/30',
   medium: 'bg-yellow-500/20 text-yellow-500 border-yellow-500/30',
-  hard: 'bg-red-500/20 text-red-500 border-red-500/30',
+  hard: 'bg-error/20 text-error border-error/30',
 };
 
 export function InterviewPrepClient({ questions }: InterviewPrepClientProps) {

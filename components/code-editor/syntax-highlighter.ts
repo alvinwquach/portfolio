@@ -136,44 +136,53 @@ export function highlightCode(code: string, lang: Language = 'typescript'): stri
   // Order is critical - match comments and strings FIRST
   const patterns: TokenPattern[] = [];
 
+  // MODIFIED(feat/design-system): Late Night Session syntax palette
+  //   comments  → text-text-muted  (recedes, unobtrusive)
+  //   strings   → text-success     (teal — familiar green for strings)
+  //   keywords  → text-accent      (violet — primary brand, dominant token)
+  //   types     → text-info        (cyan — built-ins, type system)
+  //   numbers   → text-accent-warm (amber — warm contrast against violet)
+  //   classes   → text-warning     (yellow — PascalCase identifiers pop)
+  //   props     → text-info        (cyan — object keys)
+  //   brackets  → text-text-muted  (recedes, structural chrome)
   if (lang === 'python') {
     patterns.push(
       // Docstrings (triple-quoted) - must come before regular strings
-      { regex: /("""[\s\S]*?""")/g, className: 'text-gray-500' },
+      { regex: /("""[\s\S]*?""")/g, className: 'text-text-muted' },
       // Single-line comments
-      { regex: /(#[^\n]*)/g, className: 'text-gray-500' },
+      { regex: /(#[^\n]*)/g, className: 'text-text-muted' },
       // Strings (double and single quoted)
-      { regex: /("[^"]*"|'[^']*')/g, className: 'text-emerald-400' },
+      { regex: /("[^"]*"|'[^']*')/g, className: 'text-success' },
       // Decorators (@dataclass, etc.)
-      { regex: /(@\w+)/g, className: 'text-amber-400' },
+      { regex: /(@\w+)/g, className: 'text-accent-warm' },
       // Python keywords
       {
         regex: /\b(from|import|class|def|return|for|in|if|else|elif|True|False|None|and|or|not|with|as|try|except|finally)\b/g,
-        className: 'text-purple-400',
+        className: 'text-accent',
       },
       // Type hints
       {
         regex: /\b(str|int|bool|float|List|Dict|Optional|Literal|Enum|Final|Tuple|Set|Any|Union)\b/g,
-        className: 'text-cyan-400',
+        className: 'text-info',
       },
     );
   } else {
     patterns.push(
       // JSDoc/block comments - must come before strings
-      { regex: /(\/\*\*[\s\S]*?\*\/)/g, className: 'text-gray-500' },
+      { regex: /(\/\*\*[\s\S]*?\*\/)/g, className: 'text-text-muted' },
       // Single-line comments
-      { regex: /(\/\/[^\n]*)/g, className: 'text-gray-500' },
+      { regex: /(\/\/[^\n]*)/g, className: 'text-text-muted' },
       // Strings (template literals, double, single quoted)
-      { regex: /(`[^`]*`|"[^"]*"|'[^']*')/g, className: 'text-emerald-400' },
+      { regex: /(`[^`]*`|"[^"]*"|'[^']*')/g, className: 'text-success' },
       // TypeScript keywords
       {
         regex: /\b(const|let|var|export|default|import|from|return|function|type|interface|readonly|as|satisfies|extends|implements)\b/g,
-        className: 'text-purple-400',
+        className: 'text-accent',
       },
       // Built-in types
       {
         regex: /\b(string|number|boolean|void|null|undefined|never|unknown|any|ReadonlyArray|Record|Partial|Required|Pick|Omit)\b/g,
-        className: 'text-cyan-400',
+        className: 'text-info',
       },
     );
   }
@@ -182,12 +191,12 @@ export function highlightCode(code: string, lang: Language = 'typescript'): stri
   patterns.push(
     // PascalCase identifiers (classes, interfaces, types)
     // \b = word boundary, prevents matching inside other words
-    { regex: /\b([A-Z][a-zA-Z0-9]+)\b/g, className: 'text-yellow-300' },
+    { regex: /\b([A-Z][a-zA-Z0-9]+)\b/g, className: 'text-warning' },
     // Object properties (word followed by colon, but not ::)
     // (?=...) is a lookahead - matches position without consuming
-    { regex: /\b(\w+)(?=\s*:(?!:))/g, className: 'text-sky-400' },
+    { regex: /\b(\w+)(?=\s*:(?!:))/g, className: 'text-info' },
     // Brackets and braces - subtle color to not distract
-    { regex: /([{}[\]()])/g, className: 'text-slate-400' },
+    { regex: /([{}[\]()])/g, className: 'text-text-muted' },
   );
 
   // Step 3: Apply patterns with placeholder tokens

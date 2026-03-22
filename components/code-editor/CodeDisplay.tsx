@@ -63,7 +63,7 @@ interface CodeDisplayProps {
  */
 function LineNumbers({ count }: { count: number }) {
   return (
-    <div className="select-none text-right pr-4 text-slate-600 text-xs font-mono">
+    <div className="select-none text-right pr-4 text-line text-xs font-mono">
       {Array.from({ length: count }, (_, i) => (
         <div key={i} className="leading-5">
           {i + 1}

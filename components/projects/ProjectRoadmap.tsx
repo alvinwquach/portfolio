@@ -18,33 +18,34 @@ interface ProjectRoadmapProps {
   className?: string;
 }
 
+// MODIFIED(feat/design-system): Late Night Session palette
 const phaseConfig = {
   mvp: {
     label: 'MVP',
     fullLabel: 'Minimum Viable Product',
-    color: 'text-emerald-500',
-    bgColor: 'bg-emerald-500/10',
-    borderColor: 'border-emerald-500/30',
-    solidBg: 'bg-emerald-500',
-    ringColor: 'ring-emerald-500/20',
+    color: 'text-success',
+    bgColor: 'bg-success/10',
+    borderColor: 'border-success/30',
+    solidBg: 'bg-success',
+    ringColor: 'ring-success/20',
   },
   stretch: {
     label: 'Stretch',
     fullLabel: 'Stretch Goals',
-    color: 'text-amber',
-    bgColor: 'bg-amber/10',
-    borderColor: 'border-amber/30',
-    solidBg: 'bg-amber',
-    ringColor: 'ring-amber/20',
+    color: 'text-accent-warm',
+    bgColor: 'bg-accent-warm/10',
+    borderColor: 'border-accent-warm/30',
+    solidBg: 'bg-accent-warm',
+    ringColor: 'ring-accent-warm/20',
   },
   future: {
     label: 'Future',
     fullLabel: 'Future Vision',
-    color: 'text-purple-500',
-    bgColor: 'bg-purple-500/10',
-    borderColor: 'border-purple-500/30',
-    solidBg: 'bg-purple-500',
-    ringColor: 'ring-purple-500/20',
+    color: 'text-accent',
+    bgColor: 'bg-accent/10',
+    borderColor: 'border-accent/30',
+    solidBg: 'bg-accent',
+    ringColor: 'ring-accent/20',
   },
 };
 
@@ -52,9 +53,9 @@ const statusConfig = {
   completed: {
     icon: Check,
     label: 'Completed',
-    color: 'text-emerald-500',
-    bgColor: 'bg-emerald-500',
-    ringColor: 'ring-emerald-500/30',
+    color: 'text-success',
+    bgColor: 'bg-success',
+    ringColor: 'ring-success/30',
   },
   'in-progress': {
     icon: Clock,
@@ -135,7 +136,7 @@ export function ProjectRoadmap({ roadmap, className }: ProjectRoadmapProps) {
         {totalMilestones > 0 && (
           <div className="h-2 bg-muted rounded-full overflow-hidden">
             <div
-              className="h-full bg-emerald-500 transition-all duration-700 ease-out"
+              className="h-full bg-success transition-all duration-700 ease-out"
               style={{ width: `${progressPercentage}%` }}
             />
           </div>
@@ -162,8 +163,8 @@ export function ProjectRoadmap({ roadmap, className }: ProjectRoadmapProps) {
                 <div
                   className={cn(
                     'rounded-xl border-2 transition-all duration-300',
-                    phaseCompleted ? 'border-emerald-500/50 bg-emerald-500/5' :
-                    phaseInProgress ? 'border-amber/50 bg-amber/5' :
+                    phaseCompleted ? 'border-success/50 bg-success/5' :
+                    phaseInProgress ? 'border-accent-warm/50 bg-accent-warm/5' :
                     'border-border/50 bg-card/50',
                   )}
                 >
@@ -171,7 +172,7 @@ export function ProjectRoadmap({ roadmap, className }: ProjectRoadmapProps) {
                   <div
                     className={cn(
                       'flex items-center gap-3 p-4 rounded-t-xl border-b',
-                      phaseCompleted ? 'border-emerald-500/20 bg-emerald-500/10' :
+                      phaseCompleted ? 'border-success/20 bg-success/10' :
                       phaseInProgress ? 'border-amber/20 bg-amber/10' :
                       'border-border/50 bg-muted/30'
                     )}
@@ -242,7 +243,7 @@ export function ProjectRoadmap({ roadmap, className }: ProjectRoadmapProps) {
                   <div className="hidden lg:flex absolute -right-2 top-1/2 -translate-y-1/2 z-10">
                     <div className={cn(
                       'w-4 h-4 rounded-full flex items-center justify-center',
-                      phaseCompleted ? 'bg-emerald-500 text-white' : 'bg-muted text-muted-foreground'
+                      phaseCompleted ? 'bg-success text-base' : 'bg-muted text-muted-foreground'
                     )}>
                       <ArrowRight className="w-3 h-3" />
                     </div>
@@ -254,7 +255,7 @@ export function ProjectRoadmap({ roadmap, className }: ProjectRoadmapProps) {
                   <div className="lg:hidden flex justify-center py-2">
                     <div className={cn(
                       'w-6 h-6 rounded-full flex items-center justify-center rotate-90',
-                      phaseCompleted ? 'bg-emerald-500 text-white' : 'bg-muted text-muted-foreground'
+                      phaseCompleted ? 'bg-success text-base' : 'bg-muted text-muted-foreground'
                     )}>
                       <ArrowRight className="w-4 h-4" />
                     </div>
@@ -323,7 +324,7 @@ function MilestoneCard({
     <div
       className={cn(
         'rounded-lg border transition-all duration-200',
-        status === 'completed' ? 'bg-emerald-500/5 border-emerald-500/20' :
+        status === 'completed' ? 'bg-success/5 border-success/20' :
         status === 'in-progress' ? 'bg-amber/5 border-amber/20' :
         'bg-background/50 border-border/50',
         hasDetails && 'cursor-pointer hover:shadow-sm hover:border-border'

@@ -53,14 +53,15 @@ interface EditorOutputPanelProps {
  * Panel tab configuration.
  * Each tab has a color indicator and optional count.
  */
+// MODIFIED(feat/design-system): Late Night Session palette
 const PANEL_TABS: Array<{
   id: PanelTab;
   label: string;
   activeColor: string;
 }> = [
-  { id: 'output', label: 'Output', activeColor: 'bg-amber-500' },
-  { id: 'terminal', label: 'Terminal', activeColor: 'bg-emerald-500' },
-  { id: 'problems', label: 'Problems', activeColor: 'bg-emerald-500' },
+  { id: 'output', label: 'Output', activeColor: 'bg-accent-warm' },
+  { id: 'terminal', label: 'Terminal', activeColor: 'bg-success' },
+  { id: 'problems', label: 'Problems', activeColor: 'bg-success' },
 ];
 
 export function EditorOutputPanel({
@@ -85,9 +86,9 @@ export function EditorOutputPanel({
   const terminalName = name.toLowerCase().replace(' ', '.');
 
   return (
-    <div className="bg-slate-950 border-t border-slate-700/50 hidden lg:block">
+    <div className="bg-base border-t border-line/50 hidden lg:block">
       {/* Panel Tab Bar */}
-      <div className="flex items-center gap-1 px-4 py-2 bg-slate-800 border-b border-slate-700/50">
+      <div className="flex items-center gap-1 px-4 py-2 bg-overlay border-b border-line/50">
         {PANEL_TABS.map((tab) => (
           <button
             key={tab.id}
@@ -95,20 +96,20 @@ export function EditorOutputPanel({
             className={cn(
               'text-xs flex items-center gap-1.5 px-2 py-1 rounded transition-colors',
               panelTab === tab.id
-                ? 'text-slate-200 bg-slate-700'
-                : 'text-slate-500 hover:text-slate-300'
+                ? 'text-text bg-line'
+                : 'text-text-muted hover:text-text'
             )}
           >
             <span
               className={cn(
                 'w-1.5 h-1.5 rounded-full',
-                panelTab === tab.id ? tab.activeColor : 'bg-slate-500'
+                panelTab === tab.id ? tab.activeColor : 'bg-text-muted'
               )}
             />
             {tab.label}
             {/* Show "0" count for problems tab */}
             {tab.id === 'problems' && (
-              <span className="text-[10px] text-emerald-400">0</span>
+              <span className="text-[10px] text-success">0</span>
             )}
           </button>
         ))}
@@ -120,26 +121,26 @@ export function EditorOutputPanel({
         {panelTab === 'output' && (
           <div className="flex items-start gap-6">
             {/* Profile Card */}
-            <div className="bg-slate-900 rounded-lg border border-slate-700/50 overflow-hidden min-w-[260px]">
-              <div className="p-3 border-b border-slate-800 flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center text-white font-bold">
+            <div className="bg-surface rounded-lg border border-line/50 overflow-hidden min-w-[260px]">
+              <div className="p-3 border-b border-line flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-accent to-info flex items-center justify-center text-text font-bold">
                   {initials}
                 </div>
                 <div>
                   <h4 className="font-semibold text-foreground text-sm">{name}</h4>
-                  <p className="text-xs text-emerald-400">{headline}</p>
+                  <p className="text-xs text-success">{headline}</p>
                 </div>
               </div>
               <div className="p-3 flex gap-2">
                 <Link
                   href="/#contact"
-                  className="flex-1 px-3 py-1.5 bg-emerald-500 text-slate-900 text-xs font-medium rounded hover:bg-emerald-400 transition-colors text-center"
+                  className="flex-1 px-3 py-1.5 bg-accent text-base text-xs font-medium rounded hover:bg-accent/80 transition-colors text-center"
                 >
                   Connect
                 </Link>
                 <Link
                   href="/projects"
-                  className="flex-1 px-3 py-1.5 border border-slate-600 text-slate-300 text-xs font-medium rounded hover:bg-slate-700 transition-colors text-center"
+                  className="flex-1 px-3 py-1.5 border border-line text-text text-xs font-medium rounded hover:bg-overlay transition-colors text-center"
                 >
                   View Work
                 </Link>
@@ -147,12 +148,12 @@ export function EditorOutputPanel({
             </div>
 
             {/* Compilation Output */}
-            <div className="flex-1 font-mono text-xs text-slate-400 space-y-1">
-              <p className="text-emerald-400">✓ Compiled successfully</p>
-              <p className="text-slate-500">└─ Developer.tsx exported</p>
-              <p className="text-slate-500">└─ skills.ts loaded ({skillCount} skills)</p>
-              <p className="text-slate-500">└─ career.ts parsed ({careerMilestoneCount} milestones)</p>
-              <p className="mt-2 text-amber-400">Ready to render portfolio...</p>
+            <div className="flex-1 font-mono text-xs text-text-muted space-y-1">
+              <p className="text-success">✓ Compiled successfully</p>
+              <p className="text-text-muted">└─ Developer.tsx exported</p>
+              <p className="text-text-muted">└─ skills.ts loaded ({skillCount} skills)</p>
+              <p className="text-text-muted">└─ career.ts parsed ({careerMilestoneCount} milestones)</p>
+              <p className="mt-2 text-accent-warm">Ready to render portfolio...</p>
             </div>
           </div>
         )}
@@ -160,24 +161,24 @@ export function EditorOutputPanel({
         {/* Terminal Tab */}
         {panelTab === 'terminal' && (
           <div className="font-mono text-xs space-y-1">
-            <p className="text-slate-500">$ whoami</p>
-            <p className="text-emerald-400">{terminalName}</p>
-            <p className="text-slate-500 mt-2">$ cat ./status.txt</p>
-            <p className="text-amber-400">{statusLabel}</p>
-            <p className="text-slate-500 mt-2">$ ls ./open-to/</p>
-            <p className="text-cyan-400">{openToRoles.join('  ')}</p>
-            <p className="text-slate-500 mt-2">$ echo $LOCATION</p>
-            <p className="text-slate-300">{location}</p>
+            <p className="text-text-muted">$ whoami</p>
+            <p className="text-success">{terminalName}</p>
+            <p className="text-text-muted mt-2">$ cat ./status.txt</p>
+            <p className="text-accent-warm">{statusLabel}</p>
+            <p className="text-text-muted mt-2">$ ls ./open-to/</p>
+            <p className="text-info">{openToRoles.join('  ')}</p>
+            <p className="text-text-muted mt-2">$ echo $LOCATION</p>
+            <p className="text-text">{location}</p>
           </div>
         )}
 
         {/* Problems Tab */}
         {panelTab === 'problems' && (
-          <div className="font-mono text-xs text-slate-400 flex items-center justify-center h-full">
+          <div className="font-mono text-xs text-text-muted flex items-center justify-center h-full">
             <div className="text-center">
-              <p className="text-emerald-400 text-lg mb-1">✓</p>
+              <p className="text-success text-lg mb-1">✓</p>
               <p>No problems detected</p>
-              <p className="text-slate-600 text-[10px] mt-1">Ready to ship</p>
+              <p className="text-text-muted/50 text-[10px] mt-1">Ready to ship</p>
             </div>
           </div>
         )}

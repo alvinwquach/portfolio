@@ -140,8 +140,8 @@ function LogoCard({
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-          <h3 className="text-lg font-semibold text-white">{concept.title}</h3>
-          <p className="text-sm text-white/70">{concept.subtitle}</p>
+          <h3 className="text-lg font-semibold text-text">{concept.title}</h3>
+          <p className="text-sm text-text/70">{concept.subtitle}</p>
         </div>
       </div>
       <div className="mt-3 flex flex-wrap gap-1.5">
@@ -178,7 +178,7 @@ function LogoModal({
           onClick={onClose}
           className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-black/50 flex items-center justify-center hover:bg-black/70 transition-colors"
         >
-          <IoClose className="w-6 h-6 text-white" />
+          <IoClose className="w-6 h-6 text-text" />
         </button>
 
         <div className="grid md:grid-cols-2">
@@ -232,7 +232,7 @@ function SizePreview({ Component }: { Component: LogoConcept['Component'] }) {
 function BackgroundTest({ Component }: { Component: LogoConcept['Component'] }) {
   const backgrounds = [
     { bg: 'bg-[#0d1117] border-[#30363D]', label: 'Dark' },
-    { bg: 'bg-white border-gray-200', label: 'Light' },
+    { bg: 'bg-surface border-line', label: 'Light' },
     { bg: 'bg-gradient-to-br from-[#1D428A] to-[#AA0000]', label: 'Gradient' },
   ];
 

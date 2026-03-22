@@ -41,15 +41,16 @@ interface EditorStatusBarProps {
  * Maps editor state to status bar background color.
  * Extracted as a function for clarity and testability.
  */
+// MODIFIED(feat/design-system): Late Night Session palette
 function getStatusBarColor(activeTab: TabName, language: Language): string {
-  // Python always gets yellow regardless of tab
-  if (language === 'python') return 'bg-yellow-600';
+  // Python always gets warning (yellow) regardless of tab
+  if (language === 'python') return 'bg-warning';
 
   // TypeScript colors vary by tab
   const tabColors: Record<TabName, string> = {
-    developer: 'bg-emerald-600',
-    skills: 'bg-amber-600',
-    career: 'bg-purple-600',
+    developer: 'bg-success',      // teal — developer/React
+    skills: 'bg-accent-warm',     // amber — configuration/skills
+    career: 'bg-accent',          // violet — journey/career
   };
 
   return tabColors[activeTab];

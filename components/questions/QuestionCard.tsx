@@ -41,9 +41,9 @@ interface QuestionCardProps {
 }
 
 const difficultyColors: Record<string, string> = {
-  easy: 'bg-green-500/20 text-green-500 border-green-500/30',
+  easy: 'bg-success/20 text-success border-success/30',
   medium: 'bg-yellow-500/20 text-yellow-500 border-yellow-500/30',
-  hard: 'bg-red-500/20 text-red-500 border-red-500/30',
+  hard: 'bg-error/20 text-error border-error/30',
 };
 
 export function QuestionCard({ question, onClick }: QuestionCardProps) {

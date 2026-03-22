@@ -67,7 +67,7 @@ export function CareerJourney({
           {/* Desktop horizontal timeline */}
           <div className="hidden lg:block">
             {/* Connecting line */}
-            <div className="absolute top-12 left-0 right-0 h-0.5 bg-gradient-to-r from-slate-700 via-slate-600 to-emerald-500" />
+            <div className="absolute top-12 left-0 right-0 h-0.5 bg-gradient-to-r from-line via-line/80 to-accent" />
 
             {/* Career cards */}
             <div className="grid grid-cols-6 gap-4">
@@ -76,14 +76,14 @@ export function CareerJourney({
                 return (
                   <div key={index} className="relative">
                     {/* Timeline dot */}
-                    <div className="absolute top-10 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-slate-700 border-2 border-slate-600 z-10" />
+                    <div className="absolute top-10 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-overlay border-2 border-line z-10" />
 
                     {/* Card */}
                     <div className="pt-20">
                       <div className="p-4 rounded-lg border border-border/50 bg-card/30 hover:bg-card/50 transition-colors h-full">
                         <div className="flex items-center gap-2 mb-3">
-                          <div className="p-1.5 rounded-md bg-slate-800">
-                            <Icon className="h-4 w-4 text-slate-400" />
+                          <div className="p-1.5 rounded-md bg-overlay">
+                            <Icon className="h-4 w-4 text-text-muted" />
                           </div>
                         </div>
                         <h3 className="font-medium text-sm text-foreground mb-1 line-clamp-2">
@@ -97,7 +97,7 @@ export function CareerJourney({
                             {career.transferableSkills.slice(0, 2).map((skill, i) => (
                               <span
                                 key={i}
-                                className="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-400"
+                                className="text-[10px] px-2 py-0.5 rounded bg-overlay text-text-muted"
                               >
                                 {skill.split(' ').slice(0, 3).join(' ')}
                               </span>
@@ -113,26 +113,26 @@ export function CareerJourney({
               {/* Current Role - The Destination */}
               <div className="relative">
                 {/* Timeline dot - highlighted */}
-                <div className="absolute top-10 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-emerald-500 border-2 border-emerald-400 z-10 shadow-lg shadow-emerald-500/50" />
+                <div className="absolute top-10 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-accent border-2 border-accent/70 z-10 shadow-lg shadow-accent/50" />
 
                 {/* Card */}
                 <div className="pt-20">
-                  <div className="p-4 rounded-lg bg-emerald-500 text-white h-full">
+                  <div className="p-4 rounded-lg bg-accent text-base h-full">
                     <div className="flex items-center gap-2 mb-3">
-                      <div className="p-1.5 rounded-md bg-white/20">
-                        <Code className="h-4 w-4 text-white" />
+                      <div className="p-1.5 rounded-md bg-base/20">
+                        <Code className="h-4 w-4 text-base" />
                       </div>
-                      <span className="text-[10px] font-medium px-2 py-0.5 rounded bg-amber-500 text-slate-900">
+                      <span className="text-[10px] font-medium px-2 py-0.5 rounded bg-accent-warm text-base">
                         Now
                       </span>
                     </div>
                     <h3 className="font-medium text-sm mb-1">
                       {currentRole}
                     </h3>
-                    <p className="text-xs text-white/70 mb-3">
+                    <p className="text-xs text-base/70 mb-3">
                       Building systems that matter
                     </p>
-                    <p className="text-[10px] text-white/60">
+                    <p className="text-[10px] text-base/60">
                       All paths led here
                     </p>
                   </div>
@@ -149,15 +149,15 @@ export function CareerJourney({
                 <div key={index} className="flex gap-4">
                   {/* Timeline */}
                   <div className="flex flex-col items-center">
-                    <div className="w-3 h-3 rounded-full bg-slate-700 border-2 border-slate-600" />
-                    <div className="w-0.5 flex-1 bg-slate-700" />
+                    <div className="w-3 h-3 rounded-full bg-overlay border-2 border-line" />
+                    <div className="w-0.5 flex-1 bg-line" />
                   </div>
 
                   {/* Card */}
                   <div className="flex-1 pb-4">
                     <div className="p-4 rounded-lg border border-border/50 bg-card/30">
                       <div className="flex items-center gap-2 mb-2">
-                        <Icon className="h-4 w-4 text-slate-400" />
+                        <Icon className="h-4 w-4 text-text-muted" />
                         <h3 className="font-medium text-sm text-foreground">
                           {career.title}
                         </h3>
@@ -170,7 +170,7 @@ export function CareerJourney({
                           {career.transferableSkills.slice(0, 2).map((skill, i) => (
                             <span
                               key={i}
-                              className="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-400"
+                              className="text-[10px] px-2 py-0.5 rounded bg-overlay text-text-muted"
                             >
                               {skill.split(' ').slice(0, 3).join(' ')}
                             </span>
@@ -186,18 +186,18 @@ export function CareerJourney({
             {/* Current role - mobile */}
             <div className="flex gap-4">
               <div className="flex flex-col items-center">
-                <div className="w-3 h-3 rounded-full bg-emerald-500 border-2 border-emerald-400 shadow-lg shadow-emerald-500/50" />
+                <div className="w-3 h-3 rounded-full bg-accent border-2 border-accent/70 shadow-lg shadow-accent/50" />
               </div>
               <div className="flex-1">
-                <div className="p-4 rounded-lg bg-emerald-500 text-white">
+                <div className="p-4 rounded-lg bg-accent text-base">
                   <div className="flex items-center gap-2 mb-2">
                     <Code className="h-4 w-4" />
                     <h3 className="font-medium text-sm">{currentRole}</h3>
-                    <span className="text-[10px] font-medium px-2 py-0.5 rounded bg-amber-500 text-slate-900">
+                    <span className="text-[10px] font-medium px-2 py-0.5 rounded bg-accent-warm text-base">
                       Now
                     </span>
                   </div>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-base/70">
                     Building systems that matter
                   </p>
                 </div>
@@ -216,7 +216,7 @@ export function CareerJourney({
               {allSkills.slice(0, 8).map((skill, index) => (
                 <span
                   key={index}
-                  className="px-3 py-1.5 rounded-full text-sm bg-slate-800/50 text-slate-300 border border-slate-700/50"
+                  className="px-3 py-1.5 rounded-full text-sm bg-overlay/50 text-text border border-line/50"
                 >
                   {skill}
                 </span>

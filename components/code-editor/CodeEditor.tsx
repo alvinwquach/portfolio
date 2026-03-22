@@ -104,11 +104,12 @@ const DEFAULT_PROFILE: ProfileData = {
  * Maps availability status to display configuration.
  * Extracted for clarity and potential i18n support.
  */
+// MODIFIED(feat/design-system): Late Night Session palette
 const STATUS_CONFIG: Record<string, { label: string; color: string }> = {
-  open: { label: 'Open to Work', color: 'bg-emerald-500' },
-  freelance: { label: 'Freelancing', color: 'bg-amber-500' },
-  both: { label: 'Open to Opportunities', color: 'bg-emerald-500' },
-  unavailable: { label: 'Not Available', color: 'bg-slate-500' },
+  open: { label: 'Open to Work', color: 'bg-success' },
+  freelance: { label: 'Freelancing', color: 'bg-accent-warm' },
+  both: { label: 'Open to Opportunities', color: 'bg-success' },
+  unavailable: { label: 'Not Available', color: 'bg-text-muted' },
 };
 
 export function CodeEditor({ profile, skillGroups }: CodeEditorProps) {
@@ -190,16 +191,16 @@ export function CodeEditor({ profile, skillGroups }: CodeEditorProps) {
   );
 
   return (
-    <div className="rounded-xl overflow-hidden shadow-2xl shadow-black/50 border border-slate-700/50 bg-slate-900">
+    <div className="rounded-xl overflow-hidden shadow-2xl shadow-black/50 border border-line/50 bg-surface">
       {/* Browser Chrome - Traffic lights and URL bar */}
-      <div className="flex items-center justify-between px-4 py-3 bg-slate-800 border-b border-slate-700/50">
+      <div className="flex items-center justify-between px-4 py-3 bg-overlay border-b border-line/50">
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 rounded-full bg-[#ff5f57]" />
           <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
           <div className="w-3 h-3 rounded-full bg-[#28ca41]" />
         </div>
         <div className="flex-1 max-w-md mx-4">
-          <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-900 rounded-md text-xs text-slate-400">
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-base rounded-md text-xs text-text-muted">
             <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
               <path
                 fillRule="evenodd"

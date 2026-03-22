@@ -56,7 +56,7 @@ export default async function ContactPage() {
                   <div className="flex items-center gap-3">
                     <div className={`h-3 w-3 rounded-full ${
                       profile.availabilityStatus === 'open' || profile.availabilityStatus === 'both'
-                        ? 'bg-green-500'
+                        ? 'bg-success'
                         : profile.availabilityStatus === 'freelance'
                         ? 'bg-amber'
                         : 'bg-dark-400'
