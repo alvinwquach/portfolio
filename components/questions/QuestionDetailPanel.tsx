@@ -1,7 +1,5 @@
 /**
- * QuestionDetailPanel Component
- * ==============================
- * Slide-over panel showing full question details
+ * QuestionDetailPanel — Slide-over with dark theme matching schedule colors
  */
 
 'use client';
@@ -19,8 +17,6 @@ import {
   ChevronLeft,
   ChevronRight,
 } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
 import type { InterviewQuestion } from './QuestionCard';
 
 interface QuestionDetailPanelProps {
@@ -32,52 +28,49 @@ interface QuestionDetailPanelProps {
   hasNext?: boolean;
 }
 
-const difficultyColors: Record<string, string> = {
-  easy: 'bg-success/10 text-success border-success/20',
-  medium: 'bg-yellow-500/10 text-yellow-600 border-yellow-500/20',
-  hard: 'bg-error/10 text-error border-error/20',
+const difficultyColors: Record<string, { color: string; bg: string; border: string }> = {
+  easy: { color: '#22c55e', bg: 'rgba(34,197,94,0.1)', border: 'rgba(34,197,94,0.2)' },
+  medium: { color: '#eab308', bg: 'rgba(234,179,8,0.1)', border: 'rgba(234,179,8,0.2)' },
+  hard: { color: '#ef4444', bg: 'rgba(239,68,68,0.1)', border: 'rgba(239,68,68,0.2)' },
 };
 
-// Portable Text components for rich text rendering
 const portableTextComponents = {
   block: {
     normal: ({ children }: { children?: React.ReactNode }) => (
-      <p className="mb-4 last:mb-0">{children}</p>
+      <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.55)', lineHeight: 1.7, margin: '0 0 12px' }}>{children}</p>
     ),
     h3: ({ children }: { children?: React.ReactNode }) => (
-      <h3 className="text-lg font-semibold mt-6 mb-3">{children}</h3>
+      <h3 style={{ fontSize: 16, fontWeight: 600, color: 'var(--ds-text)', margin: '20px 0 8px' }}>{children}</h3>
     ),
     h4: ({ children }: { children?: React.ReactNode }) => (
-      <h4 className="text-base font-semibold mt-4 mb-2">{children}</h4>
+      <h4 style={{ fontSize: 14, fontWeight: 600, color: 'var(--ds-text)', margin: '16px 0 6px' }}>{children}</h4>
     ),
   },
   list: {
     bullet: ({ children }: { children?: React.ReactNode }) => (
-      <ul className="list-disc list-inside space-y-1 mb-4">{children}</ul>
+      <ul style={{ listStyle: 'disc', paddingLeft: 20, marginBottom: 12, display: 'flex', flexDirection: 'column' as const, gap: 4 }}>{children}</ul>
     ),
     number: ({ children }: { children?: React.ReactNode }) => (
-      <ol className="list-decimal list-inside space-y-1 mb-4">{children}</ol>
+      <ol style={{ listStyle: 'decimal', paddingLeft: 20, marginBottom: 12, display: 'flex', flexDirection: 'column' as const, gap: 4 }}>{children}</ol>
     ),
   },
   listItem: {
     bullet: ({ children }: { children?: React.ReactNode }) => (
-      <li className="text-muted-foreground">{children}</li>
+      <li style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)' }}>{children}</li>
     ),
     number: ({ children }: { children?: React.ReactNode }) => (
-      <li className="text-muted-foreground">{children}</li>
+      <li style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)' }}>{children}</li>
     ),
   },
   marks: {
     strong: ({ children }: { children?: React.ReactNode }) => (
-      <strong className="font-semibold text-foreground">{children}</strong>
+      <strong style={{ fontWeight: 600, color: 'var(--ds-text)' }}>{children}</strong>
     ),
     em: ({ children }: { children?: React.ReactNode }) => (
-      <em className="italic">{children}</em>
+      <em style={{ fontStyle: 'italic' }}>{children}</em>
     ),
     code: ({ children }: { children?: React.ReactNode }) => (
-      <code className="px-1.5 py-0.5 bg-secondary rounded text-sm font-mono">
-        {children}
-      </code>
+      <code style={{ padding: '2px 6px', backgroundColor: 'rgba(255,255,255,0.04)', borderRadius: 4, fontSize: 13, fontFamily: 'var(--font-mono)' }}>{children}</code>
     ),
   },
 };
@@ -90,19 +83,16 @@ export function QuestionDetailPanel({
   hasPrevious = false,
   hasNext = false,
 }: QuestionDetailPanelProps) {
-  // Handle escape key
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
       if (e.key === 'ArrowLeft' && hasPrevious && onPrevious) onPrevious();
       if (e.key === 'ArrowRight' && hasNext && onNext) onNext();
     };
-
     if (question) {
       document.addEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'hidden';
     }
-
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = '';
@@ -111,13 +101,15 @@ export function QuestionDetailPanel({
 
   if (!question) return null;
 
+  const dc = difficultyColors[question.difficulty];
+
   return (
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm animate-in fade-in-0"
         onClick={onClose}
         aria-hidden="true"
+        style={{ position: 'fixed', inset: 0, zIndex: 50, backgroundColor: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)' }}
       />
 
       {/* Panel */}
@@ -125,96 +117,68 @@ export function QuestionDetailPanel({
         role="dialog"
         aria-modal="true"
         aria-labelledby="panel-title"
-        className={cn(
-          'fixed right-0 top-0 z-50 h-full w-full max-w-2xl',
-          'bg-background border-l border-border shadow-xl',
-          'animate-in slide-in-from-right-full duration-300',
-          'flex flex-col'
-        )}
+        style={{
+          position: 'fixed', right: 0, top: 0, zIndex: 50,
+          height: '100%', width: '100%', maxWidth: 640,
+          backgroundColor: '#0d1117',
+          borderLeft: '1px solid rgba(48,54,61,0.7)',
+          display: 'flex', flexDirection: 'column',
+        }}
+        className="animate-in slide-in-from-right-full duration-300"
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-border">
-          <div className="flex items-center gap-2">
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', borderBottom: '1px solid rgba(48,54,61,0.7)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             {/* Navigation */}
             {(hasPrevious || hasNext) && (
-              <div className="flex items-center gap-1 mr-2">
-                <button
-                  onClick={onPrevious}
-                  disabled={!hasPrevious}
-                  className={cn(
-                    'p-1.5 rounded-md transition-colors',
-                    hasPrevious
-                      ? 'hover:bg-secondary text-foreground'
-                      : 'text-muted-foreground/30 cursor-not-allowed'
-                  )}
-                  aria-label="Previous question"
-                >
-                  <ChevronLeft className="h-5 w-5" />
+              <div style={{ display: 'flex', gap: 2, marginRight: 8 }}>
+                <button onClick={onPrevious} disabled={!hasPrevious}
+                  style={{ padding: 4, borderRadius: 4, border: 'none', cursor: hasPrevious ? 'pointer' : 'not-allowed', backgroundColor: 'transparent', color: hasPrevious ? 'var(--ds-text)' : 'rgba(255,255,255,0.15)' }}
+                  className="hover:bg-white/5 transition-colors" aria-label="Previous question">
+                  <ChevronLeft size={18} />
                 </button>
-                <button
-                  onClick={onNext}
-                  disabled={!hasNext}
-                  className={cn(
-                    'p-1.5 rounded-md transition-colors',
-                    hasNext
-                      ? 'hover:bg-secondary text-foreground'
-                      : 'text-muted-foreground/30 cursor-not-allowed'
-                  )}
-                  aria-label="Next question"
-                >
-                  <ChevronRight className="h-5 w-5" />
+                <button onClick={onNext} disabled={!hasNext}
+                  style={{ padding: 4, borderRadius: 4, border: 'none', cursor: hasNext ? 'pointer' : 'not-allowed', backgroundColor: 'transparent', color: hasNext ? 'var(--ds-text)' : 'rgba(255,255,255,0.15)' }}
+                  className="hover:bg-white/5 transition-colors" aria-label="Next question">
+                  <ChevronRight size={18} />
                 </button>
               </div>
             )}
 
-            {/* Badges */}
-            {question.isStarred && (
-              <Star className="h-4 w-4 text-amber fill-amber" />
-            )}
-            {question.difficulty && (
-              <Badge
-                variant="outline"
-                className={cn('text-xs capitalize', difficultyColors[question.difficulty])}
-              >
+            {question.isStarred && <Star size={14} style={{ color: '#f59e0b', fill: '#f59e0b' }} />}
+            {dc && (
+              <span style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', padding: '2px 7px', borderRadius: 4, backgroundColor: dc.bg, color: dc.color, border: `1px solid ${dc.border}` }}>
                 {question.difficulty}
-              </Badge>
+              </span>
             )}
             {question.confidenceLevel > 0 && (
-              <span className="text-xs text-muted-foreground">
-                {'●'.repeat(question.confidenceLevel)}
-                {'○'.repeat(5 - question.confidenceLevel)}
+              <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.25)', letterSpacing: 1 }}>
+                {'●'.repeat(question.confidenceLevel)}{'○'.repeat(5 - question.confidenceLevel)}
               </span>
             )}
           </div>
 
-          <button
-            onClick={onClose}
-            className="p-2 rounded-md hover:bg-secondary transition-colors"
-            aria-label="Close panel"
-          >
-            <X className="h-5 w-5" />
+          <button onClick={onClose} style={{ padding: 6, borderRadius: 4, border: 'none', cursor: 'pointer', backgroundColor: 'transparent', color: 'rgba(255,255,255,0.5)' }} className="hover:bg-white/5 transition-colors" aria-label="Close">
+            <X size={18} />
           </button>
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-6">
+        <div style={{ flex: 1, overflowY: 'auto', padding: 24, display: 'flex', flexDirection: 'column', gap: 20 }}>
           {/* Question */}
-          <h2 id="panel-title" className="text-xl font-bold leading-snug">
+          <h2 id="panel-title" style={{ fontSize: 18, fontWeight: 700, color: 'var(--ds-text)', margin: 0, lineHeight: 1.35 }}>
             {question.question}
           </h2>
 
           {/* Answer */}
           {question.answer && question.answer.length > 0 && (
-            <div className="prose prose-sm max-w-none">
-              <div className="flex items-center gap-2 mb-3">
-                <MessageSquare className="h-4 w-4 text-cyan" />
-                <h4 className="text-sm font-semibold text-cyan m-0">My Answer</h4>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 10 }}>
+                <MessageSquare size={14} style={{ color: '#3b82f6' }} />
+                <h4 style={{ fontSize: 12, fontWeight: 600, color: '#3b82f6', margin: 0 }}>My Answer</h4>
               </div>
-              <div className="pl-4 border-l-2 border-cyan/20">
-                <PortableText
-                  value={question.answer}
-                  components={portableTextComponents}
-                />
+              <div style={{ paddingLeft: 14, borderLeft: '2px solid rgba(59,130,246,0.2)' }}>
+                <PortableText value={question.answer} components={portableTextComponents} />
               </div>
             </div>
           )}
@@ -222,46 +186,35 @@ export function QuestionDetailPanel({
           {/* Key Points */}
           {question.keyPoints && question.keyPoints.length > 0 && (
             <div>
-              <div className="flex items-center gap-2 mb-3">
-                <CheckCircle2 className="h-4 w-4 text-success" />
-                <h4 className="text-sm font-semibold text-muted-foreground">
-                  Key Points to Hit
-                </h4>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 10 }}>
+                <CheckCircle2 size={14} style={{ color: '#22c55e' }} />
+                <h4 style={{ fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.4)', margin: 0 }}>Key Points to Hit</h4>
               </div>
-              <ul className="space-y-2 pl-6">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6, paddingLeft: 20 }}>
                 {question.keyPoints.map((point, i) => (
-                  <li key={i} className="flex gap-2 text-sm">
-                    <span className="text-success shrink-0">✓</span>
-                    <span>{point}</span>
-                  </li>
+                  <div key={i} style={{ display: 'flex', gap: 6, fontSize: 13 }}>
+                    <span style={{ color: '#22c55e', flexShrink: 0 }}>✓</span>
+                    <span style={{ color: 'rgba(255,255,255,0.55)' }}>{point}</span>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
           )}
 
-          {/* Project & Experience References */}
-          {((question.projectReferences && question.projectReferences.length > 0) ||
-            (question.experienceReferences && question.experienceReferences.length > 0)) && (
+          {/* References */}
+          {((question.projectReferences?.length > 0) || (question.experienceReferences?.length > 0)) && (
             <div>
-              <h4 className="text-sm font-semibold text-muted-foreground mb-3">
-                Reference in Answer
-              </h4>
-              <div className="flex flex-wrap gap-2">
-                {question.projectReferences?.map((project) => (
-                  <Link
-                    key={project._id}
-                    href={`/project/${project.slug.current}`}
-                    className="inline-flex items-center gap-1 px-3 py-1.5 bg-cyan/10 text-cyan rounded-full text-sm hover:bg-cyan/20 transition-colors"
-                  >
-                    {project.name}
-                    <ArrowRight className="h-3 w-3" />
+              <h4 style={{ fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.4)', margin: '0 0 10px' }}>Reference in Answer</h4>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                {question.projectReferences?.map(project => (
+                  <Link key={project._id} href={`/project/${project.slug.current}`}
+                    style={{ display: 'inline-flex', alignItems: 'center', gap: 4, padding: '4px 10px', borderRadius: 16, fontSize: 12, backgroundColor: 'rgba(59,130,246,0.1)', color: '#3b82f6', textDecoration: 'none' }}
+                    className="hover:bg-[rgba(59,130,246,0.15)] transition-colors">
+                    {project.name} <ArrowRight size={11} />
                   </Link>
                 ))}
-                {question.experienceReferences?.map((exp) => (
-                  <span
-                    key={exp._id}
-                    className="inline-flex items-center gap-1 px-3 py-1.5 bg-amber/10 text-amber rounded-full text-sm"
-                  >
+                {question.experienceReferences?.map(exp => (
+                  <span key={exp._id} style={{ display: 'inline-flex', alignItems: 'center', gap: 4, padding: '4px 10px', borderRadius: 16, fontSize: 12, backgroundColor: 'rgba(245,158,11,0.1)', color: '#f59e0b' }}>
                     {exp.role} @ {exp.company}
                   </span>
                 ))}
@@ -271,56 +224,53 @@ export function QuestionDetailPanel({
 
           {/* Follow-up Questions */}
           {question.followUpQuestions && question.followUpQuestions.length > 0 && (
-            <div className="p-4 bg-secondary/50 rounded-lg">
-              <h4 className="text-sm font-semibold text-muted-foreground mb-3">
-                Likely Follow-ups
-              </h4>
-              <ul className="space-y-2">
+            <div style={{ padding: '12px 14px', borderRadius: 8, backgroundColor: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}>
+              <h4 style={{ fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.4)', margin: '0 0 8px' }}>Likely Follow-ups</h4>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                 {question.followUpQuestions.map((followUp, i) => (
-                  <li key={i} className="text-sm flex gap-2">
-                    <span className="text-amber">→</span>
-                    <span className="text-muted-foreground">{followUp}</span>
-                  </li>
+                  <div key={i} style={{ display: 'flex', gap: 6, fontSize: 13 }}>
+                    <span style={{ color: '#f59e0b' }}>→</span>
+                    <span style={{ color: 'rgba(255,255,255,0.45)' }}>{followUp}</span>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
           )}
 
           {/* Red Flags */}
           {question.redFlags && question.redFlags.length > 0 && (
-            <div className="p-4 bg-error/5 border border-error/20 rounded-lg">
-              <h4 className="text-sm font-semibold text-error mb-2 flex items-center gap-2">
-                <AlertTriangle className="h-4 w-4" />
-                Avoid Saying
+            <div style={{ padding: '12px 14px', borderRadius: 8, backgroundColor: 'rgba(239,68,68,0.04)', border: '1px solid rgba(239,68,68,0.15)' }}>
+              <h4 style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, fontWeight: 600, color: '#ef4444', margin: '0 0 8px' }}>
+                <AlertTriangle size={13} /> Avoid Saying
               </h4>
-              <ul className="space-y-1">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
                 {question.redFlags.map((flag, i) => (
-                  <li key={i} className="text-sm text-error/80 flex gap-2">
-                    <span>✕</span>
-                    <span>{flag}</span>
-                  </li>
+                  <div key={i} style={{ display: 'flex', gap: 6, fontSize: 13 }}>
+                    <span style={{ color: '#ef4444' }}>✕</span>
+                    <span style={{ color: 'rgba(239,68,68,0.7)' }}>{flag}</span>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
           )}
 
           {/* Tags */}
           {question.tags && question.tags.length > 0 && (
-            <div className="pt-4 border-t flex flex-wrap gap-1">
+            <div style={{ paddingTop: 16, borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', flexWrap: 'wrap', gap: 4 }}>
               {question.tags.map((tag, i) => (
-                <Badge key={i} variant="outline" className="text-xs">
+                <span key={i} style={{ fontSize: 11, padding: '2px 8px', borderRadius: 4, backgroundColor: 'rgba(255,255,255,0.04)', color: 'rgba(255,255,255,0.35)', border: '1px solid rgba(255,255,255,0.06)' }}>
                   {tag}
-                </Badge>
+                </span>
               ))}
             </div>
           )}
         </div>
 
-        {/* Footer hint */}
-        <div className="p-4 border-t border-border bg-secondary/30 text-center text-xs text-muted-foreground">
-          Press <kbd className="px-1.5 py-0.5 bg-secondary rounded text-foreground">Esc</kbd> to close
+        {/* Footer */}
+        <div style={{ padding: '10px 16px', borderTop: '1px solid rgba(48,54,61,0.7)', backgroundColor: 'rgba(255,255,255,0.02)', textAlign: 'center', fontSize: 11, color: 'rgba(255,255,255,0.25)' }}>
+          Press <kbd style={{ padding: '1px 5px', backgroundColor: 'rgba(255,255,255,0.06)', borderRadius: 3, color: 'rgba(255,255,255,0.5)' }}>Esc</kbd> to close
           {(hasPrevious || hasNext) && (
-            <>, <kbd className="px-1.5 py-0.5 bg-secondary rounded text-foreground">←</kbd>/<kbd className="px-1.5 py-0.5 bg-secondary rounded text-foreground">→</kbd> to navigate</>
+            <>, <kbd style={{ padding: '1px 5px', backgroundColor: 'rgba(255,255,255,0.06)', borderRadius: 3, color: 'rgba(255,255,255,0.5)' }}>←</kbd>/<kbd style={{ padding: '1px 5px', backgroundColor: 'rgba(255,255,255,0.06)', borderRadius: 3, color: 'rgba(255,255,255,0.5)' }}>→</kbd> to navigate</>
           )}
         </div>
       </div>

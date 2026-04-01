@@ -1,14 +1,12 @@
 /**
  * QuestionCard Component
  * ======================
- * Card display for interview questions in grid layout
+ * Card display for interview questions — matches dark theme with blue accent
  */
 
 'use client';
 
 import { Star, ArrowRight } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
 
 export interface InterviewQuestion {
   _id: string;
@@ -40,73 +38,70 @@ interface QuestionCardProps {
   onClick: () => void;
 }
 
-const difficultyColors: Record<string, string> = {
-  easy: 'bg-success/20 text-success border-success/30',
-  medium: 'bg-yellow-500/20 text-yellow-500 border-yellow-500/30',
-  hard: 'bg-error/20 text-error border-error/30',
+const difficultyColors: Record<string, { color: string; bg: string; border: string }> = {
+  easy: { color: '#22c55e', bg: 'rgba(34,197,94,0.1)', border: 'rgba(34,197,94,0.2)' },
+  medium: { color: '#eab308', bg: 'rgba(234,179,8,0.1)', border: 'rgba(234,179,8,0.2)' },
+  hard: { color: '#ef4444', bg: 'rgba(239,68,68,0.1)', border: 'rgba(239,68,68,0.2)' },
 };
 
 export function QuestionCard({ question, onClick }: QuestionCardProps) {
+  const dc = difficultyColors[question.difficulty];
+
   return (
     <button
       onClick={onClick}
-      className={cn(
-        'group text-left w-full rounded-xl border bg-card p-5',
-        'transition-all duration-200',
-        'hover:border-cyan/30 hover:bg-card/80 hover:shadow-md',
-        'focus:outline-none focus:ring-2 focus:ring-cyan/50',
-        question.isStarred ? 'border-amber/20' : 'border-border/50'
-      )}
+      className="group hover:border-[rgba(59,130,246,0.25)] transition-all duration-200"
+      style={{
+        textAlign: 'left',
+        width: '100%',
+        padding: '16px 18px',
+        borderRadius: 12,
+        border: question.isStarred ? '1px solid rgba(245,158,11,0.15)' : '1px solid rgba(255,255,255,0.06)',
+        backgroundColor: 'rgba(255,255,255,0.02)',
+        cursor: 'pointer',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
     >
-      {/* Header: Star + Difficulty */}
-      <div className="flex items-center gap-2 mb-3">
+      {/* Header: Star + Difficulty + Confidence */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 10 }}>
         {question.isStarred && (
-          <Star className="h-4 w-4 text-amber fill-amber flex-shrink-0" />
+          <Star size={14} style={{ color: '#f59e0b', fill: '#f59e0b', flexShrink: 0 }} />
         )}
-        {question.difficulty && (
-          <Badge
-            variant="outline"
-            className={cn('text-xs capitalize', difficultyColors[question.difficulty])}
-          >
+        {dc && (
+          <span style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', padding: '2px 7px', borderRadius: 4, backgroundColor: dc.bg, color: dc.color, border: `1px solid ${dc.border}` }}>
             {question.difficulty}
-          </Badge>
+          </span>
         )}
         {question.confidenceLevel > 0 && (
-          <span className="text-xs text-muted-foreground ml-auto">
-            {'●'.repeat(question.confidenceLevel)}
-            {'○'.repeat(5 - question.confidenceLevel)}
+          <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.25)', marginLeft: 'auto', letterSpacing: 1 }}>
+            {'●'.repeat(question.confidenceLevel)}{'○'.repeat(5 - question.confidenceLevel)}
           </span>
         )}
       </div>
 
       {/* Question Text */}
-      <p className="font-semibold text-base leading-snug line-clamp-3 mb-3 group-hover:text-cyan transition-colors">
+      <p className="group-hover:text-[#3b82f6] transition-colors line-clamp-3" style={{ fontSize: 14, fontWeight: 600, color: 'var(--ds-text)', margin: '0 0 10px', lineHeight: 1.4, flex: 1 }}>
         {question.question}
       </p>
 
       {/* Tags */}
       {question.tags && question.tags.length > 0 && (
-        <div className="flex flex-wrap gap-1.5 mb-3">
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginBottom: 10 }}>
           {question.tags.slice(0, 4).map((tag, i) => (
-            <span
-              key={i}
-              className="text-xs text-muted-foreground bg-secondary/50 px-2 py-0.5 rounded"
-            >
+            <span key={i} style={{ fontSize: 11, padding: '2px 7px', borderRadius: 4, backgroundColor: 'rgba(255,255,255,0.04)', color: 'rgba(255,255,255,0.35)', border: '1px solid rgba(255,255,255,0.06)' }}>
               #{tag}
             </span>
           ))}
           {question.tags.length > 4 && (
-            <span className="text-xs text-muted-foreground">
-              +{question.tags.length - 4}
-            </span>
+            <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.2)' }}>+{question.tags.length - 4}</span>
           )}
         </div>
       )}
 
       {/* Click prompt */}
-      <div className="flex items-center gap-1 text-xs text-muted-foreground group-hover:text-cyan transition-colors pt-2 border-t border-border/30">
-        <span>View answer</span>
-        <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
+      <div className="group-hover:text-[#3b82f6] transition-colors" style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, color: 'rgba(255,255,255,0.3)', paddingTop: 10, borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+        View answer <ArrowRight size={11} className="group-hover:translate-x-0.5 transition-transform" />
       </div>
     </button>
   );
