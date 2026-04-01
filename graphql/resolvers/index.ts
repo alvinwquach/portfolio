@@ -375,6 +375,7 @@ export const resolvers = {
         actions: extractStrings(exp.actions),
         results: extractStrings(exp.results),
         lessonsLearned: extractStrings(exp.lessonsLearned),
+        techStack: (exp.techStack || []).filter(Boolean),
       }));
     },
 
@@ -409,6 +410,7 @@ export const resolvers = {
         actions: extractStrings(result.actions),
         results: extractStrings(result.results),
         lessonsLearned: extractStrings(result.lessonsLearned),
+        techStack: (result.techStack || []).filter(Boolean),
       };
     },
 
