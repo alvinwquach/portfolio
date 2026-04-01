@@ -605,31 +605,29 @@ p {
 }
 
 /* ============================================
-   DARK SCROLLBAR — scoped to schedule pages
-   ============================================
-   Uses [data-schedule] attribute on the schedule layout
-   to avoid affecting the rest of the portfolio. */
+   DARK SCROLLBAR — global thin scrollbar
+   ============================================ */
 
-[data-schedule] ::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
-[data-schedule] ::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   background: transparent;
 }
 
-[data-schedule] ::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.1);
   border-radius: 3px;
 }
 
-[data-schedule] ::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.2);
 }
 
 /* Firefox */
-[data-schedule] * {
+* {
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
 }
