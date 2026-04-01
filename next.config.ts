@@ -26,16 +26,21 @@ const nextConfig: NextConfig = {
   // Security headers
   async headers() {
     return [
+      // Sanity Studio needs full script access — skip CSP for /studio
       {
-        source: '/(.*)',
+        source: '/studio/:path*',
         headers: [
-          // Prevent clickjacking - use CSP frame-ancestors instead of X-Frame-Options
-          // to allow SoundCloud widget iframe while blocking others
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+        ],
+      },
+      {
+        source: '/((?!studio).*)',
+        headers: [
           {
             key: 'X-Frame-Options',
             value: 'SAMEORIGIN',
           },
-          // Content Security Policy - allow SoundCloud iframe and scripts, plus Sanity Studio resources
           {
             key: 'Content-Security-Policy',
             value: [

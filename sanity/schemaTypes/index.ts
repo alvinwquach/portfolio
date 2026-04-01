@@ -50,6 +50,17 @@ import { integration } from './integration'
 import { resource } from './resource'
 import { roadmap } from './roadmap'
 
+// ─── Scheduling Schemas ─────────────────────────────────────
+// These three document types power the scheduling system (feat/scheduling).
+// bookingRequest: Each meeting request from the /schedule page
+// schedulingToken: Private scheduling links sent to specific people
+// schedulingConfig: Singleton that controls scheduling behavior
+import {
+  bookingRequest,
+  schedulingToken,
+  schedulingConfig,
+} from './scheduling'
+
 /**
  * Schema Export Object
  * --------------------
@@ -81,5 +92,10 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     integration,       // API integrations and third-party services
     resource,          // External resources and references
     roadmap,           // Learning goals and milestones
+
+    // ─── Scheduling (feat/scheduling) ───────────────────────
+    bookingRequest,      // Meeting requests from /schedule page
+    schedulingToken,     // Private scheduling links
+    schedulingConfig,    // Singleton config for scheduling behavior
   ],
 }
