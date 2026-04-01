@@ -12,3 +12,4 @@ export { AnimatedSection } from './animations/AnimatedSection';
 export { AnimatedCounter } from './animations/AnimatedCounter';
 export { ScrollReveal } from './animations/ScrollReveal';
 export { ScrollParallax } from './animations/ScrollParallax';
+export { TextScramble } from './animations/TextScramble';

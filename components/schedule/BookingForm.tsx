@@ -19,7 +19,6 @@ const TOPIC_OPTIONS = [
   'Technical architecture discussion',
   'Open source collaboration',
   'Project feedback & code review',
-  'Mentorship & career advice',
   'Partnership opportunity',
   'Other',
 ]

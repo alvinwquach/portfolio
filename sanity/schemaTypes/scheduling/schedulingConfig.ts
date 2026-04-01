@@ -294,7 +294,6 @@ export const schedulingConfig = defineType({
         'Technical architecture & challenges',
         'Open source collaboration',
         'Project feedback & code review',
-        'Mentorship & career advice',
       ],
       group: 'content',
     }),
