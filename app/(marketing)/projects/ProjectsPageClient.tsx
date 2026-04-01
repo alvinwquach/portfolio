@@ -1,12 +1,21 @@
 /**
- * Projects Page Client Component
- * ==============================
- * Case Study Index — not a gallery.
+ * Projects Page — Sidebar + 2-Column Grid (Kevin's layout pattern)
+ * ================================================================
  *
- * Design follows blog page pattern:
- * - Simple text-link filters (not pill buttons)
- * - Clean search bar
- * - Show ALL tech (no truncation)
+ * LAYOUT:
+ *   LEFT SIDEBAR (280px, sticky):
+ *     - Avatar + name
+ *     - "Projects" title + count
+ *     - Status filters (All, Featured, Client Work)
+ *     - Tech tag cloud for filtering
+ *
+ *   RIGHT CONTENT (flex-1):
+ *     - Search bar
+ *     - 2-column project card grid
+ *
+ * DESIGN:
+ *   Uses the same dark theme / color tokens as the schedule page.
+ *   Cards use subtle borders, hover states, and the blue accent.
  */
 
 'use client';
@@ -15,31 +24,16 @@ import * as React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import {
   ExternalLink,
   Github,
   ArrowRight,
-  Users,
-  Clock,
-  FolderOpen,
   Search,
   X,
-  CheckCircle2,
 } from 'lucide-react';
+import Select from 'react-select';
 import type { Project } from '@/lib/graphql/queries';
 import { TransitionLink } from '@/components/transitions/TransitionLink';
-
-// Category display names
-const CATEGORY_LABELS: Record<string, string> = {
-  frontend: 'Frontend',
-  backend: 'Backend',
-  databases: 'Databases',
-  'data-ml': 'Data & ML',
-  testing: 'Testing',
-  'project-tools': 'DevOps',
-};
 
 interface ProjectsPageClientProps {
   projects: Project[];
@@ -48,469 +42,412 @@ interface ProjectsPageClientProps {
   initialSearch: string;
 }
 
-// Count projects per category
-function countProjectsByCategory(projects: Project[], category: string): number {
-  return projects.filter((project) =>
-    project.techStack?.some((tech) => tech.category === category)
-  ).length;
-}
+// ═══════════════════════════════════════════════════════
+// PROJECT CARD — compact card for the 2-column grid
+// ═══════════════════════════════════════════════════════
 
-/**
- * Simple text filter link - matches blog style
- */
-function FilterLink({
-  label,
-  count,
-  active,
-  onClick,
-}: {
-  label: string;
-  count?: number;
-  active: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className={`text-sm transition-colors ${
-        active
-          ? 'text-foreground font-medium'
-          : 'text-muted-foreground hover:text-foreground'
-      }`}
-    >
-      {label}
-      {count !== undefined && (
-        <span className="ml-1 text-muted-foreground">({count})</span>
-      )}
-    </button>
-  );
-}
+function ProjectCard({ project }: { project: Project }) {
+  const hasImage = !!project.image?.url;
 
-/**
- * Featured Project Card — Full-width hero treatment
- * Shows situation, outcomes, and key details at a glance
- */
-function FeaturedProjectCard({ project }: { project: Project }) {
   return (
-    <div className="relative rounded-xl border border-border/50 bg-card/50 overflow-hidden group">
-      <div className="grid lg:grid-cols-2 gap-0">
-        {/* Image */}
-        {project.image?.url && (
-          <div
-            className="aspect-video lg:aspect-auto lg:h-full relative overflow-hidden bg-muted"
-            data-flip-id={`project-image-${project.slug.current}`}
-          >
+    <TransitionLink href={`/project/${project.slug.current}`} slug={project.slug.current}>
+      <div
+        className="group rounded-xl overflow-hidden transition-all duration-200"
+        style={{
+          border: '1px solid rgba(255,255,255,0.06)',
+          backgroundColor: 'rgba(255,255,255,0.02)',
+        }}
+      >
+        {/* Image or placeholder */}
+        <div
+          className="aspect-[16/9] relative overflow-hidden"
+          style={{ backgroundColor: 'rgba(255,255,255,0.03)' }}
+        >
+          {hasImage ? (
             <Image
-              src={project.image.url}
+              src={project.image!.url!}
               alt={project.name}
               fill
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              priority
+              sizes="(max-width: 768px) 100vw, 45vw"
               className="object-cover transition-transform duration-500 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent lg:hidden" />
-          </div>
-        )}
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span style={{ fontSize: 48, fontWeight: 700, color: 'rgba(255,255,255,0.04)', fontFamily: 'var(--font-mono)' }}>
+                {project.name.split(' ').map(w => w[0]).join('').slice(0, 2)}
+              </span>
+            </div>
+          )}
 
-        {/* Content */}
-        <div className="p-6 lg:p-8 flex flex-col">
-          {/* Header */}
-          <div className="mb-4">
-            <span className="text-xs font-medium text-cyan uppercase tracking-wider">
-              Featured Project
-            </span>
-            <h2 className="text-2xl lg:text-3xl font-bold mt-2 mb-2 group-hover:text-cyan transition-colors">
-              <TransitionLink href={`/projects/${project.slug.current}`} slug={project.slug.current}>
-                {project.name}
-              </TransitionLink>
-            </h2>
-            {project.tagline && (
-              <p className="text-lg text-muted-foreground">
-                {project.tagline}
-              </p>
-            )}
-          </div>
-
-          {/* Meta: Role, Team, Duration */}
-          <div className="flex flex-wrap gap-4 mb-4 text-sm text-muted-foreground">
-            {project.role && (
-              <div className="flex items-center gap-1.5">
-                <Users className="h-4 w-4" />
-                <span>{project.role}</span>
-              </div>
-            )}
-            {project.teamSize && (
-              <span className="text-foreground font-medium">
-                {project.teamSize === 1 ? 'Solo' : `Team of ${project.teamSize}`}
+          {/* Status badges */}
+          <div className="absolute top-3 left-3 flex gap-2">
+            {project.featured && (
+              <span style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', padding: '3px 8px', borderRadius: 4, backgroundColor: 'rgba(59,130,246,0.15)', color: '#3b82f6', border: '1px solid rgba(59,130,246,0.2)' }}>
+                Featured
               </span>
             )}
-            {project.duration && (
-              <div className="flex items-center gap-1.5">
-                <Clock className="h-4 w-4" />
-                <span>{project.duration}</span>
-              </div>
+            {project.liveUrl && (
+              <span style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', padding: '3px 8px', borderRadius: 4, backgroundColor: 'rgba(34,197,94,0.12)', color: '#22c55e', border: '1px solid rgba(34,197,94,0.2)' }}>
+                Live
+              </span>
             )}
           </div>
+        </div>
 
-          {/* Situation excerpt */}
-          {project.situation && (
-            <p className="text-muted-foreground mb-4 line-clamp-3">
-              {project.situation}
+        {/* Content */}
+        <div style={{ padding: '16px 18px 18px' }}>
+          {/* Title */}
+          <h3 className="group-hover:text-[#3b82f6] transition-colors" style={{ fontSize: 16, fontWeight: 600, color: 'var(--ds-text)', margin: 0 }}>
+            {project.name}
+          </h3>
+
+          {/* Tagline */}
+          {project.tagline && (
+            <p className="line-clamp-2" style={{ fontSize: 13, lineHeight: 1.5, color: 'rgba(255,255,255,0.4)', margin: '6px 0 0' }}>
+              {project.tagline}
             </p>
           )}
 
-          {/* Tech Stack - ALL of them */}
+          {/* Meta row: role · duration */}
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 12px', marginTop: 10, fontSize: 12, color: 'rgba(255,255,255,0.3)' }}>
+            {project.role && <span>{project.role}</span>}
+            {project.duration && (
+              <>
+                {project.role && <span>·</span>}
+                <span>{project.duration}</span>
+              </>
+            )}
+            {project.teamSize && (
+              <>
+                <span>·</span>
+                <span>{project.teamSize === 1 ? 'Solo' : `Team of ${project.teamSize}`}</span>
+              </>
+            )}
+          </div>
+
+          {/* Tech badges */}
           {project.techStack && project.techStack.length > 0 && (
-            <div className="flex flex-wrap gap-1.5 mb-5">
-              {project.techStack.map((skill) => (
-                <Badge key={skill._id} variant="secondary" className="text-xs">
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 12 }}>
+              {project.techStack.slice(0, 8).map((skill) => (
+                <span
+                  key={skill._id}
+                  style={{ fontSize: 11, padding: '2px 8px', borderRadius: 4, backgroundColor: 'rgba(255,255,255,0.04)', color: 'rgba(255,255,255,0.4)', border: '1px solid rgba(255,255,255,0.06)' }}
+                >
                   {skill.name}
-                </Badge>
+                </span>
               ))}
+              {project.techStack.length > 8 && (
+                <span style={{ fontSize: 11, padding: '2px 8px', color: 'rgba(255,255,255,0.25)' }}>
+                  +{project.techStack.length - 8}
+                </span>
+              )}
             </div>
           )}
 
-          {/* Results */}
-          {project.results && project.results.length > 0 && (
-            <div className="mb-6 p-4 rounded-lg bg-success/5 border border-success/10">
-              <p className="text-xs font-semibold text-success uppercase tracking-wider mb-2">
-                Key Outcomes
-              </p>
-              <ul className="space-y-1.5">
-                {project.results.slice(0, 3).map((result, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                    <CheckCircle2 className="h-4 w-4 text-success mt-0.5 shrink-0" />
-                    <span>{result}</span>
-                  </li>
-                ))}
-              </ul>
+          {/* Action row */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 14, paddingTop: 12, borderTop: '1px solid rgba(255,255,255,0.04)' }}>
+            <span className="group-hover:text-[#3b82f6] transition-colors" style={{ fontSize: 13, fontWeight: 500, color: 'rgba(255,255,255,0.5)', display: 'flex', alignItems: 'center', gap: 4 }}>
+              View case study <ArrowRight size={13} />
+            </span>
+            <div style={{ display: 'flex', gap: 6 }}>
+              {project.liveUrl && (
+                <span
+                  onClick={(e) => { e.preventDefault(); window.open(project.liveUrl!, '_blank') }}
+                  style={{ padding: 4, borderRadius: 4, color: 'rgba(255,255,255,0.3)', cursor: 'pointer' }}
+                  className="hover:text-white transition-colors"
+                >
+                  <ExternalLink size={14} />
+                </span>
+              )}
+              {project.githubUrl && (
+                <span
+                  onClick={(e) => { e.preventDefault(); window.open(project.githubUrl!, '_blank') }}
+                  style={{ padding: 4, borderRadius: 4, color: 'rgba(255,255,255,0.3)', cursor: 'pointer' }}
+                  className="hover:text-white transition-colors"
+                >
+                  <Github size={14} />
+                </span>
+              )}
             </div>
-          )}
-
-          {/* Actions */}
-          <div className="mt-auto flex items-center gap-3">
-            <Button asChild>
-              <TransitionLink href={`/projects/${project.slug.current}`} slug={project.slug.current}>
-                View Case Study
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </TransitionLink>
-            </Button>
-
-            {project.liveUrl && (
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2.5 rounded-lg border border-border hover:bg-secondary transition-colors"
-                aria-label="View live site"
-              >
-                <ExternalLink className="h-4 w-4" />
-              </a>
-            )}
-
-            {project.githubUrl && (
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2.5 rounded-lg border border-border hover:bg-secondary transition-colors"
-                aria-label="View source code"
-              >
-                <Github className="h-4 w-4" />
-              </a>
-            )}
           </div>
         </div>
       </div>
-    </div>
+    </TransitionLink>
   );
 }
 
-/**
- * Standard Project Card — Compact but informative
- * Shows role, description, and ALL tech
- */
-function ProjectCard({ project }: { project: Project }) {
-  return (
-    <div className="group rounded-xl border border-border/50 bg-card/30 overflow-hidden hover:border-border hover:bg-card/50 transition-all">
-      {/* Image */}
-      {project.image?.url && (
-        <div
-          className="aspect-video relative overflow-hidden bg-muted"
-          data-flip-id={`project-image-${project.slug.current}`}
-        >
-          <Image
-            src={project.image.url}
-            alt={project.name}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
-          />
-        </div>
-      )}
-
-      <div className="p-5">
-        {/* Title */}
-        <h3 className="text-lg font-semibold mb-1 group-hover:text-cyan transition-colors">
-          <TransitionLink href={`/projects/${project.slug.current}`} slug={project.slug.current}>
-            {project.name}
-          </TransitionLink>
-        </h3>
-
-        {/* Tagline */}
-        {project.tagline && (
-          <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
-            {project.tagline}
-          </p>
-        )}
-
-        {/* Meta: Role + Team + Duration */}
-        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-3 text-xs text-muted-foreground">
-          {project.role && (
-            <span className="font-medium text-foreground">{project.role}</span>
-          )}
-          {project.teamSize && (
-            <>
-              <span className="text-border">•</span>
-              <span>{project.teamSize === 1 ? 'Solo' : `Team of ${project.teamSize}`}</span>
-            </>
-          )}
-          {project.duration && (
-            <>
-              <span className="text-border">•</span>
-              <span>{project.duration}</span>
-            </>
-          )}
-        </div>
-
-        {/* Tech Stack - ALL of them */}
-        {project.techStack && project.techStack.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 mb-4">
-            {project.techStack.map((skill) => (
-              <Badge key={skill._id} variant="outline" className="text-xs">
-                {skill.name}
-              </Badge>
-            ))}
-          </div>
-        )}
-
-        {/* Situation excerpt */}
-        {project.situation && (
-          <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-            → {project.situation}
-          </p>
-        )}
-
-        {/* Actions */}
-        <div className="flex items-center gap-2">
-          <Button asChild size="sm" className="flex-1">
-            <TransitionLink href={`/projects/${project.slug.current}`} slug={project.slug.current}>
-              View Case Study
-              <ArrowRight className="ml-2 h-3.5 w-3.5" />
-            </TransitionLink>
-          </Button>
-
-          {project.liveUrl && (
-            <a
-              href={project.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 rounded-md hover:bg-secondary transition-colors"
-              aria-label="View live site"
-            >
-              <ExternalLink className="h-4 w-4 text-muted-foreground" />
-            </a>
-          )}
-
-          {project.githubUrl && (
-            <a
-              href={project.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 rounded-md hover:bg-secondary transition-colors"
-              aria-label="View source code"
-            >
-              <Github className="h-4 w-4 text-muted-foreground" />
-            </a>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
+// ═══════════════════════════════════════════════════════
+// MAIN PAGE COMPONENT
+// ═══════════════════════════════════════════════════════
 
 export function ProjectsPageClient({ projects, categories, initialCategory, initialSearch }: ProjectsPageClientProps) {
   const router = useRouter();
-
-  const [activeTab, setActiveTab] = React.useState(initialCategory);
+  const [activeFilter, setActiveFilter] = React.useState(initialCategory);
   const [searchTerm, setSearchTerm] = React.useState(initialSearch);
-  const [searchFocused, setSearchFocused] = React.useState(false);
+  const [selectedTech, setSelectedTech] = React.useState<string[]>([]);
 
-  // Update URL when filters change
-  const updateURL = React.useCallback((category: string, search: string) => {
+  const updateURL = React.useCallback((category: string, search: string, tech: string[]) => {
     const params = new URLSearchParams();
     if (category && category !== 'all') params.set('category', category);
     if (search) params.set('q', search);
+    tech.forEach(t => params.append('tech', t));
     const query = params.toString();
     router.push(query ? `/projects?${query}` : '/projects', { scroll: false });
   }, [router]);
 
-  // Handle tab change - memoized to prevent unnecessary re-renders
-  const handleTabChange = React.useCallback((tab: string) => {
-    setActiveTab(tab);
-    updateURL(tab, searchTerm);
-  }, [updateURL, searchTerm]);
+  const handleFilter = React.useCallback((filter: string) => {
+    setActiveFilter(filter);
+    updateURL(filter, searchTerm, selectedTech);
+  }, [updateURL, searchTerm, selectedTech]);
 
-  // Handle search change - memoized to prevent unnecessary re-renders
-  const handleSearchChange = React.useCallback((term: string) => {
+  const handleSearch = React.useCallback((term: string) => {
     setSearchTerm(term);
-    updateURL(activeTab, term);
-  }, [updateURL, activeTab]);
+    updateURL(activeFilter, term, selectedTech);
+  }, [updateURL, activeFilter, selectedTech]);
 
-  // Filter projects based on category and search term
-  const filteredProjects = React.useMemo(() => {
-    return projects.filter((project) => {
-      // Category filter
-      if (activeTab && activeTab !== 'all') {
-        const hasCategory = project.techStack?.some(
-          (tech) => tech.category === activeTab
-        );
-        if (!hasCategory) return false;
+  const toggleTech = React.useCallback((name: string) => {
+    setSelectedTech(prev => {
+      const next = prev.includes(name) ? prev.filter(t => t !== name) : [...prev, name];
+      updateURL(activeFilter, searchTerm, next);
+      return next;
+    });
+  }, [updateURL, activeFilter, searchTerm]);
+
+  // Filter projects
+  const filtered = React.useMemo(() => {
+    return projects.filter((p) => {
+      if (activeFilter === 'featured' && !p.featured) return false;
+      if (activeFilter && activeFilter !== 'all' && activeFilter !== 'featured') {
+        if (!p.techStack?.some(t => t.category === activeFilter)) return false;
       }
-
-      // Search filter
+      if (selectedTech.length > 0) {
+        const projectTechNames = p.techStack?.map(t => t.name) || [];
+        if (!selectedTech.every(t => projectTechNames.includes(t))) return false;
+      }
       if (searchTerm) {
-        const search = searchTerm.toLowerCase();
-        const nameMatch = project.name.toLowerCase().includes(search);
-        const taglineMatch = project.tagline?.toLowerCase().includes(search);
-        const techMatch = project.techStack?.some(
-          (tech) => tech.name.toLowerCase().includes(search)
-        );
-        const situationMatch = project.situation?.toLowerCase().includes(search);
-        if (!nameMatch && !taglineMatch && !techMatch && !situationMatch) return false;
+        const s = searchTerm.toLowerCase();
+        return p.name.toLowerCase().includes(s)
+          || p.tagline?.toLowerCase().includes(s)
+          || p.techStack?.some(t => t.name.toLowerCase().includes(s))
+          || p.situation?.toLowerCase().includes(s);
       }
-
       return true;
     });
-  }, [projects, activeTab, searchTerm]);
+  }, [projects, activeFilter, searchTerm, selectedTech]);
 
-  // Separate featured from rest
-  const featuredProject = filteredProjects.find((p) => p.featured);
-  const otherProjects = filteredProjects.filter((p) => !p.featured || p !== featuredProject);
+  // Collect all unique tech names for the tag cloud
+  const allTech = React.useMemo(() => {
+    const techMap = new Map<string, number>();
+    projects.forEach(p => p.techStack?.forEach(t => techMap.set(t.name, (techMap.get(t.name) || 0) + 1)));
+    return Array.from(techMap.entries()).sort((a, b) => b[1] - a[1]);
+  }, [projects]);
 
-  const hasFilters = activeTab !== 'all' || searchTerm;
+  const featuredCount = projects.filter(p => p.featured).length;
+  const liveCount = projects.filter(p => p.liveUrl).length;
 
   return (
-    <div className="py-16 md:py-24">
-      <div className="container max-w-5xl">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-light mb-2">Projects</h1>
-          <p className="text-muted-foreground">
-            Systems designed, architected, and shipped under real constraints.
+    <>
+      {/* Mobile layout */}
+      <div className="lg:hidden" style={{ minHeight: 'calc(100vh - 80px)', padding: '24px 16px' }}>
+        {/* Mobile header */}
+        <div style={{ marginBottom: 20 }}>
+          <h1 style={{ fontSize: 28, fontWeight: 700, color: 'var(--ds-text)', margin: '0 0 4px' }}>Projects</h1>
+          <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.4)', margin: 0 }}>
+            {projects.length} projects · {liveCount} live · {featuredCount} featured
           </p>
         </div>
 
-        {/* Category Filters - Simple text links like blog */}
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 mb-8 pb-6 border-b border-border/30">
-          <FilterLink
-            label="All"
-            count={projects.length}
-            active={activeTab === 'all'}
-            onClick={() => handleTabChange('all')}
-          />
-          {categories.map((cat) => (
-            <FilterLink
-              key={cat}
-              label={CATEGORY_LABELS[cat] || cat}
-              count={countProjectsByCategory(projects, cat)}
-              active={activeTab === cat}
-              onClick={() => handleTabChange(cat)}
-            />
-          ))}
-        </div>
-
-        {/* Search Bar - Matches blog style */}
-        <div className={`relative w-full max-w-sm mb-10 transition-all duration-200 ${searchFocused ? 'max-w-md' : ''}`}>
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        {/* Mobile search */}
+        <div style={{ position: 'relative', marginBottom: 16 }}>
+          <Search size={14} style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', color: 'rgba(255,255,255,0.25)' }} />
           <input
-            type="text"
-            placeholder="Search projects or technologies..."
-            value={searchTerm}
-            onChange={(e) => handleSearchChange(e.target.value)}
-            onFocus={() => setSearchFocused(true)}
-            onBlur={() => setSearchFocused(false)}
-            className="w-full pl-10 pr-10 py-2 bg-transparent border border-border/50 rounded-md text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:border-border transition-all"
+            type="text" value={searchTerm} onChange={e => handleSearch(e.target.value)}
+            placeholder="Search projects..."
+            style={{ width: '100%', padding: '8px 8px 8px 32px', fontSize: 13, backgroundColor: 'transparent', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8, color: 'var(--ds-text)', outline: 'none' }}
           />
-          {searchTerm && (
-            <button
-              onClick={() => handleSearchChange('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-muted rounded transition-colors"
-              aria-label="Clear search"
-            >
-              <X className="h-3 w-3 text-muted-foreground" />
-            </button>
-          )}
         </div>
 
-        {/* Results count when filtered */}
-        {hasFilters && (
-          <p className="text-sm text-muted-foreground mb-6">
-            Showing {filteredProjects.length} of {projects.length} projects
-            {activeTab !== 'all' && ` in ${CATEGORY_LABELS[activeTab] || activeTab}`}
-            {searchTerm && ` matching "${searchTerm}"`}
-          </p>
-        )}
+        {/* Mobile cards */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          {filtered.map(p => <ProjectCard key={p._id} project={p} />)}
+        </div>
+      </div>
 
-        {/* Projects */}
-        {filteredProjects.length > 0 ? (
-          <div className="space-y-12">
-            {/* Featured Project */}
-            {featuredProject && (
-              <section>
-                <FeaturedProjectCard project={featuredProject} />
-              </section>
-            )}
+      {/* Desktop layout — sidebar + 2-column grid */}
+      <div className="hidden lg:flex" style={{ minHeight: 'calc(100vh - 80px)' }}>
 
-            {/* Other Projects */}
-            {otherProjects.length > 0 && (
-              <section>
-                {featuredProject && (
-                  <h2 className="text-2xl md:text-3xl font-light text-foreground mb-6">
-                    All Projects
-                  </h2>
-                )}
-                <div className="grid md:grid-cols-2 gap-6">
-                  {otherProjects.map((project) => (
-                    <ProjectCard key={project._id} project={project} />
-                  ))}
-                </div>
-              </section>
-            )}
+        {/* ═══ SIDEBAR ═══════════════════════════════════ */}
+        <aside style={{
+          width: 280,
+          flexShrink: 0,
+          borderRight: '1px solid rgba(255,255,255,0.05)',
+          padding: '32px 28px 24px',
+          overflowY: 'auto',
+          position: 'sticky',
+          top: 80, // below nav
+          height: 'calc(100vh - 80px)',
+        }}>
+          {/* Avatar + name */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
+            <div style={{ width: 36, height: 36, borderRadius: '50%', backgroundColor: 'rgba(59,130,246,0.1)', border: '1px solid rgba(59,130,246,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 700, color: '#3b82f6' }}>AQ</div>
+            <span style={{ fontSize: 13, fontWeight: 500, color: 'rgba(255,255,255,0.45)' }}>Alvin Quach</span>
           </div>
-        ) : (
-          <div className="text-center py-16">
-            <FolderOpen className="h-12 w-12 mx-auto text-muted-foreground/30 mb-4" />
-            <p className="text-muted-foreground mb-4">
-              {hasFilters
-                ? 'No projects match your filters.'
-                : 'No projects found.'}
-            </p>
-            {hasFilters && (
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setSearchTerm('');
-                  setActiveTab('all');
-                  router.push('/projects', { scroll: false });
+
+          {/* Title + stats */}
+          <h1 style={{ fontSize: 22, fontWeight: 700, color: 'var(--ds-text)', margin: '0 0 8px' }}>Projects</h1>
+          <div style={{ display: 'flex', gap: 16, marginBottom: 24 }}>
+            <div>
+              <p style={{ fontSize: 20, fontWeight: 700, color: 'var(--ds-text)', margin: 0 }}>{projects.length}</p>
+              <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', margin: 0 }}>total</p>
+            </div>
+            <div>
+              <p style={{ fontSize: 20, fontWeight: 700, color: '#22c55e', margin: 0 }}>{liveCount}</p>
+              <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', margin: 0 }}>live</p>
+            </div>
+            <div>
+              <p style={{ fontSize: 20, fontWeight: 700, color: '#3b82f6', margin: 0 }}>{featuredCount}</p>
+              <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', margin: 0 }}>featured</p>
+            </div>
+          </div>
+
+          {/* Status filters */}
+          <p style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'rgba(255,255,255,0.2)', margin: '0 0 10px', fontFamily: 'var(--font-mono)' }}>Status</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 2, marginBottom: 24 }}>
+            {[
+              { key: 'all', label: 'All', count: projects.length },
+              { key: 'featured', label: 'Featured', count: featuredCount },
+            ].map(({ key, label, count }) => (
+              <button
+                key={key}
+                onClick={() => handleFilter(key)}
+                style={{
+                  display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                  padding: '6px 10px', borderRadius: 6, fontSize: 13, border: 'none',
+                  backgroundColor: activeFilter === key ? 'rgba(59,130,246,0.08)' : 'transparent',
+                  color: activeFilter === key ? '#3b82f6' : 'rgba(255,255,255,0.5)',
+                  cursor: 'pointer', textAlign: 'left', width: '100%',
+                  transition: 'all 0.15s',
                 }}
               >
-                Clear filters
-              </Button>
+                <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <span style={{ width: 5, height: 5, borderRadius: '50%', backgroundColor: activeFilter === key ? '#3b82f6' : 'rgba(255,255,255,0.15)' }} />
+                  {label}
+                </span>
+                <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.25)' }}>{count}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Tech multi-select */}
+          <p style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'rgba(255,255,255,0.2)', margin: '0 0 10px', fontFamily: 'var(--font-mono)' }}>Tech</p>
+          <Select
+            isMulti
+            options={allTech.map(([name]) => ({ value: name, label: name }))}
+            value={selectedTech.map(t => ({ value: t, label: t }))}
+            onChange={(selected) => {
+              const next = (selected || []).map(s => s.value);
+              setSelectedTech(next);
+              updateURL(activeFilter, searchTerm, next);
+            }}
+            placeholder="Filter by tech..."
+            noOptionsMessage={() => 'No tech found'}
+            styles={{
+              control: (base, state) => ({
+                ...base,
+                backgroundColor: 'rgba(255,255,255,0.02)',
+                borderColor: state.isFocused ? 'rgba(59,130,246,0.4)' : 'rgba(255,255,255,0.06)',
+                borderRadius: 8,
+                minHeight: 36,
+                fontSize: 12,
+                boxShadow: 'none',
+                '&:hover': { borderColor: 'rgba(59,130,246,0.3)' },
+              }),
+              menu: (base) => ({
+                ...base,
+                backgroundColor: '#161b22',
+                border: '1px solid rgba(48,54,61,0.7)',
+                borderRadius: 8,
+                zIndex: 50,
+              }),
+              option: (base, state) => ({
+                ...base,
+                fontSize: 12,
+                backgroundColor: state.isFocused ? 'rgba(59,130,246,0.1)' : 'transparent',
+                color: state.isSelected ? '#3b82f6' : 'rgba(255,255,255,0.6)',
+                cursor: 'pointer',
+                '&:active': { backgroundColor: 'rgba(59,130,246,0.15)' },
+              }),
+              multiValue: (base) => ({
+                ...base,
+                backgroundColor: 'rgba(59,130,246,0.12)',
+                borderRadius: 4,
+              }),
+              multiValueLabel: (base) => ({
+                ...base,
+                color: '#3b82f6',
+                fontSize: 11,
+              }),
+              multiValueRemove: (base) => ({
+                ...base,
+                color: '#3b82f6',
+                '&:hover': { backgroundColor: 'rgba(59,130,246,0.2)', color: '#60a5fa' },
+              }),
+              input: (base) => ({ ...base, color: 'var(--ds-text)', fontSize: 12 }),
+              placeholder: (base) => ({ ...base, color: 'rgba(255,255,255,0.25)', fontSize: 12 }),
+              indicatorSeparator: () => ({ display: 'none' }),
+              dropdownIndicator: (base) => ({ ...base, color: 'rgba(255,255,255,0.2)', padding: 4 }),
+              clearIndicator: (base) => ({ ...base, color: 'rgba(255,255,255,0.25)', padding: 4 }),
+            }}
+          />
+        </aside>
+
+        {/* ═══ MAIN CONTENT ══════════════════════════════ */}
+        <main style={{ flex: 1, minWidth: 0, padding: '32px 32px 48px' }}>
+
+          {/* Search bar */}
+          <div style={{ position: 'relative', maxWidth: 320, marginBottom: 24 }}>
+            <Search size={14} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: 'rgba(255,255,255,0.25)' }} />
+            <input
+              type="text" value={searchTerm} onChange={e => handleSearch(e.target.value)}
+              placeholder="Search projects or tech..."
+              style={{ width: '100%', padding: '9px 36px 9px 34px', fontSize: 13, backgroundColor: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 8, color: 'var(--ds-text)', outline: 'none', transition: 'border-color 0.15s' }}
+            />
+            {searchTerm && (
+              <button onClick={() => handleSearch('')} style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', padding: 2, color: 'rgba(255,255,255,0.3)' }}>
+                <X size={13} />
+              </button>
             )}
           </div>
-        )}
+
+          {/* Results info */}
+          {(activeFilter !== 'all' || searchTerm || selectedTech.length > 0) && (
+            <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)', marginBottom: 16 }}>
+              {filtered.length} of {projects.length} projects
+              {searchTerm && ` matching "${searchTerm}"`}
+              {selectedTech.length > 0 && ` using ${selectedTech.join(', ')}`}
+            </p>
+          )}
+
+          {/* Project grid — 2 columns */}
+          {filtered.length > 0 ? (
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16 }}>
+              {filtered.map(p => <ProjectCard key={p._id} project={p} />)}
+            </div>
+          ) : (
+            <div style={{ textAlign: 'center', padding: '60px 0' }}>
+              <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.3)', marginBottom: 12 }}>
+                No projects match your filters.
+              </p>
+              <button
+                onClick={() => { setSearchTerm(''); setActiveFilter('all'); setSelectedTech([]); router.push('/projects', { scroll: false }) }}
+                style={{ fontSize: 13, color: '#3b82f6', background: 'none', border: 'none', cursor: 'pointer' }}
+              >
+                Clear filters
+              </button>
+            </div>
+          )}
+        </main>
       </div>
-    </div>
+    </>
   );
 }

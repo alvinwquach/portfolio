@@ -70,7 +70,7 @@ import type {
   RecaptchaVerifyResponse,
 } from '@/types/scheduling'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const getResend = () => new Resend(process.env.RESEND_API_KEY || '')
 
 export async function POST(request: NextRequest) {
   try {
@@ -323,7 +323,7 @@ export async function POST(request: NextRequest) {
     const verifyUrl = `${baseUrl}/api/schedule/verify?token=${verificationToken}`
 
     // Using void to explicitly show we're not awaiting this
-    void resend.emails.send({
+    void getResend().emails.send({
       from: 'Alvin Quach <schedule@alvinquach.dev>',
       to: body.requesterEmail,
       subject: 'Verify your meeting request — alvinquach.dev',

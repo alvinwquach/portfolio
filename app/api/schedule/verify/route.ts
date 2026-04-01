@@ -139,7 +139,7 @@ export async function GET(request: NextRequest) {
     // This email confirms to the requester that their request is
     // in the queue and explains next steps.
     const { Resend } = await import('resend')
-    const resend = new Resend(process.env.RESEND_API_KEY)
+    const resend = new Resend(process.env.RESEND_API_KEY || '')
 
     const formattedSlot = new Intl.DateTimeFormat('en-US', {
       weekday: 'long',

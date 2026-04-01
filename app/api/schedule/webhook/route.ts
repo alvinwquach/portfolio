@@ -43,7 +43,7 @@ import { createCalendarEvent } from '@/lib/scheduling/google'
 import { Resend } from 'resend'
 import type { ApiResponse } from '@/types/scheduling'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const getResend = () => new Resend(process.env.RESEND_API_KEY || '')
 
 export async function POST(request: Request) {
   try {
@@ -113,7 +113,7 @@ export async function POST(request: Request) {
         const booking = await getBookingById(bookingId)
         if (!booking) return NextResponse.json<ApiResponse>({ success: true })
 
-        await resend.emails.send({
+        await getResend().emails.send({
           from: 'Schedule System <schedule@alvinquach.dev>',
           to: 'alvinwquach@gmail.com',
           subject: `New meeting request: ${booking.requesterName}${booking.requesterCompany ? ` from ${booking.requesterCompany}` : ''}`,
@@ -168,7 +168,7 @@ export async function POST(request: Request) {
           console.error('[webhook] Google Calendar event creation failed:', gcalError)
 
           // Alert Alvin about the failure
-          void resend.emails.send({
+          void getResend().emails.send({
             from: 'Schedule System <schedule@alvinquach.dev>',
             to: 'alvinwquach@gmail.com',
             subject: `⚠️ Calendar event failed for ${booking.requesterName}`,
@@ -184,7 +184,7 @@ export async function POST(request: Request) {
           timeZone: booking.timezone || 'America/Los_Angeles',
         })
 
-        await resend.emails.send({
+        await getResend().emails.send({
           from: 'Alvin Quach <schedule@alvinquach.dev>',
           to: booking.requesterEmail,
           subject: `Meeting confirmed — ${new Date(booking.requestedSlot).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} with Alvin Quach`,
@@ -224,7 +224,7 @@ export async function POST(request: Request) {
           rejectedAt: new Date().toISOString(),
         })
 
-        await resend.emails.send({
+        await getResend().emails.send({
           from: 'Alvin Quach <schedule@alvinquach.dev>',
           to: booking.requesterEmail,
           subject: 'Re: Your meeting request — alvinquach.dev',

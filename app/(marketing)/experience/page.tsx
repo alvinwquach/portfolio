@@ -147,7 +147,7 @@ function ClientSubItem({ item }: { item: ClientItem }) {
         <div>
           <div className="flex items-center gap-2 mb-0.5">
             {item.slug ? (
-              <Link href={`/projects/${item.slug}`} className="text-sm font-semibold hover:text-amber transition-colors">
+              <Link href={`/project/${item.slug}`} className="text-sm font-semibold hover:text-amber transition-colors">
                 {item.name}
               </Link>
             ) : (
@@ -176,7 +176,7 @@ function ClientSubItem({ item }: { item: ClientItem }) {
             </a>
           )}
           {item.slug && (
-            <Link href={`/projects/${item.slug}`} className="text-xs text-amber hover:text-amber/80 font-medium">
+            <Link href={`/project/${item.slug}`} className="text-xs text-amber hover:text-amber/80 font-medium">
               Case Study →
             </Link>
           )}

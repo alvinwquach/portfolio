@@ -250,7 +250,7 @@ export function QuestionDetailPanel({
                 {question.projectReferences?.map((project) => (
                   <Link
                     key={project._id}
-                    href={`/projects/${project.slug.current}`}
+                    href={`/project/${project.slug.current}`}
                     className="inline-flex items-center gap-1 px-3 py-1.5 bg-cyan/10 text-cyan rounded-full text-sm hover:bg-cyan/20 transition-colors"
                   >
                     {project.name}

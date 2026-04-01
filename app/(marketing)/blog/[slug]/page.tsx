@@ -270,7 +270,7 @@ export default async function KnowledgeNodePage({ params }: Props) {
               {node.relatedProjects.map((project) => (
                 <Link
                   key={project._id}
-                  href={`/projects/${project.slug.current}`}
+                  href={`/project/${project.slug.current}`}
                   className="inline-flex items-center gap-2 px-4 py-2 bg-secondary rounded-lg hover:bg-secondary/80 transition-colors"
                 >
                   <Code className="h-4 w-4 text-cyan" />
