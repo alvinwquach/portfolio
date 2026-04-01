@@ -188,7 +188,6 @@ export const structure: StructureResolver = (S) =>
             .title('Interview Prep')
             .items([
               S.documentTypeListItem('interviewQuestion').title('Interview Questions').icon(() => '❓'),
-              S.documentTypeListItem('codingChallenge').title('Coding Challenges').icon(() => '💻'),
             ])
         ),
 
@@ -266,40 +265,20 @@ export const structure: StructureResolver = (S) =>
             ])
         ),
 
-      // Experiments & Research
+      // Resources
       S.listItem()
-        .title('Research & Experiments')
-        .icon(() => '🧪')
+        .title('Resources')
+        .icon(() => '📚')
         .child(
-          S.list()
-            .title('Research & Experiments')
-            .items([
-              S.documentTypeListItem('experiment').title('Experiments').icon(() => '🧪'),
-              S.documentTypeListItem('citation').title('Citations').icon(() => '📄'),
-              S.documentTypeListItem('resource').title('Resources').icon(() => '📚'),
-            ])
+          S.documentTypeList('resource').title('Resources')
         ),
 
-      // Planning & Reflection
+      // Planning
       S.listItem()
-        .title('Planning & Reflection')
+        .title('Planning')
         .icon(() => '📅')
         .child(
-          S.list()
-            .title('Planning & Reflection')
-            .items([
-              S.documentTypeListItem('roadmap').title('Roadmap').icon(() => '🗺️'),
-              S.documentTypeListItem('journal').title('Journal').icon(() => '📔'),
-              S.documentTypeListItem('feedback').title('Feedback').icon(() => '💬'),
-            ])
-        ),
-
-      // Media & Demos
-      S.listItem()
-        .title('Media & Demos')
-        .icon(() => '🎬')
-        .child(
-          S.documentTypeList('demo').title('Demos & Media')
+          S.documentTypeList('roadmap').title('Roadmap')
         ),
 
       // Integrations
@@ -308,6 +287,73 @@ export const structure: StructureResolver = (S) =>
         .icon(() => '🔌')
         .child(
           S.documentTypeList('integration').title('Integrations & APIs')
+        ),
+
+      S.divider(),
+
+      // ─── Scheduling (feat/scheduling) ─────────────────────
+      // This section groups all scheduling-related documents.
+      // The schedulingConfig is a singleton (one document), while
+      // bookingRequests and schedulingTokens are lists with filters.
+      //
+      // WHY FILTERED VIEWS?
+      // When Alvin opens Studio to review requests, he wants to see
+      // "Pending Approval" requests first (the ones needing action),
+      // not all 200+ requests ever made. Filters make this fast.
+      S.listItem()
+        .title('Scheduling')
+        .icon(() => '📅')
+        .child(
+          S.list()
+            .title('Scheduling')
+            .items([
+              // Pending Approval — requests waiting for Alvin's review
+              // This is the most-used view: "what do I need to act on?"
+              S.listItem()
+                .title('Pending Approval')
+                .icon(() => '⏳')
+                .child(
+                  S.documentList()
+                    .title('Pending Approval')
+                    .filter('_type == "bookingRequest" && status == "pending_approval"')
+                ),
+
+              // Confirmed — upcoming meetings that have been approved
+              S.listItem()
+                .title('Confirmed')
+                .icon(() => '✅')
+                .child(
+                  S.documentList()
+                    .title('Confirmed')
+                    .filter('_type == "bookingRequest" && status == "confirmed"')
+                ),
+
+              S.divider(),
+
+              // All Requests — unfiltered list of every booking ever made
+              S.documentTypeListItem('bookingRequest')
+                .title('All Requests')
+                .icon(() => '📋'),
+
+              // Private Links — tokens generated for specific recipients
+              S.documentTypeListItem('schedulingToken')
+                .title('Private Links')
+                .icon(() => '🔗'),
+
+              S.divider(),
+
+              // Config — singleton document that controls scheduling behavior.
+              // Uses S.document() with a fixed documentId so only one can exist.
+              S.listItem()
+                .title('Config')
+                .icon(() => '⚙️')
+                .child(
+                  S.document()
+                    .schemaType('schedulingConfig')
+                    .documentId('schedulingConfig')
+                    .title('Scheduling Config')
+                ),
+            ])
         ),
 
       S.divider(),

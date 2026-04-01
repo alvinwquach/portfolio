@@ -518,3 +518,118 @@ p {
 .bg-gradient-radial {
   background: radial-gradient(circle, var(--tw-gradient-stops));
 }
+
+/* ============================================
+   SCHEDULING SYSTEM — Color Tokens & Slot Styles
+   ============================================
+
+   WHY A SEPARATE SECTION?
+   -----------------------
+   The scheduling pages (feat/scheduling branch) use a slightly
+   different color emphasis than the portfolio. The portfolio's
+   primary accent is violet (#8B5CF6), but the scheduling UI
+   uses electric blue (#3b82f6) as its primary action color.
+
+   This keeps scheduling visually distinct — when a visitor
+   lands on /schedule, the blue-dominant palette signals
+   "this is a functional tool" vs. the violet portfolio.
+
+   HOW THESE ARE USED:
+   -------------------
+   The --sched-* CSS variables are consumed by:
+   1. Tailwind classes via @theme inline (e.g., bg-sched-accent)
+   2. The .slot-* utility classes below (for calendar slot blocks)
+   3. Components in components/schedule/ via inline styles or cn()
+
+   WHY CSS VARIABLES INSTEAD OF HARDCODED HEX?
+   --------------------------------------------
+   - Single source of truth: change the variable, everything updates
+   - GSAP can animate CSS variables at runtime
+   - Dark/light theme switching (if ever added) just swaps variables
+   ============================================ */
+
+:root {
+  /* --- Scheduling accent colors ----------------------------------------- */
+  /* Electric blue — the "action" color for scheduling UI.
+     Used for: selected slots, CTAs, active states, focus rings */
+  --sched-accent:           #3b82f6;
+
+  /* Violet — secondary accent, used for featured/private link badges */
+  --sched-accent-secondary: #8b5cf6;
+
+  /* Success green — confirmation states, "live" indicators */
+  --sched-success:          #22c55e;
+
+  /* Warning amber — caution notices (reschedule warnings, dev mode) */
+  --sched-warning:          #f59e0b;
+
+  /* Error red — rejection states, validation errors */
+  --sched-error:            #ef4444;
+
+  /* --- Scheduling background surfaces ----------------------------------- */
+  /* These layer on top of the portfolio's --ds-base/surface/overlay
+     to create depth in the schedule two-column layout */
+  --sched-bg-primary:       #07090d;
+  --sched-bg-secondary:     #0d1117;
+  --sched-bg-tertiary:      #161b22;
+
+  /* --- Scheduling borders & text ---------------------------------------- */
+  --sched-border:           rgba(48, 54, 61, 0.7);
+  --sched-text-primary:     #f1f5f9;
+  --sched-text-secondary:   #94a3b8;
+  --sched-text-muted:       #475569;
+}
+
+/* ============================================
+   TIME-GRID SLOT HOVER STYLES
+   ============================================
+   Slots in the calendar grid are absolutely-positioned buttons
+   with inline styles for positioning and base colors. These CSS
+   rules add hover effects that can't be done with inline styles.
+
+   The selector targets buttons that are direct children of the
+   day column (div.relative) in the time grid.
+   ============================================ */
+
+/* Hover effect on slot blocks — increase background intensity and add glow */
+.grid > div.relative > button:hover {
+  background-color: color-mix(in srgb, var(--sched-accent) 25%, transparent) !important;
+  border-color: color-mix(in srgb, var(--sched-accent) 50%, transparent) !important;
+  box-shadow: 0 0 10px color-mix(in srgb, var(--sched-accent) 12%, transparent);
+}
+
+/* Focus ring for keyboard navigation (accessibility) */
+.grid > div.relative > button:focus-visible {
+  outline: 2px solid var(--sched-accent);
+  outline-offset: 1px;
+}
+
+/* ============================================
+   DARK SCROLLBAR — scoped to schedule pages
+   ============================================
+   Uses [data-schedule] attribute on the schedule layout
+   to avoid affecting the rest of the portfolio. */
+
+[data-schedule] ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+[data-schedule] ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+[data-schedule] ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+[data-schedule] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Firefox */
+[data-schedule] * {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
