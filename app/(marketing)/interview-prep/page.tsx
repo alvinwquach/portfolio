@@ -4,6 +4,7 @@
  * Knowledge base for interview preparation - shows how I think through problems.
  */
 
+import { Suspense } from 'react';
 import { fetchGraphQL } from '@/lib/graphql/client';
 import { InterviewPrepClient } from './InterviewPrepClient';
 
@@ -73,5 +74,9 @@ async function getInterviewQuestions(): Promise<InterviewQuestion[]> {
 
 export default async function InterviewPrepPage() {
   const questions = await getInterviewQuestions();
-  return <InterviewPrepClient questions={questions} />;
+  return (
+    <Suspense fallback={null}>
+      <InterviewPrepClient questions={questions} />
+    </Suspense>
+  );
 }
