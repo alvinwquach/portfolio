@@ -39,7 +39,7 @@ import { isSlotAvailable } from '@/lib/scheduling/slots'
 import { Resend } from 'resend'
 import type { ApiResponse, ActionTokenPayload, RescheduleFormData } from '@/types/scheduling'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const getResend = () => new Resend(process.env.RESEND_API_KEY || '')
 
 export async function POST(request: Request) {
   try {
@@ -186,7 +186,7 @@ export async function POST(request: Request) {
     })
 
     // ── Send notification to Alvin ───────────────────────
-    void resend.emails.send({
+    void getResend().emails.send({
       from: 'Schedule System <schedule@alvinquach.dev>',
       to: 'alvinwquach@gmail.com',
       subject: `${booking.requesterName} requested to reschedule`,

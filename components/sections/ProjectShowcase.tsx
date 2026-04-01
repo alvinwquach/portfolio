@@ -244,7 +244,7 @@ export function ProjectShowcase({ projects, className }: ProjectShowcaseProps) {
                 {/* View Full Case Study */}
                 <div className="mt-6 pt-6 border-t">
                   <Button asChild variant="outline">
-                    <Link href={`/projects/${project.slug.current}`}>
+                    <Link href={`/project/${project.slug.current}`}>
                       Full Case Study
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>

@@ -32,7 +32,7 @@ import { deleteCalendarEvent } from '@/lib/scheduling/google'
 import { Resend } from 'resend'
 import type { ApiResponse, ActionTokenPayload } from '@/types/scheduling'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const getResend = () => new Resend(process.env.RESEND_API_KEY || '')
 
 export async function POST(request: Request) {
   try {
@@ -100,7 +100,7 @@ export async function POST(request: Request) {
     // Fire and forget — don't block the response on email delivery
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://alvinquach.dev'
 
-    void resend.emails.send({
+    void getResend().emails.send({
       from: 'Alvin Quach <schedule@alvinquach.dev>',
       to: booking.requesterEmail,
       subject: `Meeting cancelled — ${new Date(booking.requestedSlot).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`,

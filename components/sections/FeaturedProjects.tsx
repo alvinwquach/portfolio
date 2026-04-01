@@ -176,7 +176,7 @@ function ClientProjectCard({ project, isFeatured = false }: { project: Project; 
           {/* Title */}
           <h3 className="text-2xl md:text-3xl font-bold mb-3">
             <Link
-              href={`/projects/${project.slug.current}`}
+              href={`/project/${project.slug.current}`}
               className="hover:text-amber transition-colors"
             >
               {project.name}
@@ -222,7 +222,7 @@ function ClientProjectCard({ project, isFeatured = false }: { project: Project; 
           {/* Actions - Always visible */}
           <div className="flex flex-wrap gap-3 mt-auto">
             <Button asChild>
-              <Link href={`/projects/${project.slug.current}`}>
+              <Link href={`/project/${project.slug.current}`}>
                 View Case Study
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
@@ -303,7 +303,7 @@ function ClientProjectCardCompact({ project }: { project: Project }) {
         {/* Title */}
         <h3 className="text-xl font-semibold mb-2">
           <Link
-            href={`/projects/${project.slug.current}`}
+            href={`/project/${project.slug.current}`}
             className="hover:text-amber transition-colors"
           >
             {project.name}
@@ -344,7 +344,7 @@ function ClientProjectCardCompact({ project }: { project: Project }) {
         {/* Actions */}
         <div className="flex items-center gap-2 mt-auto pt-4 border-t border-amber/10">
           <Button asChild size="sm" variant="default" className="flex-1">
-            <Link href={`/projects/${project.slug.current}`}>
+            <Link href={`/project/${project.slug.current}`}>
               View Case Study
               <ArrowRight className="ml-1 h-3 w-3" />
             </Link>
@@ -410,7 +410,7 @@ function PersonalProjectCard({ project, priority = false }: { project: Project; 
         {/* Title */}
         <h3 className="text-lg font-semibold mb-2">
           <Link
-            href={`/projects/${project.slug.current}`}
+            href={`/project/${project.slug.current}`}
             className="hover:text-cyan transition-colors"
           >
             {project.name}
@@ -443,7 +443,7 @@ function PersonalProjectCard({ project, priority = false }: { project: Project; 
         {/* Actions - Always visible at bottom */}
         <div className="flex items-center gap-2 mt-auto pt-4 border-t border-border/50">
           <Button asChild size="sm" className="flex-1">
-            <Link href={`/projects/${project.slug.current}`}>
+            <Link href={`/project/${project.slug.current}`}>
               Details
               <ArrowRight className="ml-1 h-3 w-3" />
             </Link>

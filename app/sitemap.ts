@@ -107,7 +107,7 @@
  *
  *   // Dynamic project pages
  *   const projectPages = projects.map((project: any) => ({
- *     url: `${baseUrl}/projects/${project.slug}`,
+ *     url: `${baseUrl}/project/${project.slug}`,
  *     lastModified: new Date(project._updatedAt),
  *     changeFrequency: 'monthly' as const,
  *     priority: 0.7,
@@ -216,7 +216,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ]);
 
   const projectPages: MetadataRoute.Sitemap = projects.map((project) => ({
-    url: `${baseUrl}/projects/${project.slug}`,
+    url: `${baseUrl}/project/${project.slug}`,
     lastModified: new Date(project._updatedAt),
     changeFrequency: "monthly" as const,
     priority: 0.7,

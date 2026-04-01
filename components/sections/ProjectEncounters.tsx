@@ -107,7 +107,7 @@ function ProjectEncounter({
         </p>
 
         <Link
-          href={`/projects/${project.slug}`}
+          href={`/project/${project.slug}`}
           className="text-sm text-foreground/60 hover:text-foreground flex items-center gap-1 transition-colors"
         >
           View project

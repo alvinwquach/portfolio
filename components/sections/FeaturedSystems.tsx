@@ -72,7 +72,7 @@ export function FeaturedSystems({ projects }: FeaturedSystemsProps) {
 
                 {/* Title */}
                 <h3 className="text-2xl md:text-3xl font-bold mb-3 group-hover:text-cyan transition-colors">
-                  <Link href={`/projects/${project.slug.current}`}>
+                  <Link href={`/project/${project.slug.current}`}>
                     {project.name}
                   </Link>
                 </h3>
@@ -103,7 +103,7 @@ export function FeaturedSystems({ projects }: FeaturedSystemsProps) {
                 {/* Actions */}
                 <div className="flex items-center gap-4">
                   <Button asChild variant="outline" size="sm">
-                    <Link href={`/projects/${project.slug.current}`}>
+                    <Link href={`/project/${project.slug.current}`}>
                       View Project
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>

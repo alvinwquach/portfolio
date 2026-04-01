@@ -344,7 +344,7 @@ const GalleryCard = forwardRef<HTMLDivElement, GalleryCardProps>(
           {/* Links */}
           <div className="flex items-center gap-4 pt-1">
             <Link
-              href={`/projects/${project.slug}`}
+              href={`/project/${project.slug}`}
               className="inline-flex items-center gap-2 text-sm font-medium transition-[gap] duration-200 hover:gap-3"
               style={{ color: `hsl(${project.accentHsl})` }}
             >
