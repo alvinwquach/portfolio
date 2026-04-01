@@ -8,7 +8,7 @@
 
 import Link from 'next/link';
 import { MapPin, Download, Briefcase, ArrowRight } from 'lucide-react';
-import { ScrollParallax, FadeIn, TextScramble, AnimatedCounter } from '@/components/gsap';
+import { ScrollParallax, FadeIn, TextScramble } from '@/components/gsap';
 import { CodeEditor } from '@/components/code-editor';
 import type { Profile, SkillGroup } from '@/lib/graphql/queries';
 
@@ -88,46 +88,6 @@ export function CodeEditorHero({ profile, skillGroups }: CodeEditorHeroProps) {
             </p>
           </FadeIn>
         </div>
-
-        {/* ═══ STATS + CTA ═══════════════════════════════ */}
-        <FadeIn delay={0.7} distance={12}>
-          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '16px 40px', paddingBottom: 40, borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-            {/* CTA */}
-            <Link
-              href="/projects"
-              className="inline-flex items-center gap-2 rounded-lg font-medium hover:opacity-85 transition-opacity group"
-              style={{ padding: '10px 20px', backgroundColor: '#3b82f6', color: 'white', fontSize: 14 }}
-            >
-              View Projects
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
-
-            {/* Quick stats */}
-            <div style={{ display: 'flex', gap: 28 }}>
-              <div>
-                <p style={{ fontSize: 20, fontWeight: 700, color: 'var(--ds-text)', margin: 0 }}><AnimatedCounter value={5} suffix="+" /></p>
-                <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.25)', margin: 0 }}>projects shipped</p>
-              </div>
-              <div>
-                <p style={{ fontSize: 20, fontWeight: 700, color: 'var(--ds-text)', margin: 0 }}><AnimatedCounter value={8} suffix="+" /></p>
-                <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.25)', margin: 0 }}>years coding</p>
-              </div>
-              <div>
-                <p style={{ fontSize: 20, fontWeight: 700, color: 'var(--ds-text)', margin: 0 }}><AnimatedCounter value={20} suffix="+" /></p>
-                <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.25)', margin: 0 }}>technologies</p>
-              </div>
-            </div>
-
-            {/* Role pills */}
-            <div className="hidden md:flex" style={{ gap: 5 }}>
-              {(p.openToRoles || DEFAULTS.openToRoles).slice(0, 3).map((role, i) => (
-                <span key={i} style={{ fontSize: 11, padding: '4px 10px', borderRadius: 5, backgroundColor: 'rgba(255,255,255,0.04)', color: 'rgba(255,255,255,0.3)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                  {role}
-                </span>
-              ))}
-            </div>
-          </div>
-        </FadeIn>
 
         {/* ═══ CODE EDITOR ═══════════════════════════════ */}
         <div style={{ paddingTop: 40 }}>
