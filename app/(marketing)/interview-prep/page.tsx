@@ -2,8 +2,6 @@
  * Interview Prep Page
  * ====================
  * Knowledge base for interview preparation - shows how I think through problems.
- * For recruiters: See depth of understanding and decision-making.
- * For me: Quick reference before interviews.
  */
 
 import { fetchGraphQL } from '@/lib/graphql/client';
@@ -75,25 +73,5 @@ async function getInterviewQuestions(): Promise<InterviewQuestion[]> {
 
 export default async function InterviewPrepPage() {
   const questions = await getInterviewQuestions();
-
-  return (
-    <div className="py-24">
-      <div className="container">
-        {/* Header */}
-        <div className="max-w-3xl mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            How I Think Through Problems
-          </h1>
-          <p className="text-lg text-muted-foreground">
-            Technical depth isn&apos;t just knowing the answer — it&apos;s knowing <em>why</em>.
-            Here&apos;s how I approach common interview topics, with real examples from
-            systems I&apos;ve built.
-          </p>
-        </div>
-
-        {/* Interactive Client Component */}
-        <InterviewPrepClient questions={questions} />
-      </div>
-    </div>
-  );
+  return <InterviewPrepClient questions={questions} />;
 }
