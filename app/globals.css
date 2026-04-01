@@ -22,18 +22,18 @@
 
 :root {
   /* --- Core 8 color tokens -------------------------------------------- */
-  --ds-base:         #0D0D14;   /* Deep space — the "night" backdrop      */
-  --ds-surface:      #141420;   /* Card / panel surfaces                   */
-  --ds-overlay:      #1C1C2E;   /* Elevated: modals, dropdowns             */
-  --ds-line:         #2A2A45;   /* Borders, dividers                       */
-  --ds-text:         #E4E4F0;   /* Primary text — cool white               */
-  --ds-text-muted:   #7B7B9C;   /* Secondary / muted text                  */
-  --ds-accent:       #8B5CF6;   /* Electric violet — late-night neon glow  */
+  --ds-base:         #07090d;   /* Near-black — matches schedule page      */
+  --ds-surface:      #0d1117;   /* Card / panel surfaces                   */
+  --ds-overlay:      #161b22;   /* Elevated: modals, dropdowns             */
+  --ds-line:         rgba(48, 54, 61, 0.7);  /* Borders — matches schedule  */
+  --ds-text:         #f1f5f9;   /* Primary text — matches schedule         */
+  --ds-text-muted:   #94a3b8;   /* Secondary / muted text                  */
+  --ds-accent:       #3b82f6;   /* Blue — consistent with schedule page    */
   --ds-accent-warm:  #F59E0B;   /* Amber — CTAs, warmth, energy            */
 
   /* --- Semantic tokens -------------------------------------------------- */
-  --ds-success:  #34D399;       /* Teal — strings, success, terminal       */
-  --ds-error:    #F87171;       /* Soft coral — errors                     */
+  --ds-success:  #22c55e;       /* Green — strings, success, terminal      */
+  --ds-error:    #ef4444;       /* Red — errors                            */
   --ds-warning:  #FBBF24;       /* Warm yellow — attention, Python         */
   --ds-info:     #67E8F9;       /* Cyan — types, info, built-ins           */
 
@@ -422,8 +422,8 @@ p {
 /* High contrast mode support */
 @media (prefers-contrast: high) {
   :root {
-    --ds-line:       #4A4A6A;
-    --ds-text-muted: #A0A0C0;
+    --ds-line:       rgba(75, 85, 99, 0.8);
+    --ds-text-muted: #cbd5e1;
   }
 }
 
@@ -618,16 +618,20 @@ p {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15);
 }
 
 /* Firefox */
 * {
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
 }

@@ -44,7 +44,6 @@ const tags: Tag[] = [
 
   // CMS & Content
   { name: 'Sanity', category: 'cms', color: '#F03E2F' },
-  { name: 'Tina CMS', category: 'cms', color: '#EC4815' },
   { name: 'Headless CMS', category: 'concept', color: '#6366F1' },
   { name: 'CMS', category: 'concept', color: '#6366F1' },
   { name: 'Schema Design', category: 'concept', color: '#8B5CF6' },

@@ -64,6 +64,7 @@ import { VisualEditing } from "next-sanity/visual-editing";
  * - When enabled, Sanity fetches draft content instead of published
  */
 import { draftMode } from "next/headers";
+import { Suspense } from "react";
 
 /**
  * SanityLive:
@@ -74,6 +75,7 @@ import { draftMode } from "next/headers";
 import { SanityLive } from "@/sanity/lib/live";
 import { getProfile } from "@/lib/graphql/queries";
 import { GSAPProvider } from "@/components/animation/GSAPProvider";
+import { PostHogPageTracker } from "@/components/providers/PostHogProvider";
 
 /**
  * Font Configuration — Late Night Session typography
@@ -293,6 +295,9 @@ export default async function RootLayout({
       >
         {/* Page content from child routes */}
         <GSAPProvider>{children}</GSAPProvider>
+        <Suspense fallback={null}>
+          <PostHogPageTracker />
+        </Suspense>
 
         {/**
          * SanityLive Component:

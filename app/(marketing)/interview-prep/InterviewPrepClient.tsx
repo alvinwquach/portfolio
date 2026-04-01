@@ -30,8 +30,8 @@ import {
   ChevronsLeft,
   ChevronsRight,
 } from 'lucide-react';
+import { PortableText } from '@portabletext/react';
 import { QuestionCard, type InterviewQuestion } from '@/components/questions/QuestionCard';
-import { QuestionDetailPanel } from '@/components/questions/QuestionDetailPanel';
 
 interface InterviewPrepClientProps {
   questions: InterviewQuestion[];
@@ -316,19 +316,17 @@ export function InterviewPrepClient({ questions }: InterviewPrepClientProps) {
             </p>
           )}
 
-          {/* Question grid — 2 columns */}
+          {/* Question grid */}
           {filteredQuestions.length > 0 ? (
             <>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16 }}>
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3" style={{ gap: 16 }}>
                 {visibleQuestions.map(q => <QuestionCard key={q._id} question={q} onClick={() => setSelectedQuestion(q)} />)}
               </div>
 
-              {/* Pagination */}
               {totalPages > 1 && (
                 <Pagination currentPage={safePage} totalPages={totalPages} onPageChange={goToPage} />
               )}
 
-              {/* CTA */}
               <div style={{ marginTop: 32, paddingTop: 24, borderTop: '1px solid rgba(255,255,255,0.06)', textAlign: 'center' }}>
                 <p style={{ fontSize: 16, fontWeight: 600, color: 'var(--ds-text)', margin: '0 0 6px' }}>Want to See These in Action?</p>
                 <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.35)', margin: '0 0 16px', maxWidth: 480, marginLeft: 'auto', marginRight: 'auto' }}>
@@ -348,15 +346,17 @@ export function InterviewPrepClient({ questions }: InterviewPrepClientProps) {
         </main>
       </div>
 
-      {/* Detail Panel (slide-over) */}
-      <QuestionDetailPanel
-        question={selectedQuestion}
-        onClose={() => setSelectedQuestion(null)}
-        onPrevious={handlePrevious}
-        onNext={handleNext}
-        hasPrevious={currentQuestionIndex > 0}
-        hasNext={currentQuestionIndex < filteredQuestions.length - 1}
-      />
+      {/* Overlay detail panel */}
+      {selectedQuestion && (
+        <OverlayDetailPanel
+          question={selectedQuestion}
+          onClose={() => setSelectedQuestion(null)}
+          onPrevious={handlePrevious}
+          onNext={handleNext}
+          hasPrevious={currentQuestionIndex > 0}
+          hasNext={currentQuestionIndex < filteredQuestions.length - 1}
+        />
+      )}
     </>
   );
 }
@@ -415,5 +415,205 @@ function Pagination({ currentPage, totalPages, onPageChange }: { currentPage: nu
         Page {currentPage} of {totalPages}
       </span>
     </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════
+// INLINE DETAIL PANEL — pushes grid aside
+// ═══════════════════════════════════════════════════════
+
+const difficultyColors: Record<string, { color: string; bg: string; border: string }> = {
+  easy: { color: '#22c55e', bg: 'rgba(34,197,94,0.1)', border: 'rgba(34,197,94,0.2)' },
+  medium: { color: '#eab308', bg: 'rgba(234,179,8,0.1)', border: 'rgba(234,179,8,0.2)' },
+  hard: { color: '#ef4444', bg: 'rgba(239,68,68,0.1)', border: 'rgba(239,68,68,0.2)' },
+};
+
+const portableTextComponents = {
+  block: {
+    normal: ({ children }: { children?: React.ReactNode }) => (
+      <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.55)', lineHeight: 1.7, margin: '0 0 10px' }}>{children}</p>
+    ),
+    h3: ({ children }: { children?: React.ReactNode }) => (
+      <h3 style={{ fontSize: 15, fontWeight: 600, color: 'var(--ds-text)', margin: '16px 0 6px' }}>{children}</h3>
+    ),
+    h4: ({ children }: { children?: React.ReactNode }) => (
+      <h4 style={{ fontSize: 13, fontWeight: 600, color: 'var(--ds-text)', margin: '12px 0 4px' }}>{children}</h4>
+    ),
+  },
+  list: {
+    bullet: ({ children }: { children?: React.ReactNode }) => (
+      <ul style={{ listStyle: 'disc', paddingLeft: 18, marginBottom: 10, display: 'flex', flexDirection: 'column' as const, gap: 3 }}>{children}</ul>
+    ),
+  },
+  listItem: {
+    bullet: ({ children }: { children?: React.ReactNode }) => (
+      <li style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)' }}>{children}</li>
+    ),
+  },
+  marks: {
+    strong: ({ children }: { children?: React.ReactNode }) => (
+      <strong style={{ fontWeight: 600, color: 'var(--ds-text)' }}>{children}</strong>
+    ),
+    code: ({ children }: { children?: React.ReactNode }) => (
+      <code style={{ padding: '1px 5px', backgroundColor: 'rgba(255,255,255,0.04)', borderRadius: 3, fontSize: 12, fontFamily: 'var(--font-mono)' }}>{children}</code>
+    ),
+  },
+};
+
+function OverlayDetailPanel({
+  question, onClose, onPrevious, onNext, hasPrevious, hasNext,
+}: {
+  question: InterviewQuestion;
+  onClose: () => void;
+  onPrevious: () => void;
+  onNext: () => void;
+  hasPrevious: boolean;
+  hasNext: boolean;
+}) {
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowLeft' && hasPrevious) onPrevious();
+      if (e.key === 'ArrowRight' && hasNext) onNext();
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    document.body.style.overflow = 'hidden';
+    return () => { document.removeEventListener('keydown', handleKeyDown); document.body.style.overflow = ''; };
+  }, [onClose, onPrevious, onNext, hasPrevious, hasNext]);
+
+  const dc = difficultyColors[question.difficulty];
+
+  return (
+    <>
+      {/* Backdrop */}
+      <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 50, backgroundColor: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)' }} />
+
+      {/* Panel */}
+      <div style={{
+        position: 'fixed', right: 0, top: 0, zIndex: 50,
+        width: '100%', maxWidth: 520, height: '100%',
+        backgroundColor: '#0d1117', borderLeft: '1px solid rgba(255,255,255,0.06)',
+        display: 'flex', flexDirection: 'column',
+      }} className="animate-in slide-in-from-right-full duration-300">
+      {/* Header */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 14px', borderBottom: '1px solid rgba(255,255,255,0.06)', flexShrink: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <div style={{ display: 'flex', gap: 2 }}>
+            <button onClick={onPrevious} disabled={!hasPrevious}
+              style={{ padding: 3, borderRadius: 4, border: 'none', cursor: hasPrevious ? 'pointer' : 'not-allowed', backgroundColor: 'transparent', color: hasPrevious ? 'var(--ds-text)' : 'rgba(255,255,255,0.1)' }}>
+              <ChevronsLeft size={14} />
+            </button>
+            <button onClick={onNext} disabled={!hasNext}
+              style={{ padding: 3, borderRadius: 4, border: 'none', cursor: hasNext ? 'pointer' : 'not-allowed', backgroundColor: 'transparent', color: hasNext ? 'var(--ds-text)' : 'rgba(255,255,255,0.1)' }}>
+              <ChevronsRight size={14} />
+            </button>
+          </div>
+          {question.isStarred && <Star size={12} style={{ color: '#f59e0b', fill: '#f59e0b' }} />}
+          {dc && (
+            <span style={{ fontSize: 9, fontWeight: 600, textTransform: 'uppercase', padding: '1px 6px', borderRadius: 3, backgroundColor: dc.bg, color: dc.color, border: `1px solid ${dc.border}` }}>
+              {question.difficulty}
+            </span>
+          )}
+        </div>
+        <button onClick={onClose} style={{ padding: 4, borderRadius: 4, border: 'none', cursor: 'pointer', backgroundColor: 'transparent', color: 'rgba(255,255,255,0.4)' }} className="hover:text-white transition-colors">
+          <X size={15} />
+        </button>
+      </div>
+
+      {/* Scrollable content */}
+      <div style={{ flex: 1, overflowY: 'auto', padding: '16px 18px', display: 'flex', flexDirection: 'column', gap: 16 }}>
+        <h2 style={{ fontSize: 16, fontWeight: 700, color: 'var(--ds-text)', margin: 0, lineHeight: 1.3 }}>{question.question}</h2>
+
+        {/* Answer */}
+        {question.answer && question.answer.length > 0 && (
+          <div>
+            <p style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#3b82f6', margin: '0 0 8px', fontFamily: 'var(--font-mono)' }}>Answer</p>
+            <div style={{ paddingLeft: 12, borderLeft: '2px solid rgba(59,130,246,0.15)' }}>
+              <PortableText value={question.answer} components={portableTextComponents} />
+            </div>
+          </div>
+        )}
+
+        {/* Key Points */}
+        {question.keyPoints && question.keyPoints.length > 0 && (
+          <div>
+            <p style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'rgba(255,255,255,0.25)', margin: '0 0 8px', fontFamily: 'var(--font-mono)' }}>Key Points</p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+              {question.keyPoints.map((point, i) => (
+                <div key={i} style={{ display: 'flex', gap: 6, fontSize: 12 }}>
+                  <span style={{ color: '#22c55e', flexShrink: 0 }}>✓</span>
+                  <span style={{ color: 'rgba(255,255,255,0.5)' }}>{point}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* References */}
+        {(question.projectReferences?.length > 0 || question.experienceReferences?.length > 0) && (
+          <div>
+            <p style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'rgba(255,255,255,0.25)', margin: '0 0 8px', fontFamily: 'var(--font-mono)' }}>References</p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
+              {question.projectReferences?.map(p => (
+                <Link key={p._id} href={`/project/${p.slug.current}`}
+                  style={{ fontSize: 11, padding: '2px 8px', borderRadius: 4, backgroundColor: 'rgba(59,130,246,0.08)', color: '#3b82f6', textDecoration: 'none' }}>
+                  {p.name}
+                </Link>
+              ))}
+              {question.experienceReferences?.map(e => (
+                <span key={e._id} style={{ fontSize: 11, padding: '2px 8px', borderRadius: 4, backgroundColor: 'rgba(245,158,11,0.08)', color: '#f59e0b' }}>
+                  {e.role} @ {e.company}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Follow-ups */}
+        {question.followUpQuestions && question.followUpQuestions.length > 0 && (
+          <div>
+            <p style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'rgba(255,255,255,0.25)', margin: '0 0 8px', fontFamily: 'var(--font-mono)' }}>Follow-ups</p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+              {question.followUpQuestions.map((q, i) => (
+                <div key={i} style={{ display: 'flex', gap: 5, fontSize: 12 }}>
+                  <span style={{ color: '#f59e0b' }}>→</span>
+                  <span style={{ color: 'rgba(255,255,255,0.4)' }}>{q}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Red flags */}
+        {question.redFlags && question.redFlags.length > 0 && (
+          <div style={{ padding: '10px 12px', borderRadius: 6, backgroundColor: 'rgba(239,68,68,0.04)', border: '1px solid rgba(239,68,68,0.1)' }}>
+            <p style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#ef4444', margin: '0 0 6px', fontFamily: 'var(--font-mono)' }}>Avoid</p>
+            {question.redFlags.map((f, i) => (
+              <div key={i} style={{ display: 'flex', gap: 5, fontSize: 12, marginBottom: 2 }}>
+                <span style={{ color: '#ef4444' }}>✕</span>
+                <span style={{ color: 'rgba(239,68,68,0.6)' }}>{f}</span>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Tags */}
+        {question.tags && question.tags.length > 0 && (
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, paddingTop: 12, borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+            {question.tags.map((tag, i) => (
+              <span key={i} style={{ fontSize: 10, padding: '2px 7px', borderRadius: 3, backgroundColor: 'rgba(255,255,255,0.04)', color: 'rgba(255,255,255,0.3)' }}>
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Footer hint */}
+      <div style={{ padding: '8px 14px', borderTop: '1px solid rgba(255,255,255,0.06)', fontSize: 10, color: 'rgba(255,255,255,0.15)', textAlign: 'center', flexShrink: 0 }}>
+        <kbd style={{ padding: '1px 4px', backgroundColor: 'rgba(255,255,255,0.06)', borderRadius: 2 }}>Esc</kbd> close · <kbd style={{ padding: '1px 4px', backgroundColor: 'rgba(255,255,255,0.06)', borderRadius: 2 }}>←</kbd><kbd style={{ padding: '1px 4px', backgroundColor: 'rgba(255,255,255,0.06)', borderRadius: 2 }}>→</kbd> navigate
+      </div>
+    </div>
+    </>
   );
 }

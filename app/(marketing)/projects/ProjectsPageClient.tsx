@@ -430,7 +430,7 @@ export function ProjectsPageClient({ projects, categories, initialCategory, init
 
           {/* Project grid — 2 columns */}
           {filtered.length > 0 ? (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16 }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3" style={{ gap: 16 }}>
               {filtered.map(p => <ProjectCard key={p._id} project={p} />)}
             </div>
           ) : (

@@ -446,7 +446,7 @@ export function BlogPageClient({ knowledgeNodes, tags, initialType, initialSearc
 
               {/* Post grid — 2 columns */}
               {regularPosts.length > 0 && (
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16 }}>
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3" style={{ gap: 16 }}>
                   {regularPosts.map(node => <PostCard key={node._id} node={node} />)}
                 </div>
               )}

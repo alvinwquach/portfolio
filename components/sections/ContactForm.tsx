@@ -2,27 +2,61 @@
 
 import { useActionState, useRef, useEffect } from 'react';
 import { useFormStatus } from 'react-dom';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
 import { submitContact } from '@/app/actions/contact';
 import { initialContactState } from '@/app/actions/contact.types';
 import { Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 
+const inputStyle: React.CSSProperties = {
+  width: '100%',
+  padding: '9px 12px',
+  fontSize: 13,
+  backgroundColor: 'rgba(255,255,255,0.03)',
+  border: '1px solid rgba(255,255,255,0.08)',
+  borderRadius: 8,
+  color: 'var(--ds-text)',
+  outline: 'none',
+};
+
+const labelStyle: React.CSSProperties = {
+  display: 'block',
+  fontSize: 13,
+  fontWeight: 500,
+  color: 'rgba(255,255,255,0.5)',
+  marginBottom: 6,
+};
+
 function SubmitButton() {
   const { pending } = useFormStatus();
   return (
-    <Button type="submit" variant="gold" className="w-full" disabled={pending}>
+    <button
+      type="submit"
+      disabled={pending}
+      style={{
+        width: '100%',
+        padding: '10px 16px',
+        borderRadius: 8,
+        fontSize: 14,
+        fontWeight: 500,
+        backgroundColor: pending ? 'rgba(59,130,246,0.5)' : '#3b82f6',
+        color: 'white',
+        border: 'none',
+        cursor: pending ? 'not-allowed' : 'pointer',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 8,
+      }}
+      className="hover:opacity-85 transition-opacity"
+    >
       {pending ? (
         <>
-          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+          <Loader2 size={15} className="animate-spin" />
           Sending...
         </>
       ) : (
         'Send Message'
       )}
-    </Button>
+    </button>
   );
 }
 
@@ -40,80 +74,42 @@ export function ContactForm() {
   }, [state]);
 
   return (
-    <form ref={formRef} action={formAction} className="space-y-6">
-      {/* Name */}
-      <div className="space-y-2">
-        <Label htmlFor="name">
-          Name <span className="text-coral">*</span>
-        </Label>
-        <Input
-          id="name"
-          name="name"
-          type="text"
-          placeholder="Your name"
-          required
-          disabled={isPending}
-        />
+    <form ref={formRef} action={formAction} style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+      <div>
+        <label htmlFor="name" style={labelStyle}>Name <span style={{ color: '#ef4444' }}>*</span></label>
+        <input id="name" name="name" type="text" placeholder="Your name" required disabled={isPending} style={inputStyle} className="focus:border-[rgba(59,130,246,0.4)]" />
       </div>
 
-      {/* Email */}
-      <div className="space-y-2">
-        <Label htmlFor="email">
-          Email <span className="text-coral">*</span>
-        </Label>
-        <Input
-          id="email"
-          name="email"
-          type="email"
-          placeholder="your.email@example.com"
-          required
-          disabled={isPending}
-        />
+      <div>
+        <label htmlFor="email" style={labelStyle}>Email <span style={{ color: '#ef4444' }}>*</span></label>
+        <input id="email" name="email" type="email" placeholder="your.email@example.com" required disabled={isPending} style={inputStyle} className="focus:border-[rgba(59,130,246,0.4)]" />
       </div>
 
-      {/* Subject */}
-      <div className="space-y-2">
-        <Label htmlFor="subject">Subject</Label>
-        <Input
-          id="subject"
-          name="subject"
-          type="text"
-          placeholder="What's this about?"
-          disabled={isPending}
-        />
+      <div>
+        <label htmlFor="subject" style={labelStyle}>Subject</label>
+        <input id="subject" name="subject" type="text" placeholder="What's this about?" disabled={isPending} style={inputStyle} className="focus:border-[rgba(59,130,246,0.4)]" />
       </div>
 
-      {/* Message */}
-      <div className="space-y-2">
-        <Label htmlFor="message">
-          Message <span className="text-coral">*</span>
-        </Label>
-        <Textarea
-          id="message"
-          name="message"
-          placeholder="Tell me about your project or opportunity..."
-          rows={6}
-          required
-          disabled={isPending}
-        />
+      <div>
+        <label htmlFor="message" style={labelStyle}>Message <span style={{ color: '#ef4444' }}>*</span></label>
+        <textarea id="message" name="message" placeholder="Tell me about your project or opportunity..." rows={5} required disabled={isPending}
+          style={{ ...inputStyle, resize: 'vertical' }} className="focus:border-[rgba(59,130,246,0.4)]" />
       </div>
 
-      {/* Status Messages */}
       {state.status === 'success' && (
-        <div className="flex items-center gap-2 p-4 bg-success/10 border border-success/20 rounded-lg text-success">
-          <CheckCircle className="h-5 w-5 flex-shrink-0" />
-          <p>{state.message}</p>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '12px 14px', borderRadius: 8, backgroundColor: 'rgba(34,197,94,0.08)', border: '1px solid rgba(34,197,94,0.15)', color: '#22c55e', fontSize: 13 }}>
+          <CheckCircle size={16} style={{ flexShrink: 0 }} />
+          <p style={{ margin: 0 }}>{state.message}</p>
         </div>
       )}
 
       {state.status === 'error' && (
-        <div className="flex items-center gap-2 p-4 bg-coral/10 border border-coral/20 rounded-lg text-coral">
-          <AlertCircle className="h-5 w-5 flex-shrink-0" />
-          <p>{state.message}</p>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '12px 14px', borderRadius: 8, backgroundColor: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.15)', color: '#ef4444', fontSize: 13 }}>
+          <AlertCircle size={16} style={{ flexShrink: 0 }} />
+          <p style={{ margin: 0 }}>{state.message}</p>
         </div>
       )}
 
-      {/* Submit Button */}
       <SubmitButton />
     </form>
   );
