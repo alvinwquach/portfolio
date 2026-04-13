@@ -61,6 +61,10 @@ import {
   schedulingConfig,
 } from './scheduling'
 
+// ─── Private Schemas ────────────────────────────────────────
+// These document types are for personal tools, not public-facing content.
+import { jobApplication } from './jobApplication'
+
 /**
  * Schema Export Object
  * --------------------
@@ -97,5 +101,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     bookingRequest,      // Meeting requests from /schedule page
     schedulingToken,     // Private scheduling links
     schedulingConfig,    // Singleton config for scheduling behavior
+
+    // ─── Private ────────────────────────────────────────────
+    jobApplication,      // Job application tracker
   ],
 }

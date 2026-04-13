@@ -358,6 +358,16 @@ export const structure: StructureResolver = (S) =>
 
       S.divider(),
 
+      // ─── Private Tools ────────────────────────────────────
+      S.listItem()
+        .title('Job Tracker')
+        .icon(() => '💼')
+        .child(
+          S.documentTypeList('jobApplication').title('Job Applications')
+        ),
+
+      S.divider(),
+
       // Tags
       S.listItem()
         .title('Tags')
