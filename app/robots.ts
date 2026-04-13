@@ -132,6 +132,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: [
           "/studio",   // Sanity Studio - internal CMS interface
           "/api/",     // API routes - not content pages
+          "/tracker",  // Private job tracker - not public content
         ],
       },
     ],
